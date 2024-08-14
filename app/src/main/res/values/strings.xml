@@ -3,7 +3,15 @@
     <string name="string_welcome_sign_in">Hi, Welcome back!</string>
     <string name="string_hint_email">Your email</string>
     <string name="string_hint_password">Password</string>
-    <string name="string_sign_in">Sign In\n</string>
+    <string name="string_sign_in">Sign In</string>
     <string name="string_forgot_password">Forgot password?</string>
-    <string name="string_sign_up_in_sign_in">Don\'t have an account? Sign Up</string>
+    <string name="string_sign_up_in_sign_in_full">Don\'t have an account? Sign Up</string>
+    <string name="string_sign_up">Sign Up</string>
+    <string name="string_create_account">Create Account</string>
+    <string name="string_description_sign_up">We are here to help you</string>
+    <string name="string_sign_in_in_sign_up">Do you have an account? Sign In</string>
+    <string name="do_not_leave_this_field_blank">Do not leave this field blank</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="invalid_password">Password must contain at least 8 characers</string>
+    <string name="string_title_sign_up_profile">Fill Your Profile</string>
 </resources>

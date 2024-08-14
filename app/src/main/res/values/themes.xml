@@ -5,5 +5,9 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.DoctorApp" parent="Base.Theme.DoctorApp" />
+    <style name="Theme.DoctorApp" parent="Base.Theme.DoctorApp">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorAccent">@color/color_1c64f2</item>
+    </style>
+
 </resources>

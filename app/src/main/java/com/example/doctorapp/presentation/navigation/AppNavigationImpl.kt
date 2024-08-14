@@ -14,4 +14,12 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
         openScreen(R.id.action_splashFragment_to_signInFragment)
     }
 
+    override fun openSignInToSignUpScreen(bundle: Bundle?) {
+        openScreen(R.id.action_signInFragment_to_signUpFragment)
+    }
+
+    override fun openSignUpToSignInScreen(bundle: Bundle?) {
+        openScreen(R.id.action_signUpFragment_to_signInFragment)
+    }
+
 }

@@ -1,19 +1,20 @@
-package com.example.doctorapp.presentation.auth.signIn
+package com.example.doctorapp.presentation.auth.signUp
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chatapp.domain.core.base.BaseViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 
-class SignInViewModel : BaseViewModel() {
+class SignUpViewModel : BaseViewModel() {
     private var _validator = MutableLiveData(false)
     val validator: MutableLiveData<Boolean> get() = _validator
+    private var _isNameValid = false
     private var _isEmailValid = false
     private var _isPasswordValid = false
 
-    fun setValidState(isEmailValid: Boolean? = _isEmailValid, isPasswordValid: Boolean? = _isPasswordValid) {
+    fun setValidState(isNameValid: Boolean? = _isNameValid, isEmailValid: Boolean? = _isEmailValid, isPasswordValid: Boolean? = _isPasswordValid) {
+        _isNameValid = isNameValid!!
         _isEmailValid = isEmailValid!!
         _isPasswordValid = isPasswordValid!!
-        _validator.value = (_isEmailValid && _isPasswordValid)
+        _validator.value = (_isNameValid &&_isEmailValid && _isPasswordValid)
     }
 }

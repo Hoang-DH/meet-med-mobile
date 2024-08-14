@@ -1,4 +1,4 @@
-package com.example.doctorapp.presentation.auth.signIn
+package com.example.doctorapp.presentation.auth.signUp
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.chatapp.domain.core.base.BaseFragment
 import com.example.doctorapp.R
-import com.example.doctorapp.databinding.FragmentSignInBinding
+import com.example.doctorapp.databinding.FragmentSignUpBinding
 import com.example.doctorapp.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.Spanner
 import com.example.doctorapp.utils.validate
@@ -16,33 +16,42 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SignInFragment :
-    BaseFragment<FragmentSignInBinding, SignInViewModel>(R.layout.fragment_sign_in) {
+class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(R.layout.fragment_sign_up) {
 
     @Inject
     lateinit var appNavigation: AppNavigation
 
     companion object {
-        fun newInstance() = SignInFragment()
+        fun newInstance() = SignUpFragment()
     }
 
-    private val viewModel: SignInViewModel by viewModels()
+    private val viewModel: SignUpViewModel by viewModels()
     override fun getVM() = viewModel
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         Spanner.spanString(
-            binding.tvSignUp,
-            resources.getString(R.string.string_sign_up),
+            binding.tvSignIn,
+            resources.getString(R.string.string_sign_in),
             resources
         ) {
-            appNavigation.openSignInToSignUpScreen()
+            appNavigation.openSignUpToSignInScreen()
         }
     }
 
     override fun bindingStateView() {
         super.bindingStateView()
         binding.apply {
+
+            etName.validate { email ->
+                if (email.isEmpty()) {
+                    etName.error =
+                        resources.getString(R.string.do_not_leave_this_field_blank)
+                } else {
+                    viewModel.setValidState(isNameValid = true)
+                }
+            }
+
             etEmail.validate { email ->
                 if (email.isEmpty()) {
                     etEmail.error =
@@ -65,7 +74,7 @@ class SignInFragment :
             }
         }
         viewModel.validator.observe(viewLifecycleOwner) { isValid ->
-            binding.btnSignIn.isEnabled = isValid
+            binding.btnSignUp.isEnabled = isValid
         }
     }
 
