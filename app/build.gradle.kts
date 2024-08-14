@@ -37,6 +37,10 @@ android {
         dataBinding = true
         buildConfig = true
     }
+
+    hilt{
+        enableAggregatingTask = false
+    }
 }
 
 dependencies {

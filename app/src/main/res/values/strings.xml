@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">DoctorApp</string>
+    <string name="string_welcome_sign_in">Hi, Welcome back!</string>
+    <string name="string_hint_email">Your email</string>
+    <string name="string_hint_password">Password</string>
+    <string name="string_sign_in">Sign In\n</string>
+    <string name="string_forgot_password">Forgot password?</string>
+    <string name="string_sign_up_in_sign_in">Don\'t have an account? Sign Up</string>
 </resources>

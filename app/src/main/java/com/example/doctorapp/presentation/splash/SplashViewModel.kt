@@ -8,12 +8,13 @@ import com.example.chatapp.domain.core.base.BaseViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
 class SplashViewModel : BaseViewModel() {
     private val _actionSplash = MutableLiveData<SplashActionState>()
     val actionSplash: LiveData<SplashActionState> = _actionSplash
     init {
         viewModelScope.launch {
-            delay(1000)
+            delay(1500)
             _actionSplash.value = SplashActionState.Finish
         }
     }

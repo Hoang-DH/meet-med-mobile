@@ -2,20 +2,33 @@ package com.example.doctorapp.presentation.container
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil.setContentView
+import androidx.navigation.fragment.NavHostFragment
+import com.example.chatapp.domain.core.base.BaseActivity
 import com.example.doctorapp.R
+import com.example.doctorapp.databinding.ActivityMainBinding
+import com.example.doctorapp.presentation.navigation.AppNavigation
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>() {
+
+    @Inject
+    lateinit var appNavigation: AppNavigation
+
+    private val viewModel: MainActivityViewModel by viewModels()
+    override fun getVM() = viewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        appNavigation.bind(navHostFragment.navController)
     }
+
+    override val layoutId: Int = R.layout.activity_main
 }

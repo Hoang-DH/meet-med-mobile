@@ -6,7 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.example.core.utils.dialog.LoadingDialog
+import com.example.doctorapp.utils.LoadingDialog
 import java.lang.ref.WeakReference
 
 abstract class BaseActivityNotRequiredViewModel<BD: ViewDataBinding> : AppCompatActivity() {
