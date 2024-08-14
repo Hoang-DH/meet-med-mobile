@@ -14,4 +14,14 @@
     <string name="invalid_email">Invalid email address</string>
     <string name="invalid_password">Password must contain at least 8 characers</string>
     <string name="string_title_sign_up_profile">Fill Your Profile</string>
+    <string name="string_hint_full_name">Your Full Name</string>
+    <string name="string_hint_gender">Gender</string>
+    <resources>
+        <string-array name="dropdown_options">
+            <item>Male</item>
+            <item>Female</item>
+            <item>Other</item>
+        </string-array>
+    </resources>
+
 </resources>
