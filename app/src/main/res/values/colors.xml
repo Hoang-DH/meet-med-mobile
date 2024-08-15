@@ -7,5 +7,6 @@
     <color name="color_6b7280">#6B7280</color>
     <color name="color_text_hint">#9CA3AF</color>
     <color name="color_transparent">#00000000</color>
+    <color name="color_bg_edt">#F9FAFB</color>
 
 </resources>

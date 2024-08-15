@@ -16,12 +16,22 @@
     <string name="string_title_sign_up_profile">Fill Your Profile</string>
     <string name="string_hint_full_name">Your Full Name</string>
     <string name="string_hint_gender">Gender</string>
-    <resources>
-        <string-array name="dropdown_options">
-            <item>Male</item>
-            <item>Female</item>
-            <item>Other</item>
-        </string-array>
-    </resources>
+    <string name="string_hint_nick_name">Nickname</string>
+    <string name="string_hint_mail">name@example.com</string>
+    <string name="string_save">Save</string>
+    <string name="string_gender_male">Male</string>
+    <string name="string_gender_female">Female</string>
+    <string name="string_gender_other">Other</string>
+    <string name="string_congratulations">Congratulations!</string>
+    <string name="string_account_ready">Your account is ready to use. You will be redirected to the Home Page in a few seconds…</string>
+    <string name="string_done">Done</string>
+    <string name="string_edit_your_appointment">Edit your appointment</string>
+
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
 
 </resources>

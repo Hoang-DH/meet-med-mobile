@@ -27,8 +27,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            />
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -41,6 +40,14 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popUpTo="@id/signInFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpProfileFragment"
+            app:destination="@id/signUpProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/signUpProfileFragment"
+        android:name="com.example.doctorapp.presentation.auth.signUp.SignUpProfileFragment"
+        android:label="SignUpProfileFragment"
+        tools:layout="@layout/fragment_sign_up_profile" />
 </navigation>

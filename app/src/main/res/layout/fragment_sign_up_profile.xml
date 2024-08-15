@@ -48,7 +48,6 @@
             android:translationY="-65dp"
             app:layout_constraintStart_toEndOf="@id/ivAvatar"
             app:layout_constraintTop_toBottomOf="@id/ivAvatar" />
-        />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etFullName"
@@ -70,7 +69,7 @@
             android:layout_marginHorizontal="@dimen/common_size_20dp"
             android:layout_marginTop="@dimen/common_size_20dp"
             android:background="@drawable/bg_edit_text"
-            android:hint="@string/string_hint_full_name"
+            android:hint="@string/string_hint_nick_name"
             android:padding="@dimen/common_size_10dp"
             android:textColorHint="@color/color_text_hint"
             android:textSize="@dimen/common_text_size_14sp"
@@ -84,7 +83,7 @@
             android:layout_marginTop="@dimen/common_size_20dp"
             android:background="@drawable/bg_edit_text"
             android:drawablePadding="@dimen/common_size_10dp"
-            android:hint="@string/string_hint_full_name"
+            android:hint="@string/string_hint_mail"
             android:padding="@dimen/common_size_10dp"
             android:textColorHint="@color/color_text_hint"
             android:textSize="@dimen/common_text_size_14sp"
@@ -97,6 +96,7 @@
             android:layout_marginHorizontal="@dimen/common_size_20dp"
             android:layout_marginTop="@dimen/common_size_20dp"
             android:background="@drawable/bg_edit_text"
+            android:drawableStart="@drawable/ic_calendar"
             android:drawablePadding="@dimen/common_size_10dp"
             android:hint="@string/string_hint_full_name"
             android:padding="@dimen/common_size_10dp"
@@ -104,15 +104,37 @@
             android:textSize="@dimen/common_text_size_14sp"
             app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spinnerOptions"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/etGender"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginHorizontal="@dimen/common_size_20dp"
             android:layout_marginTop="@dimen/common_size_20dp"
             android:background="@drawable/bg_edit_text"
+            android:drawableEnd="@drawable/ic_drop_down"
+            android:paddingEnd="@dimen/common_size_20dp"
+            android:elevation="0dp"
+            android:hint="@string/string_hint_gender"
+            android:padding="@dimen/common_size_10dp"
+            android:textColorHint="@color/color_text_hint"
+            android:gravity="start|center_vertical"
             android:textSize="@dimen/common_text_size_14sp"
+            style="?android:attr/borderlessButtonStyle"
             app:layout_constraintTop_toBottomOf="@id/etDob" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_30dp"
+            android:background="@drawable/bg_button"
+            android:maxLines="1"
+            android:text="@string/string_save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_size_16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etGender" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/common_size_20dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/llGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pop_up_gender"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llMale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/common_size_5dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_size_10dp"
+                    android:drawableStart="@drawable/ic_male"
+                    android:drawablePadding="@dimen/common_size_10dp"
+                    android:gravity="center_vertical"
+
+                    android:text="@string/string_gender_male"
+                    android:textColor="@color/color_text_hint"
+                    android:textSize="@dimen/common_text_size_14sp" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#9CA3AF"
+                />
+
+            <LinearLayout
+                android:id="@+id/llFemale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/common_size_5dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_size_10dp"
+                    android:drawableStart="@drawable/ic_female"
+                    android:drawablePadding="@dimen/common_size_10dp"
+                    android:gravity="center_vertical"
+
+                    android:text="@string/string_gender_female"
+                    android:textColor="@color/color_text_hint"
+                    android:textSize="@dimen/common_text_size_14sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#9CA3AF" />
+
+
+            <LinearLayout
+                android:id="@+id/llOther"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/common_size_5dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_size_10dp"
+                    android:drawableStart="@drawable/ic_male"
+                    android:drawablePadding="@dimen/common_size_10dp"
+                    android:drawableTint="@color/color_transparent"
+                    android:gravity="center_vertical"
+                    android:text="@string/string_gender_other"
+                    android:textColor="@color/color_text_hint"
+                    android:textSize="@dimen/common_text_size_14sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

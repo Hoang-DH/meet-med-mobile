@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dialog_congratulation"
+            android:paddingVertical="@dimen/common_size_30dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_congratulation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_congratulation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_congratulation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_size_30dp"
+                android:text="@string/string_congratulations"
+                android:textColor="@color/black"
+                android:textSize="@dimen/common_size_20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/iv_congratulation"
+                app:layout_constraintStart_toStartOf="@id/iv_congratulation"
+                app:layout_constraintTop_toBottomOf="@id/iv_congratulation" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_account_ready"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_size_10dp"
+                android:maxLines="3"
+                android:paddingHorizontal="50dp"
+                android:text="@string/string_account_ready"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/common_size_14sp"
+                app:layout_constraintEnd_toEndOf="@id/tv_congratulation"
+                app:layout_constraintStart_toStartOf="@id/tv_congratulation"
+                app:layout_constraintTop_toBottomOf="@id/tv_congratulation" />
+
+            <ProgressBar
+                android:layout_width="@dimen/common_size_57dp"
+                android:layout_height="@dimen/common_size_57dp"
+                android:layout_marginTop="@dimen/common_size_20dp"
+                android:indeterminateTint="@color/color_primary"
+                app:layout_constraintEnd_toEndOf="@id/tv_account_ready"
+                app:layout_constraintStart_toStartOf="@id/tv_account_ready"
+                app:layout_constraintTop_toBottomOf="@id/tv_account_ready" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/tv_account_ready"
+                app:layout_constraintStart_toStartOf="@id/tv_account_ready"
+                app:layout_constraintTop_toBottomOf="@id/tv_account_ready">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_done"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginHorizontal="@dimen/common_size_50dp"
+                    android:layout_marginTop="@dimen/common_size_30dp"
+                    android:background="@drawable/bg_button_enable"
+                    android:text="@string/string_done"
+                    android:textColor="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="@dimen/common_size_20dp"
+                    android:text="@string/string_edit_your_appointment" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</layout>
