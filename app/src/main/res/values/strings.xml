@@ -26,6 +26,7 @@
     <string name="string_account_ready">Your account is ready to use. You will be redirected to the Home Page in a few seconds…</string>
     <string name="string_done">Done</string>
     <string name="string_edit_your_appointment">Edit your appointment</string>
+    <string name="string_search_doctor">Search doctor...</string>
 
     <string-array name="gender_options">
         <item>Male</item>

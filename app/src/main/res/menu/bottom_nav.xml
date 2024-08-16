@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/tabMessages"
+        android:icon="@drawable/bg_msg"
+        android:title="@string/message_bottom_bar" />
+    <item
+        android:id="@+id/tabFriends"
+        android:icon="@drawable/bg_friend"
+        android:title="@string/friend_bottom_bar" />
+    <item
+        android:id="@+id/tabFemaleList"
+        android:icon="@drawable/bg_profile"
+        android:title="@string/profile_bottom_bar" />
+</menu>
