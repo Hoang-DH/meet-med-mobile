@@ -31,6 +31,12 @@ object Dialog {
                 (context.resources.displayMetrics.widthPixels * 0.85).toInt(),
                 (context.resources.displayMetrics.heightPixels * 0.5).toInt()
             )
+            //dialog disappear after 3 seconds
+            customView.postDelayed({
+                dialog.dismiss()
+//                onClickDone?.invoke()
+            }, 3000)
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

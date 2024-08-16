@@ -27,6 +27,9 @@
     <string name="string_done">Done</string>
     <string name="string_edit_your_appointment">Edit your appointment</string>
     <string name="string_search_doctor">Search doctor...</string>
+    <string name="string_home">Home</string>
+    <string name="string_booking">Booking</string>
+    <string name="string_profile">Profile</string>
 
     <string-array name="gender_options">
         <item>Male</item>

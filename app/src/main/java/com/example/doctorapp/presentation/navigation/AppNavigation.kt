@@ -8,4 +8,5 @@ interface AppNavigation: BaseNavigator {
     fun openSignInToSignUpScreen(bundle: Bundle? = null)
     fun openSignUpToSignInScreen(bundle: Bundle? = null)
     fun openSignUpToSignUpProfileScreen(bundle: Bundle? = null)
+    fun openSignUpProfileToHomeContainerScreen(bundle: Bundle? = null)
 }

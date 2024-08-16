@@ -49,5 +49,13 @@
         android:id="@+id/signUpProfileFragment"
         android:name="com.example.doctorapp.presentation.auth.signUp.SignUpProfileFragment"
         android:label="SignUpProfileFragment"
-        tools:layout="@layout/fragment_sign_up_profile" />
+        tools:layout="@layout/fragment_sign_up_profile" >
+        <action
+            android:id="@+id/action_signUpProfileFragment_to_homeContainerFragment"
+            app:destination="@id/homeContainerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeContainerFragment"
+        android:name="com.example.doctorapp.presentation.homeContainer.HomeContainerFragment"
+        android:label="HomeContainerFragment" />
 </navigation>

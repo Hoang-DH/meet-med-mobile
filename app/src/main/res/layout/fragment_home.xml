@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.homeContainer.home.HomeFragment">
+<layout>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/icNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_has_noti"
-        android:layout_marginEnd="@dimen/common_size_20dp"
-        />
-
-    <androidx.appcompat.widget.AppCompatEditText
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/icNotification"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginHorizontal="@dimen/common_size_20dp"
-        android:background="@drawable/bg_search_view"
-        android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="@dimen/common_size_10dp"
-        android:hint="@string/string_search_doctor"
-        android:paddingStart="@dimen/common_size_10dp"
-        android:paddingVertical="@dimen/common_size_10dp"
-        android:textColorHint="@color/color_text_hint"
-        android:layout_marginTop="@dimen/common_size_10dp"
-        />
+        android:layout_height="match_parent"
+        tools:context=".presentation.homeContainer.home.HomeFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_30dp"
+            android:layout_marginEnd="@dimen/common_size_20dp"
+            android:src="@drawable/ic_has_noti"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_10dp"
+            android:background="@drawable/bg_search_view"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="@dimen/common_size_10dp"
+            android:hint="@string/string_search_doctor"
+            android:paddingVertical="@dimen/common_size_10dp"
+            android:padding="@dimen/common_size_10dp"
+            android:textColorHint="@color/color_text_hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/icNotification" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

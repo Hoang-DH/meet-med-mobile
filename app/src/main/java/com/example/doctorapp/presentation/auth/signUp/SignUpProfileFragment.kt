@@ -1,27 +1,29 @@
 package com.example.doctorapp.presentation.auth.signUp
 
-import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.example.chatapp.domain.core.base.BaseFragment
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentSignUpProfileBinding
 import com.example.doctorapp.databinding.PopupGenderBinding
 import com.example.doctorapp.presentation.constants.Gender
+import com.example.doctorapp.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.Dialog
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignUpProfileFragment :
     BaseFragment<FragmentSignUpProfileBinding, SignUpProfileViewModel>(R.layout.fragment_sign_up_profile) {
+
+        @Inject
+        lateinit var appNavigation: AppNavigation
 
     companion object {
         fun newInstance() = SignUpProfileFragment()
@@ -47,6 +49,11 @@ class SignUpProfileFragment :
         binding.btnSave.setOnClickListener{
             context?.let{
                 Dialog.showCongratulationDialog(it, getString(R.string.string_account_ready), true)
+                // after 3 seconds, navigate to home screen
+                binding.btnSave.postDelayed({
+                    appNavigation.openSignUpProfileToHomeContainerScreen()
+                }, 3000)
+
             }
         }
     }
