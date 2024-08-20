@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.homeContainer.home.search.SearchDoctorFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_marginTop="@dimen/common_size_30dp"
+        android:layout_marginStart="@dimen/common_size_10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_search_doctor_title"
+        android:textSize="@dimen/common_size_20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/common_size_30dp"
+        app:layout_constraintStart_toStartOf="@id/ivBack"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/ivBack"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/common_size_20dp"
+        android:layout_marginTop="@dimen/common_size_15dp"
+        android:background="@drawable/bg_search_view"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/common_size_10dp"
+        android:hint="@string/string_search_doctor"
+        android:paddingVertical="@dimen/common_size_10dp"
+        android:padding="@dimen/common_size_10dp"
+        android:textColorHint="@color/color_text_hint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/etSearch"
+        android:layout_marginTop="@dimen/common_size_15dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

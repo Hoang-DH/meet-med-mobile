@@ -30,6 +30,7 @@
     <string name="string_home">Home</string>
     <string name="string_booking">Booking</string>
     <string name="string_profile">Profile</string>
+    <string name="string_search_doctor_title">All Doctors</string>
 
     <string-array name="gender_options">
         <item>Male</item>

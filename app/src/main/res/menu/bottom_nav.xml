@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/tabMessages"
+        android:id="@+id/tabHome"
         android:icon="@drawable/ic_home"
         android:title="@string/string_home" />
     <item
-        android:id="@+id/tabFriends"
+        android:id="@+id/tabBooking"
         android:icon="@drawable/ic_tab_calendar"
         android:title="@string/string_booking" />
     <item

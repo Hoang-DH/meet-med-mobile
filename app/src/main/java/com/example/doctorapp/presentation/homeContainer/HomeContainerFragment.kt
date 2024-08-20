@@ -1,11 +1,8 @@
 package com.example.doctorapp.presentation.homeContainer
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -18,6 +15,7 @@ import com.example.doctorapp.databinding.FragmentHomeContainerBinding
 class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding, BaseViewModel>(R.layout.fragment_home_container) {
 
     private lateinit var navController: NavController
+
     companion object {
         fun newInstance() = HomeContainerFragment()
     }
@@ -28,8 +26,39 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding, BaseVie
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         navController = (childFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment).findNavController()
-        binding.bottomNav.setupWithNavController(navController)
-        binding.bottomNav.itemIconTintList = null
+
+
+
+
+        binding.bottomNav.apply {
+            setupWithNavController(navController)
+
+            setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.tabHome -> {
+                        navController.navigate(R.id.home_fragment)
+                        item.actionView?.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_selected_icon_bottom_nav, null)
+                        true
+                    }
+
+                    R.id.tabProfile -> {
+                        navController.navigate(R.id.profile_fragment)
+                        true
+                    }
+
+                    R.id.tabBooking -> {
+                        navController.navigate(R.id.booking_fragment)
+                        true
+                    }
+
+                    else -> {
+                        false
+                    }
+                }
+            }
+            itemIconTintList = null
+        }
+
     }
 
 }
