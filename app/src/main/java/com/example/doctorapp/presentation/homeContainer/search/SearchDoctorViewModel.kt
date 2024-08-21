@@ -1,4 +1,4 @@
-package com.example.doctorapp.presentation.homeContainer.home.search
+package com.example.doctorapp.presentation.homeContainer.search
 
 import androidx.lifecycle.ViewModel
 

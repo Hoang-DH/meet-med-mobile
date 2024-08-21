@@ -17,4 +17,7 @@
     <dimen name="common_size_57dp">57dp</dimen>
     <dimen name="size_icon_bottom_nav">24dp</dimen>
     <dimen name="common_size_15dp">15dp</dimen>
+    <dimen name="common_text_size_16sp">16sp</dimen>
+    <dimen name="img_doctor_avatar_size">109dp</dimen>
+    <dimen name="common_size_12dp">12dp</dimen>
 </resources>

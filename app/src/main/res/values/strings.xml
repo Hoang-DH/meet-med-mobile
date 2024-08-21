@@ -26,11 +26,12 @@
     <string name="string_account_ready">Your account is ready to use. You will be redirected to the Home Page in a few seconds…</string>
     <string name="string_done">Done</string>
     <string name="string_edit_your_appointment">Edit your appointment</string>
-    <string name="string_search_doctor">Search doctor...</string>
+    <string name="string_search_doctor">Search doctor…</string>
     <string name="string_home">Home</string>
     <string name="string_booking">Booking</string>
     <string name="string_profile">Profile</string>
     <string name="string_search_doctor_title">All Doctors</string>
+    <string name="string_search_doctor_count">%1$d founds</string>
 
     <string-array name="gender_options">
         <item>Male</item>

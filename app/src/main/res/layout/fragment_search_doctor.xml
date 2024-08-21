@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.homeContainer.home.search.SearchDoctorFragment">
+    tools:context=".presentation.homeContainer.search.SearchDoctorFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivBack"
@@ -51,8 +51,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginStart="@dimen/common_size_20dp"
         app:layout_constraintTop_toBottomOf="@id/etSearch"
         android:layout_marginTop="@dimen/common_size_15dp"
+        tools:listitem="@layout/category_item"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDoctorCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_size_20dp"
+        android:text="@string/string_search_doctor_count"
+        android:textColor="@color/color_bg_item"
+        android:textSize="@dimen/common_text_size_16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/common_size_20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvCategory"
+        tools:text="532 founds"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSortType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/common_size_20dp"
+        android:text="@string/string_search_doctor_count"
+        android:textColor="@color/color_6b7280"
+        android:textSize="@dimen/common_text_size_16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/common_size_20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvCategory"
+        android:drawableEnd="@drawable/ic_sort_default"
+        android:drawablePadding="@dimen/common_size_5dp"
+        tools:text="Default"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/common_size_20dp"
+        android:layout_marginTop="@dimen/common_size_15dp"
+        app:layout_constraintTop_toBottomOf="@id/tvSortType"
+        tools:listitem="@layout/doctor_item"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
