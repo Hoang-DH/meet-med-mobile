@@ -1,4 +1,4 @@
-package com.example.chatapp.domain.core.base
+package com.example.doctorapp.domain.core.base
 
 import android.os.Bundle
 import android.view.MotionEvent
@@ -22,7 +22,17 @@ abstract class BaseActivityNotRequiredViewModel<BD: ViewDataBinding> : AppCompat
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(WeakReference(this).get()!!, layoutId)
         _binding?.lifecycleOwner = this
+        initView()
+        setOnClick()
+        bindingStateView()
+        bindingAction()
+
     }
+
+    open fun initView() {}
+    open fun setOnClick() {}
+    open fun bindingStateView() {}
+    open fun bindingAction() {}
 
     override fun onDestroy() {
         super.onDestroy()

@@ -2,6 +2,7 @@ package com.example.chatapp.domain.core.base
 
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
+import com.example.doctorapp.domain.core.base.BaseActivityNotRequiredViewModel
 
 abstract class BaseActivity<BD: ViewDataBinding, VM: BaseViewModel>: BaseActivityNotRequiredViewModel<BD>() {
     private lateinit var viewModel: VM
