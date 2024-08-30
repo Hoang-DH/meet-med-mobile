@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import com.example.chatapp.domain.core.base.BaseFragment
+import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentSignUpProfileBinding
 import com.example.doctorapp.databinding.PopupGenderBinding

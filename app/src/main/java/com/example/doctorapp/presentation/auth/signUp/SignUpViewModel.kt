@@ -1,8 +1,7 @@
 package com.example.doctorapp.presentation.auth.signUp
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.chatapp.domain.core.base.BaseViewModel
+import com.example.doctorapp.domain.core.base.BaseViewModel
 
 class SignUpViewModel : BaseViewModel() {
     private var _validator = MutableLiveData(false)

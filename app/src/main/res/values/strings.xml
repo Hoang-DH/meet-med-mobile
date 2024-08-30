@@ -32,6 +32,15 @@
     <string name="string_profile">Profile</string>
     <string name="string_search_doctor_title">All Doctors</string>
     <string name="string_search_doctor_count">%1$d founds</string>
+    <string name="string_doctor_details">Doctor Details</string>
+    <string name="string_patients">patients</string>
+    <string name="string_years_of_experience">years of experience</string>
+    <string name="string_rating">ratings</string>
+    <string name="string_about_me">About me</string>
+    <string name="string_dummy_about_me">Dr. David Patel, a dedicated cardiologist, brings a wealth of experience to Golden Gate Cardiology Center in Golden Gate, CA. view more</string>
+    <string name="string_working_time">Working Time</string>
+    <string name="string_dummy_working_time">Monday-Friday, 08.00 AM-18.00 pM</string>
+    <string name="string_book_appointment">Book Appointment</string>
 
     <string-array name="gender_options">
         <item>Male</item>

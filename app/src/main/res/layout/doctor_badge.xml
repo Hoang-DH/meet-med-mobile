@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icNumberOfPatients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_number_patients"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNumberOfPatients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_size_5dp"
+        android:textColor="@color/color_1C2A3A"
+        android:textSize="@dimen/common_text_size_14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/icNumberOfPatients"
+        app:layout_constraintStart_toStartOf="@id/icNumberOfPatients"
+        app:layout_constraintTop_toBottomOf="@id/icNumberOfPatients"
+        tools:text="1000+" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_size_5dp"
+        android:text="@string/string_patients"
+        app:layout_constraintEnd_toEndOf="@id/tvNumberOfPatients"
+        app:layout_constraintStart_toStartOf="@id/tvNumberOfPatients"
+        app:layout_constraintTop_toBottomOf="@id/tvNumberOfPatients" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icYoe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_yoe"
+        app:layout_constraintStart_toEndOf="@id/icNumberOfPatients"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/icRating"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvYoe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_size_5dp"
+        android:textColor="@color/color_1C2A3A"
+        android:textSize="@dimen/common_text_size_14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/icYoe"
+        app:layout_constraintStart_toStartOf="@id/icYoe"
+        app:layout_constraintTop_toBottomOf="@id/icYoe"
+        tools:text="10+" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_size_5dp"
+        android:text="@string/string_years_of_experience"
+        app:layout_constraintEnd_toEndOf="@id/tvYoe"
+        app:layout_constraintStart_toStartOf="@id/tvYoe"
+        app:layout_constraintTop_toBottomOf="@id/tvYoe" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_rating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_size_5dp"
+        android:textColor="@color/color_1C2A3A"
+        android:textSize="@dimen/common_text_size_14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/icRating"
+        app:layout_constraintStart_toStartOf="@id/icRating"
+        app:layout_constraintTop_toBottomOf="@id/icRating"
+        tools:text="1000+" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_size_5dp"
+        android:text="@string/string_rating"
+        app:layout_constraintEnd_toEndOf="@id/tvRating"
+        app:layout_constraintStart_toStartOf="@id/tvRating"
+        app:layout_constraintTop_toBottomOf="@id/tvRating" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

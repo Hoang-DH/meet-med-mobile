@@ -1,4 +1,4 @@
-package com.example.chatapp.domain.core.base
+package com.example.doctorapp.domain.core.base
 
 import androidx.lifecycle.ViewModel
 

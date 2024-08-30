@@ -1,4 +1,4 @@
-package com.example.chatapp.domain.core.base
+package com.example.doctorapp.domain.core.base
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,6 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.example.doctorapp.domain.core.base.BaseActivityNotRequiredViewModel
 
 abstract class BaseFragmentNotRequiredViewModel<BD: ViewDataBinding>(@LayoutRes id: Int): Fragment(id) {
 
@@ -66,6 +65,12 @@ abstract class BaseFragmentNotRequiredViewModel<BD: ViewDataBinding>(@LayoutRes 
             } else {
                 (activity as BaseActivityNotRequiredViewModel<*>?)!!.hideLoading()
             }
+        }
+    }
+
+    fun showDatePickerDialog() {
+        if (activity != null && activity is BaseActivityNotRequiredViewModel<*>) {
+            (activity as BaseActivityNotRequiredViewModel<*>?)!!.showDatePickerDialog()
         }
     }
 

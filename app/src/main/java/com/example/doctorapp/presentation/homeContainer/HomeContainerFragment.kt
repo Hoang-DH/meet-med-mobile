@@ -7,8 +7,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.chatapp.domain.core.base.BaseFragment
-import com.example.chatapp.domain.core.base.BaseViewModel
+import com.example.doctorapp.domain.core.base.BaseFragment
+import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentHomeContainerBinding
 

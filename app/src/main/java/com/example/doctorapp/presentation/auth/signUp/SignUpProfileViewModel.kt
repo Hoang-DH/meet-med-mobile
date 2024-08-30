@@ -1,10 +1,6 @@
 package com.example.doctorapp.presentation.auth.signUp
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.chatapp.domain.core.base.BaseViewModel
-import com.example.doctorapp.presentation.constants.Gender
+import com.example.doctorapp.domain.core.base.BaseViewModel
 
 class SignUpProfileViewModel : BaseViewModel() {
     // create get and set for all edit text in fragment mutable live data

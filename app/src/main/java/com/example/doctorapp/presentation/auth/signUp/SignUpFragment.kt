@@ -2,16 +2,11 @@ package com.example.doctorapp.presentation.auth.signUp
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.chatapp.domain.core.base.BaseFragment
+import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentSignUpBinding
 import com.example.doctorapp.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.Spanner
-import com.example.doctorapp.utils.validate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

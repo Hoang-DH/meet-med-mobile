@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/baseWebViewActivity">
+    app:startDestination="@id/doctorDetailFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -62,4 +62,9 @@
         android:id="@+id/baseWebViewActivity"
         android:name="com.example.doctorapp.domain.core.base.BaseWebViewActivity"
         android:label="BaseWebViewActivity" />
+    <fragment
+        android:id="@+id/doctorDetailFragment"
+        android:name="com.example.doctorapp.presentation.homeContainer.doctorDetail.DoctorDetailFragment"
+        android:label="fragment_doctor_detail"
+        tools:layout="@layout/fragment_doctor_detail" />
 </navigation>

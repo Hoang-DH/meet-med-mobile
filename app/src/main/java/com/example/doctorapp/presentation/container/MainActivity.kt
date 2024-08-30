@@ -1,14 +1,9 @@
 package com.example.doctorapp.presentation.container
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.navigation.fragment.NavHostFragment
-import com.example.chatapp.domain.core.base.BaseActivity
+import com.example.doctorapp.domain.core.base.BaseActivity
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.ActivityMainBinding
 import com.example.doctorapp.presentation.navigation.AppNavigation

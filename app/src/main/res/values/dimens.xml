@@ -20,4 +20,6 @@
     <dimen name="common_text_size_16sp">16sp</dimen>
     <dimen name="img_doctor_avatar_size">109dp</dimen>
     <dimen name="common_size_12dp">12dp</dimen>
+    <dimen name="common_size_25dp">25dp</dimen>
+    <dimen name="common_text_size_20sp">20sp</dimen>
 </resources>

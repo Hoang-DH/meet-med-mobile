@@ -6,6 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.example.doctorapp.utils.DateTimePickerDialog
 import com.example.doctorapp.utils.LoadingDialog
 import java.lang.ref.WeakReference
 
@@ -47,6 +48,10 @@ abstract class BaseActivityNotRequiredViewModel<BD: ViewDataBinding> : AppCompat
 
     fun hideLoading() {
         LoadingDialog.getInstance(this)?.hidden()
+    }
+
+    fun showDatePickerDialog() {
+        DateTimePickerDialog.getInstance().showDatePickerDialog(supportFragmentManager)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
