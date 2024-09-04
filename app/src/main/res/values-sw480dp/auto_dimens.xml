@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="common_size_10dp">11.68dp</dimen>
+	<dimen name="common_size_12dp">14.01dp</dimen>
+	<dimen name="common_size_15dp">17.52dp</dimen>
+	<dimen name="common_size_20dp">23.36dp</dimen>
+	<dimen name="common_size_25dp">29.20dp</dimen>
+	<dimen name="common_size_30dp">35.04dp</dimen>
+	<dimen name="common_size_33dp">38.54dp</dimen>
+	<dimen name="common_size_40dp">46.72dp</dimen>
+	<dimen name="common_size_43dp">50.22dp</dimen>
+	<dimen name="common_size_50dp">58.39dp</dimen>
+	<dimen name="common_size_53dp">61.90dp</dimen>
+	<dimen name="common_size_55dp">64.23dp</dimen>
+	<dimen name="common_size_57dp">66.57dp</dimen>
+	<dimen name="common_size_5dp">5.84dp</dimen>
+	<dimen name="img_doctor_avatar_size">127.30dp</dimen>
+	<dimen name="size_icon_bottom_nav">28.03dp</dimen>
+	<dimen name="common_size_14sp">16.35sp</dimen>
+	<dimen name="common_size_16sp">18.69sp</dimen>
+	<dimen name="common_size_20sp">23.36sp</dimen>
+	<dimen name="common_text_size_14sp">16.35sp</dimen>
+	<dimen name="common_text_size_16sp">18.69sp</dimen>
+	<dimen name="common_text_size_20sp">23.36sp</dimen>
+</resources>

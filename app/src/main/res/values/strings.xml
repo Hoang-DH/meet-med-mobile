@@ -41,6 +41,7 @@
     <string name="string_working_time">Working Time</string>
     <string name="string_dummy_working_time">Monday-Friday, 08.00 AM-18.00 pM</string>
     <string name="string_book_appointment">Book Appointment</string>
+    <string name="string_my_booking">My Bookings</string>
 
     <string-array name="gender_options">
         <item>Male</item>

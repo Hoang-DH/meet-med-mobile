@@ -5,6 +5,8 @@ plugins {
     id("kotlin-kapt")
 }
 
+apply("../autodimension.gradle")
+
 android {
     namespace = "com.example.doctorapp"
     compileSdk = 34
