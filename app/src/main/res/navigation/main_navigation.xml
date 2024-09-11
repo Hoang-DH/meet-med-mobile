@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/doctorDetailFragment">
+    app:startDestination="@id/bookingFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -67,4 +67,8 @@
         android:name="com.example.doctorapp.presentation.homeContainer.doctorDetail.DoctorDetailFragment"
         android:label="fragment_doctor_detail"
         tools:layout="@layout/fragment_doctor_detail" />
+    <fragment
+        android:id="@+id/bookingFragment"
+        android:name="com.example.doctorapp.presentation.homeContainer.booking.BookingFragment"
+        android:label="BookingFragment" />
 </navigation>

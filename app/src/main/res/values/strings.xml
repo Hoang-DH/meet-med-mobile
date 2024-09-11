@@ -47,11 +47,19 @@
     <string name="string_notification">Notification</string>
     <string name="string_settings">Settings</string>
     <string name="string_my_booking">My Bookings</string>
+    <string name="string_cancel">Cancel</string>
+    <string name="string_reschedule">Re-Schedule</string>
 
     <string-array name="gender_options">
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
+    </string-array>
+
+    <string-array name="booking_status">
+        <item>Upcoming</item>
+        <item>Completed</item>
+        <item>Cancelled</item>
     </string-array>
 
 
