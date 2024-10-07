@@ -49,6 +49,8 @@
     <string name="string_my_booking">My Bookings</string>
     <string name="string_cancel">Cancel</string>
     <string name="string_reschedule">Re-Schedule</string>
+    <string name="string_categories">Categories</string>
+    <string name="string_see_all">See All</string>
 
     <string-array name="gender_options">
         <item>Male</item>
@@ -61,6 +63,5 @@
         <item>Completed</item>
         <item>Cancelled</item>
     </string-array>
-
 
 </resources>

@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.ActivityBaseWebViewBinding
 
-class BaseWebViewActivity : BaseActivity<ActivityBaseWebViewBinding, BaseWebViewViewModel>() {
+abstract class BaseWebViewActivity : BaseActivity<ActivityBaseWebViewBinding, BaseWebViewViewModel>() {
 
     private val viewModel: BaseWebViewViewModel by viewModels()
 
@@ -46,5 +46,7 @@ class BaseWebViewActivity : BaseActivity<ActivityBaseWebViewBinding, BaseWebView
 
 
     }
+
+    abstract fun getWebViewTitle(): String
 
 }

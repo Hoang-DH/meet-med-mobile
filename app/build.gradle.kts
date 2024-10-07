@@ -13,12 +13,15 @@ android {
 
     defaultConfig {
         applicationId = "com.example.doctorapp"
-        minSdk = 26
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["auth0Domain"] = "@string/com_auth0_domain"
+        manifestPlaceholders["auth0Scheme"] = "@string/com_auth0_scheme"
     }
 
     buildTypes {
@@ -67,4 +70,10 @@ dependencies {
     //hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+    //Auth0
+    implementation(libs.auth0)
+
+    //Glide
+    implementation(libs.glide)
 }

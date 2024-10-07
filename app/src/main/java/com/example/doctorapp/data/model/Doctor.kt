@@ -1,7 +1,7 @@
 package com.example.doctorapp.data.model
 
 data class Doctor(
-    val id: Int? = null,
+    val id: Int,
     val name: String,
     val speciality: String,
     val description: String,

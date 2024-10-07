@@ -1,102 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.homeContainer.search.SearchDoctorFragment">
+<layout>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_arrow_back"
-        android:layout_marginTop="@dimen/common_size_30dp"
-        android:layout_marginStart="@dimen/common_size_10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/string_search_doctor_title"
-        android:textSize="@dimen/common_size_20sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/common_size_30dp"
-        app:layout_constraintStart_toStartOf="@id/ivBack"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/ivBack"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etSearch"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/common_size_20dp"
-        android:layout_marginTop="@dimen/common_size_15dp"
-        android:background="@drawable/bg_search_view"
-        android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="@dimen/common_size_10dp"
-        android:hint="@string/string_search_doctor"
-        android:paddingVertical="@dimen/common_size_10dp"
-        android:padding="@dimen/common_size_10dp"
-        android:textColorHint="@color/color_text_hint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        android:layout_height="match_parent"
+        tools:context=".presentation.homeContainer.search.SearchDoctorFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="@dimen/common_size_20dp"
-        app:layout_constraintTop_toBottomOf="@id/etSearch"
-        android:layout_marginTop="@dimen/common_size_15dp"
-        tools:listitem="@layout/category_item"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_size_10dp"
+            android:layout_marginTop="@dimen/common_size_30dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDoctorCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_size_20dp"
-        android:text="@string/string_search_doctor_count"
-        android:textColor="@color/color_bg_item"
-        android:textSize="@dimen/common_text_size_16sp"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/common_size_20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvCategory"
-        tools:text="532 founds"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_30dp"
+            android:text="@string/string_search_doctor_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/common_size_20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/ivBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ivBack"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvSortType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/common_size_20dp"
-        android:text="@string/string_search_doctor_count"
-        android:textColor="@color/color_6b7280"
-        android:textSize="@dimen/common_text_size_16sp"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/common_size_20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvCategory"
-        android:drawableEnd="@drawable/ic_sort_default"
-        android:drawablePadding="@dimen/common_size_5dp"
-        tools:text="Default"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_15dp"
+            android:background="@drawable/bg_search_view"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="@dimen/common_size_10dp"
+            android:hint="@string/string_search_doctor"
+            android:padding="@dimen/common_size_10dp"
+            android:paddingVertical="@dimen/common_size_10dp"
+            android:textColorHint="@color/color_text_hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/common_size_20dp"
-        android:layout_marginTop="@dimen/common_size_15dp"
-        app:layout_constraintTop_toBottomOf="@id/tvSortType"
-        tools:listitem="@layout/doctor_item"
-        />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_15dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/etSearch"
+            tools:listitem="@layout/category_item" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDoctorCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_20dp"
+            android:text="@string/string_search_doctor_count"
+            android:textColor="@color/color_bg_item"
+            android:textSize="@dimen/common_text_size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvCategory"
+            tools:text="532 founds" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSortType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_20dp"
+            android:layout_marginEnd="@dimen/common_size_20dp"
+            android:drawableEnd="@drawable/ic_sort_default"
+            android:drawablePadding="@dimen/common_size_5dp"
+            android:text="@string/string_search_doctor_count"
+            android:textColor="@color/color_6b7280"
+            android:textSize="@dimen/common_text_size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvCategory"
+            tools:text="Default" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_15dp"
+            app:layout_constraintTop_toBottomOf="@id/tvSortType"
+            tools:listitem="@layout/doctor_item" />
 
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -6,7 +6,6 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentSignUpBinding
 import com.example.doctorapp.presentation.navigation.AppNavigation
-import com.example.doctorapp.utils.Spanner
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -25,13 +24,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(R.la
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        Spanner.spanString(
-            binding.tvSignIn,
-            resources.getString(R.string.string_sign_in),
-            resources
-        ) {
-            appNavigation.openSignUpToSignInScreen()
-        }
+//        Spanner.spanString(
+//            binding.tvSignIn,
+//            resources.getString(R.string.string_sign_in),
+//            resources
+//        ) {
+//            appNavigation.openSignUpToSignInScreen()
+//        }
     }
 
 //    override fun bindingStateView() {

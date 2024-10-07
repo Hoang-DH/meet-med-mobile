@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/bookingFragment">
+    app:startDestination="@id/homeContainerFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -28,6 +28,15 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_signInFragment_to_homeContainerFragment"
+            app:destination="@id/homeContainerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -57,11 +66,12 @@
     <fragment
         android:id="@+id/homeContainerFragment"
         android:name="com.example.doctorapp.presentation.homeContainer.HomeContainerFragment"
-        android:label="HomeContainerFragment" />
-    <activity
-        android:id="@+id/baseWebViewActivity"
-        android:name="com.example.doctorapp.domain.core.base.BaseWebViewActivity"
-        android:label="BaseWebViewActivity" />
+        android:label="HomeContainerFragment" >
+        <action
+            android:id="@+id/action_homeContainerFragment_to_searchDoctorFragment"
+            app:destination="@id/searchDoctorFragment"
+            app:enterAnim="@anim/slide_in_bottom"/>
+    </fragment>
     <fragment
         android:id="@+id/doctorDetailFragment"
         android:name="com.example.doctorapp.presentation.homeContainer.doctorDetail.DoctorDetailFragment"
@@ -71,4 +81,20 @@
         android:id="@+id/bookingFragment"
         android:name="com.example.doctorapp.presentation.homeContainer.booking.BookingFragment"
         android:label="BookingFragment" />
+    <activity
+        android:id="@+id/signInWebVIewActivity"
+        android:name="com.example.doctorapp.presentation.auth.signIn.SignInWebVIewActivity"
+        android:label="SignInWebVIewActivity" />
+    <fragment
+        android:id="@+id/searchDoctorFragment"
+        android:name="com.example.doctorapp.presentation.homeContainer.search.SearchDoctorFragment"
+        android:label="fragment_search_doctor"
+        tools:layout="@layout/fragment_search_doctor" >
+        <action
+            android:id="@+id/action_searchDoctorFragment_to_homeContainerFragment"
+            app:destination="@id/homeContainerFragment"
+            app:exitAnim="@anim/slide_out_bottom"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/searchDoctorFragment"/>
+    </fragment>
 </navigation>

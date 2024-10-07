@@ -7,25 +7,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.doctorapp.R
+import com.example.doctorapp.databinding.FragmentSearchDoctorBinding
+import com.example.doctorapp.domain.core.base.BaseFragment
+import com.example.doctorapp.presentation.navigation.AppNavigation
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class SearchDoctorFragment : Fragment() {
+@AndroidEntryPoint
+class SearchDoctorFragment : BaseFragment<FragmentSearchDoctorBinding, SearchDoctorViewModel>(R.layout.fragment_search_doctor) {
+
+    @Inject
+    lateinit var appNavigation: AppNavigation
 
     companion object {
         fun newInstance() = SearchDoctorFragment()
     }
 
     private val viewModel: SearchDoctorViewModel by viewModels()
+    override fun getVM() = viewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_search_doctor, container, false)
+    override fun bindingAction() {
+        super.bindingAction()
+        binding.ivBack.setOnClickListener{
+            appNavigation.openSearchDoctorToHomeContainerScreen()
+        }
     }
 }

@@ -1,13 +1,22 @@
 package com.example.doctorapp.presentation.auth.signIn
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import com.example.doctorapp.domain.core.base.BaseFragment
+import android.util.Log
+import androidx.fragment.app.viewModels
+import com.auth0.android.Auth0
+import com.auth0.android.authentication.AuthenticationAPIClient
+import com.auth0.android.authentication.AuthenticationException
+import com.auth0.android.callback.Callback
+import com.auth0.android.provider.WebAuthProvider
+import com.auth0.android.result.Credentials
+import com.auth0.android.result.UserProfile
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentSignInBinding
+import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.presentation.navigation.AppNavigation
-import com.example.doctorapp.utils.Spanner
-import com.example.doctorapp.utils.validate
+import com.example.doctorapp.utils.Utils
+import com.example.doctorapp.utils.Utils.showSnackBar
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -17,52 +26,67 @@ class SignInFragment :
 
     @Inject
     lateinit var appNavigation: AppNavigation
-
-    companion object {
-        fun newInstance() = SignInFragment()
-    }
+    private lateinit var account: Auth0
 
     private val viewModel: SignInViewModel by viewModels()
     override fun getVM() = viewModel
 
-    override fun initView(savedInstanceState: Bundle?) {
-        super.initView(savedInstanceState)
-        Spanner.spanString(
-            binding.tvSignUp,
-            resources.getString(R.string.string_sign_up),
-            resources
-        ) {
-            appNavigation.openSignInToSignUpScreen()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        account = Auth0(
+            resources.getString(R.string.com_auth0_client_id),
+            resources.getString(R.string.com_auth0_domain)
+        )
+    }
+
+    override fun bindingAction() {
+        super.bindingAction()
+        binding.btnSignIn.setOnClickListener {
+            loginWithBrowser()
         }
     }
 
-    override fun bindingStateView() {
-        super.bindingStateView()
-        binding.apply {
-            etEmail.validate { email ->
-                if (email.isEmpty()) {
-                    etEmail.error =
-                        resources.getString(R.string.do_not_leave_this_field_blank)
-                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    etEmail.error = resources.getString(R.string.invalid_email)
-                } else {
-                    viewModel.setValidState(isEmailValid = true)
+    private fun loginWithBrowser() {
+        WebAuthProvider.login(account)
+            .withScheme(getString(R.string.com_auth0_scheme))
+            .withAudience("http://localhost:8000")
+
+            // Launch the authentication passing the callback where the results will be received
+            .start(requireContext(), object : Callback<Credentials, AuthenticationException> {
+                override fun onFailure(error: AuthenticationException) {
+                    showSnackBar("Error: ${error.message}", binding.root)
                 }
-            }
-            etPassword.validate { password ->
-                if (password.isEmpty()) {
-                    etPassword.error =
-                        resources.getString(R.string.do_not_leave_this_field_blank)
-                } else if (password.length < 6) {
-                    etPassword.error = resources.getString(R.string.invalid_password)
-                } else {
-                    viewModel.setValidState(isPasswordValid = true)
+
+                override fun onSuccess(result: Credentials) {
+//                    cachedCredentials = credentials
+                    showSnackBar("Success: ${result.accessToken}", binding.root)
+//                    updateUI()
+                    val accessToken = result.accessToken
+                    showUserProfile(accessToken)
+                    appNavigation.openSignInToHomeContainerScreen()
                 }
-            }
-        }
-        viewModel.validator.observe(viewLifecycleOwner) { isValid ->
-            binding.btnSignIn.isEnabled = isValid
-        }
+            })
     }
+
+    private fun showUserProfile(accessToken: String) {
+        val client = AuthenticationAPIClient(account)
+
+        // With the access token, call `userInfo` and get the profile from Auth0.
+        client.userInfo(accessToken)
+            .start(object : Callback<UserProfile, AuthenticationException> {
+                override fun onFailure(exception: AuthenticationException) {
+                    // Something went wrong!
+                }
+
+                override fun onSuccess(profile: UserProfile) {
+                    // We have the user's profile!
+                    val email = profile.email
+                    val name = profile.name
+                    Log.d("HoangDH", "email: $email")
+                    Log.d("HoangDH", "name: $name")
+                }
+            })
+    }
+
 
 }

@@ -24,4 +24,9 @@
     <dimen name="common_text_size_20sp">20sp</dimen>
     <dimen name="common_size_3dp">3dp</dimen>
     <dimen name="common_text_size_18sp">18sp</dimen>
+    <dimen name="common_size_100dp">100dp</dimen>
+    <dimen name="common_text_size_12dp">12sp</dimen>
+    <dimen name="common_size_60dp">60dp</dimen>
+    <dimen name="common_size_80dp">80dp</dimen>
+    <dimen name="common_size_70dp">70dp</dimen>
 </resources>

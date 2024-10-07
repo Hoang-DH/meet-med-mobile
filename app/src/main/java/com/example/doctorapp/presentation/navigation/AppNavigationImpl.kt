@@ -30,4 +30,16 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
         openScreen(R.id.action_signUpProfileFragment_to_homeContainerFragment)
     }
 
+    override fun openSignInToHomeContainerScreen(bundle: Bundle?) {
+        openScreen(R.id.action_signInFragment_to_homeContainerFragment)
+    }
+
+    override fun openHomeContainerToSearchDoctorScreen(bundle: Bundle?) {
+        openScreen(R.id.action_homeContainerFragment_to_searchDoctorFragment)
+    }
+
+    override fun openSearchDoctorToHomeContainerScreen(bundle: Bundle?) {
+        openScreen(R.id.action_searchDoctorFragment_to_homeContainerFragment)
+    }
+
 }
