@@ -72,7 +72,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_rating"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/icReview"
+        app:layout_constraintStart_toEndOf="@id/icYoe"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -96,5 +97,35 @@
         app:layout_constraintEnd_toEndOf="@id/tvRating"
         app:layout_constraintStart_toStartOf="@id/tvRating"
         app:layout_constraintTop_toBottomOf="@id/tvRating" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_review"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_size_5dp"
+        android:textColor="@color/color_1C2A3A"
+        android:textSize="@dimen/common_text_size_14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/icReview"
+        app:layout_constraintStart_toStartOf="@id/icReview"
+        app:layout_constraintTop_toBottomOf="@id/icReview"
+        tools:text="1000+" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_size_5dp"
+        android:text="@string/string_reviews"
+        app:layout_constraintEnd_toEndOf="@id/tvReview"
+        app:layout_constraintStart_toStartOf="@id/tvReview"
+        app:layout_constraintTop_toBottomOf="@id/tvReview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -76,7 +76,13 @@
         android:id="@+id/doctorDetailFragment"
         android:name="com.example.doctorapp.presentation.homeContainer.doctorDetail.DoctorDetailFragment"
         android:label="fragment_doctor_detail"
-        tools:layout="@layout/fragment_doctor_detail" />
+        tools:layout="@layout/fragment_doctor_detail" >
+        <action
+            android:id="@+id/action_doctorDetailFragment_to_searchDoctorFragment"
+            app:destination="@id/searchDoctorFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/searchDoctorFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/bookingFragment"
         android:name="com.example.doctorapp.presentation.homeContainer.booking.BookingFragment"
@@ -96,5 +102,8 @@
             app:exitAnim="@anim/slide_out_bottom"
             app:popUpToInclusive="true"
             app:popUpTo="@id/searchDoctorFragment"/>
+        <action
+            android:id="@+id/action_searchDoctorFragment_to_doctorDetailFragment"
+            app:destination="@id/doctorDetailFragment" />
     </fragment>
 </navigation>

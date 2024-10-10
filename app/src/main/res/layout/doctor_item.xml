@@ -1,80 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/common_size_10dp"
-    android:elevation="15dp"
-    app:cardCornerRadius="@dimen/common_size_12dp">
+<layout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/common_size_15dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/common_size_10dp"
+        android:elevation="15dp"
+        app:cardCornerRadius="@dimen/common_size_12dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_layout_avatar"
-            android:layout_width="@dimen/img_doctor_avatar_size"
-            android:layout_height="@dimen/img_doctor_avatar_size"
-            android:elevation="0dp"
-            app:cardCornerRadius="@dimen/common_size_12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/common_size_15dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_layout_avatar"
+                android:layout_width="@dimen/img_doctor_avatar_size"
+                android:layout_height="@dimen/img_doctor_avatar_size"
+                android:elevation="0dp"
+                app:cardCornerRadius="@dimen/common_size_12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_profile_disabled" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_doctor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_size_15dp"
+                android:textColor="@color/color_bg_item"
+                android:textSize="@dimen/common_text_size_16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Dr. John Doe" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/civ_perfomer_in_rank"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_profile_disabled" />
+                android:id="@+id/iv_heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_heart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.cardview.widget.CardView>
+            <View
+                android:id="@+id/divider"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/common_size_15dp"
+                android:layout_marginTop="@dimen/common_size_20dp"
+                android:background="@color/color_divider"
+                app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
+                app:layout_constraintTop_toBottomOf="@id/iv_heart" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_doctor_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_size_15dp"
-            android:textColor="@color/color_bg_item"
-            android:textSize="@dimen/common_text_size_16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Dr. John Doe" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSpeciality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_size_15dp"
+                android:layout_marginTop="@dimen/common_size_10dp"
+                android:textColor="@color/color_4B5563"
+                android:textSize="@dimen/common_text_size_14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                tools:text="Cardiologist" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_heart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_heart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_size_15dp"
+                android:layout_marginTop="@dimen/common_size_5dp"
+                android:src="@drawable/ic_star"
+                app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
+                app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/common_size_15dp"
-            android:layout_marginTop="@dimen/common_size_20dp"
-            android:background="@color/color_divider"
-            app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
-            app:layout_constraintTop_toBottomOf="@id/iv_heart" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_size_3dp"
+                android:layout_marginTop="@dimen/common_size_5dp"
+                android:text="5"
+                android:textColor="@color/color_6b7280"
+                app:layout_constraintStart_toEndOf="@id/ivStar"
+                app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_size_15dp"
-            android:textColor="@color/color_4B5563"
-            android:textSize="@dimen/common_text_size_14sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
-            app:layout_constraintTop_toBottomOf="@id/divider"
-            tools:text="Cardiologist" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_size_5dp"
+                android:layout_marginTop="@dimen/common_size_5dp"
+                android:text="|"
+                android:textColor="@color/color_text_hint"
+                app:layout_constraintStart_toEndOf="@id/tvRating"
+                app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_size_5dp"
+                android:layout_marginTop="@dimen/common_size_5dp"
+                android:text="@string/string_review_num"
+                android:textColor="@color/color_6b7280"
+                app:layout_constraintStart_toEndOf="@id/tvDivider"
+                app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
 
-</androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>
 
 

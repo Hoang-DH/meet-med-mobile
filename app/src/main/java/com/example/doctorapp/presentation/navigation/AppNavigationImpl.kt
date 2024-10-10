@@ -42,4 +42,12 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
         openScreen(R.id.action_searchDoctorFragment_to_homeContainerFragment)
     }
 
+    override fun openSearchDoctorToDoctorDetailScreen(bundle: Bundle?) {
+        openScreen(R.id.action_searchDoctorFragment_to_doctorDetailFragment, bundle)
+    }
+
+    override fun openDoctorDetailToSearchDoctorScreen(bundle: Bundle?) {
+        openScreen(R.id.action_doctorDetailFragment_to_searchDoctorFragment)
+    }
+
 }
