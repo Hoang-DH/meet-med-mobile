@@ -68,10 +68,10 @@ abstract class BaseFragmentNotRequiredViewModel<BD: ViewDataBinding>(@LayoutRes 
         }
     }
 
-    fun showDatePickerDialog() {
-        if (activity != null && activity is BaseActivityNotRequiredViewModel<*>) {
-            (activity as BaseActivityNotRequiredViewModel<*>?)!!.showDatePickerDialog()
-        }
-    }
+//    fun showDatePickerDialog(fullSlotDay: List<Long>) {
+//        if (activity != null && activity is BaseActivityNotRequiredViewModel<*>) {
+//            (activity as BaseActivityNotRequiredViewModel<*>?)!!.showDatePickerDialog(fullSlotDay)
+//        }
+//    }
 
 }
