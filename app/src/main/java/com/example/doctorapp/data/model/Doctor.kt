@@ -16,11 +16,36 @@ data class Doctor(
     val imageUrl: String,
     val yoe: Int,
 ) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readFloat(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readString().toString(),
+        parcel.readInt()
+    ) {
+    }
+
     override fun describeContents(): Int {
         TODO("Not yet implemented")
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         TODO("Not yet implemented")
+    }
+
+    companion object CREATOR : Parcelable.Creator<Doctor> {
+        override fun createFromParcel(parcel: Parcel): Doctor {
+            return Doctor(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Doctor?> {
+            return arrayOfNulls(size)
+        }
     }
 }

@@ -82,6 +82,9 @@
             app:destination="@id/searchDoctorFragment"
             app:popUpToInclusive="true"
             app:popUpTo="@id/searchDoctorFragment"/>
+        <action
+            android:id="@+id/action_doctorDetailFragment_to_bookingAppointmentFragment"
+            app:destination="@id/bookingAppointmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookingFragment"
@@ -106,4 +109,9 @@
             android:id="@+id/action_searchDoctorFragment_to_doctorDetailFragment"
             app:destination="@id/doctorDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/bookingAppointmentFragment"
+        android:name="com.example.doctorapp.presentation.homeContainer.booking.bookingAppointment.BookingAppointmentFragment"
+        android:label="BookingAppointmentFragment"
+        tools:layout="@layout/fragment_booking_appointment"/>
 </navigation>

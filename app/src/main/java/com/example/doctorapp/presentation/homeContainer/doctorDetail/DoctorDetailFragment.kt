@@ -63,7 +63,7 @@ class DoctorDetailFragment : BaseFragment<FragmentDoctorDetailBinding, DoctorDet
                 appNavigation.openDoctorDetailToSearchDoctorScreen()
             }
             btnBookAppointment.setOnClickListener {
-                showDatePickerDialog()
+                appNavigation.openDoctorDetailToBookingAppointmentScreen()
             }
         }
     }

@@ -2,11 +2,7 @@ package com.example.doctorapp.utils
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
 import com.google.android.material.datepicker.CalendarConstraints
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class DateValidator (private val validDays: List<Long>) : CalendarConstraints.DateValidator {
 

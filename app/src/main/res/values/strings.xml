@@ -55,6 +55,9 @@
     <string name="string_review_num">%1$d review</string>
     <string name="string_reviews">reviews</string>
     <string name="string_Reviews">Reviews</string>
+    <string name="string_booking_appointment">Booking Appointment</string>
+    <string name="string_select_date">Select Date</string>
+    <string name="string_select_time">Select Time</string>
 
     <string-array name="gender_options">
         <item>Male</item>

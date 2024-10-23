@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="@dimen/common_size_10dp"
+        android:layout_marginBottom="@dimen/common_size_10dp"
+        android:background="@drawable/bg_choose_date"
+        android:paddingHorizontal="@dimen/common_size_10dp"
+        android:paddingVertical="@dimen/common_size_10dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTime"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_0dp"
+            android:textAlignment="center"
+            android:textColor="@color/color_1C2A3A"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="08:00-08:15" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_1C2A3A"
+            app:layout_constraintTop_toBottomOf="@id/tvTime" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSlots"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_0dp"
+            tools:text="6 slots"
+            android:textAlignment="center"
+            android:textColor="@color/color_1C2A3A"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            android:textSize="@dimen/common_text_size_14sp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

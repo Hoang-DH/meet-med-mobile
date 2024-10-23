@@ -50,4 +50,8 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
         openScreen(R.id.action_doctorDetailFragment_to_searchDoctorFragment)
     }
 
+    override fun openDoctorDetailToBookingAppointmentScreen(bundle: Bundle?) {
+        openScreen(R.id.action_doctorDetailFragment_to_bookingAppointmentFragment)
+    }
+
 }
