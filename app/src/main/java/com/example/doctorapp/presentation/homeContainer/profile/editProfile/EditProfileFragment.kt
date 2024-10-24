@@ -1,4 +1,4 @@
-package com.example.doctorapp.presentation.auth.signUp
+package com.example.doctorapp.presentation.homeContainer.profile.editProfile
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -10,26 +10,26 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.R
-import com.example.doctorapp.databinding.FragmentSignUpProfileBinding
+import com.example.doctorapp.databinding.FragmentEditProfileBinding
 import com.example.doctorapp.databinding.PopupGenderBinding
 import com.example.doctorapp.presentation.constants.Gender
 import com.example.doctorapp.presentation.navigation.AppNavigation
-import com.example.doctorapp.utils.Dialog
+import com.example.doctorapp.presentation.utils.Dialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SignUpProfileFragment :
-    BaseFragment<FragmentSignUpProfileBinding, SignUpProfileViewModel>(R.layout.fragment_sign_up_profile) {
+class EditProfileFragment :
+    BaseFragment<FragmentEditProfileBinding, EditProfileViewModel>(R.layout.fragment_edit_profile) {
 
         @Inject
         lateinit var appNavigation: AppNavigation
 
     companion object {
-        fun newInstance() = SignUpProfileFragment()
+        fun newInstance() = EditProfileFragment()
     }
 
-    private val viewModel: SignUpProfileViewModel by viewModels()
+    private val viewModel: EditProfileViewModel by viewModels()
     override fun getVM() = viewModel
 
 
@@ -51,7 +51,7 @@ class SignUpProfileFragment :
                 Dialog.showCongratulationDialog(it, getString(R.string.string_account_ready), true)
                 // after 3 seconds, navigate to home screen
                 binding.btnSave.postDelayed({
-                    appNavigation.openSignUpProfileToHomeContainerScreen()
+//                    appNavigation.openSignUpProfileToHomeContainerScreen()
                 }, 3000)
 
             }

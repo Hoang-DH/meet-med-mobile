@@ -1,4 +1,4 @@
-package com.example.doctorapp.utils
+package com.example.doctorapp.presentation.utils
 
 object Define {
     object Fields{

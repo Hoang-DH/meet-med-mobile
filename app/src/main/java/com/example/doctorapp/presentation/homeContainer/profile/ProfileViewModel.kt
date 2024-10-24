@@ -1,7 +1,7 @@
 package com.example.doctorapp.presentation.homeContainer.profile
 
-import androidx.lifecycle.ViewModel
+import com.example.doctorapp.domain.core.base.BaseViewModel
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel : BaseViewModel() {
     // TODO: Implement the ViewModel
 }

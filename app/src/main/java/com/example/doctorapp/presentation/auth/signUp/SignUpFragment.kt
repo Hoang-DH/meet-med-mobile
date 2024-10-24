@@ -76,7 +76,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(R.la
         super.setOnClick()
         binding.btnSignUp.isEnabled = true
         binding.btnSignUp.setOnClickListener {
-            appNavigation.openSignUpToSignUpProfileScreen()
+//            appNavigation.openSignUpToSignUpProfileScreen()
         }
     }
 

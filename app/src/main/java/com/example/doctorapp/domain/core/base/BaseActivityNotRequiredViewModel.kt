@@ -6,8 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.example.doctorapp.utils.DateTimePickerDialog
-import com.example.doctorapp.utils.LoadingDialog
+import com.example.doctorapp.presentation.utils.LoadingDialog
 import java.lang.ref.WeakReference
 
 abstract class BaseActivityNotRequiredViewModel<BD: ViewDataBinding> : AppCompatActivity() {

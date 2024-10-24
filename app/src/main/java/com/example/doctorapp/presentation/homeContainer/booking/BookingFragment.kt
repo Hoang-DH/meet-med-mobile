@@ -1,17 +1,14 @@
 package com.example.doctorapp.presentation.homeContainer.booking
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentBookingBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.presentation.adapter.BookingPagerAdapter
 import com.example.doctorapp.presentation.homeContainer.booking.bookingCategory.BookingCategoryFragment
-import com.example.doctorapp.utils.Define
+import com.example.doctorapp.presentation.utils.Define
 import com.google.android.material.tabs.TabLayoutMediator
 
 class BookingFragment :

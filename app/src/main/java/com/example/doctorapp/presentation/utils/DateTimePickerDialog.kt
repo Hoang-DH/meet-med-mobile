@@ -1,4 +1,4 @@
-package com.example.doctorapp.utils
+package com.example.doctorapp.presentation.utils
 
 import androidx.fragment.app.FragmentManager
 import com.example.doctorapp.R
@@ -6,7 +6,6 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import java.util.Calendar
 
 class DateTimePickerDialog private constructor(
     fullSlotDay: List<Long>,

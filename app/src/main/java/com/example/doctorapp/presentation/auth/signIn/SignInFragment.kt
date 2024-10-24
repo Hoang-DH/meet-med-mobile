@@ -14,9 +14,7 @@ import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentSignInBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.presentation.navigation.AppNavigation
-import com.example.doctorapp.utils.Utils
-import com.example.doctorapp.utils.Utils.showSnackBar
-import com.google.android.material.snackbar.Snackbar
+import com.example.doctorapp.presentation.utils.Utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
