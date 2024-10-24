@@ -1,8 +1,8 @@
-package com.example.doctorapp.presentation.auth.signUp
+package com.example.doctorapp.presentation.homeContainer.profile.editProfile
 
 import com.example.doctorapp.domain.core.base.BaseViewModel
 
-class SignUpProfileViewModel : BaseViewModel() {
+class EditProfileViewModel : BaseViewModel() {
     // create get and set for all edit text in fragment mutable live data
 //    private var _fullName: MutableLiveData<String> = MutableLiveData()
 //    val fullName: LiveData<String>

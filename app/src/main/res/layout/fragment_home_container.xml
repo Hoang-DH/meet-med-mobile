@@ -24,13 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_margin="16dp"
             android:background="@drawable/nav_home"
-            android:padding="12dp"
-            app:itemIconTint="@null"
-            app:labelVisibilityMode="unlabeled"
+            app:elevation="@dimen/common_size_20dp"
             app:menu="@menu/bottom_nav" />
 
-
+<!--        app:itemIconTint="@null"-->
+<!--        app:labelVisibilityMode="unlabeled"-->
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

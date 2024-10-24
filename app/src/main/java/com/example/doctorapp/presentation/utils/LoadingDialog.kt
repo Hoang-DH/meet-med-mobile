@@ -1,4 +1,4 @@
-package com.example.doctorapp.utils
+package com.example.doctorapp.presentation.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity

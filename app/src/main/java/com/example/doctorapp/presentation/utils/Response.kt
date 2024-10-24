@@ -1,4 +1,4 @@
-package com.example.doctorapp.utils
+package com.example.doctorapp.presentation.utils
 
 sealed class Response<out T> {
     data class Success<out T>(val data: T): Response<T>()

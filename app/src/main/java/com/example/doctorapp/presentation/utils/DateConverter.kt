@@ -1,7 +1,6 @@
-package com.example.doctorapp.utils
+package com.example.doctorapp.presentation.utils
 
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.Date
 
 object DateConverter {

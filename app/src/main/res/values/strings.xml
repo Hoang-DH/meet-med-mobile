@@ -13,7 +13,7 @@
     <string name="do_not_leave_this_field_blank">Do not leave this field blank</string>
     <string name="invalid_email">Invalid email address</string>
     <string name="invalid_password">Password must contain at least 8 characers</string>
-    <string name="string_title_sign_up_profile">Fill Your Profile</string>
+    <string name="string_title_edit_profile">Edit Your Profile</string>
     <string name="string_hint_full_name">Your Full Name</string>
     <string name="string_hint_gender">Gender</string>
     <string name="string_hint_nick_name">Nickname</string>
@@ -58,6 +58,9 @@
     <string name="string_booking_appointment">Booking Appointment</string>
     <string name="string_select_date">Select Date</string>
     <string name="string_select_time">Select Time</string>
+    <string name="string_choose_image">Choose Image</string>
+    <string name="string_take_from_gallery">Take from gallery</string>
+    <string name="string_take_from_camera">Take from Camera</string>
 
     <string-array name="gender_options">
         <item>Male</item>
