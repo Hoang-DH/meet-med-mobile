@@ -5,7 +5,7 @@ import androidx.fragment.app.viewModels
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentBookingAppointmentBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
-import com.example.doctorapp.presentation.utils.DateConverter
+import com.example.doctorapp.presentation.utils.DateUtils
 import com.example.doctorapp.presentation.utils.DateTimePickerDialog
 import java.util.Calendar
 
@@ -28,12 +28,12 @@ class BookingAppointmentFragment : BaseFragment<FragmentBookingAppointmentBindin
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         binding.apply {
-            tvDate.text = DateConverter.convertLongToDate(Calendar.getInstance().timeInMillis)
+            tvDate.text = DateUtils.convertLongToDate(Calendar.getInstance().timeInMillis)
         }
     }
 
     override fun onDateTimeSelected(date: Long) {
-        binding.tvDate.text = DateConverter.convertLongToDate(date)
+        binding.tvDate.text = DateUtils.convertLongToDate(date)
     }
 
 }

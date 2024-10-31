@@ -61,6 +61,9 @@
     <string name="string_choose_image">Choose Image</string>
     <string name="string_take_from_gallery">Take from gallery</string>
     <string name="string_take_from_camera">Take from Camera</string>
+    <string name="string_edit_profile_successfully">Edit profile successfully</string>
+    <string name="string_number_new_notification">%1$d new</string>
+    <string name="string_mark_all_as_read">Mark all as read</string>
 
     <string-array name="gender_options">
         <item>Male</item>

@@ -1,7 +1,7 @@
 package com.example.doctorapp.presentation.navigation
 
 import android.os.Bundle
-import com.example.chatapp.domain.core.navigation.BaseNavigator
+import com.example.doctorapp.domain.core.navigation.BaseNavigator
 
 interface AppNavigation: BaseNavigator {
     fun openSplashToSignInScreen(bundle: Bundle? = null)
@@ -13,4 +13,7 @@ interface AppNavigation: BaseNavigator {
     fun openSearchDoctorToDoctorDetailScreen(bundle: Bundle? = null)
     fun openDoctorDetailToSearchDoctorScreen(bundle: Bundle? = null)
     fun openDoctorDetailToBookingAppointmentScreen(bundle: Bundle? = null)
+    fun openHomeContainerToSignIn(bundle: Bundle? = null)
+    fun openProfileToEditProfile(bundle: Bundle? = null)
+    fun openProfileToNotificationScreen(bundle: Bundle? = null)
 }

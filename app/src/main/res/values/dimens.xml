@@ -32,4 +32,6 @@
     <dimen name="common_text_size_12sp">12sp</dimen>
     <dimen name="common_size_24sp">24sp</dimen>
     <dimen name="common_size_0dp">0dp</dimen>
+    <dimen name="common_size_1dp">1dp</dimen>
+    <dimen name="common_size_22dp">22dp</dimen>
 </resources>

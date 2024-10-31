@@ -1,4 +1,4 @@
-package com.example.chatapp.domain.core.navigation
+package com.example.doctorapp.domain.core.navigation
 
 import android.os.Bundle
 import androidx.navigation.NavController

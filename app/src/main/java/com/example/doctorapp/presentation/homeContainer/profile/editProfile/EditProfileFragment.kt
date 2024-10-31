@@ -35,25 +35,24 @@ class EditProfileFragment :
 
     private var popupMenu: PopupWindow? = null
 
-
-    override fun initView(savedInstanceState: Bundle?) {
-        super.initView(savedInstanceState)
-
-    }
-
     override fun setOnClick() {
         super.setOnClick()
-        binding.etGender.setOnClickListener {
-            onGenderClick(it)
-        }
-        binding.btnSave.setOnClickListener{
-            context?.let{
-                Dialog.showCongratulationDialog(it, getString(R.string.string_account_ready), true)
-                // after 3 seconds, navigate to home screen
-                binding.btnSave.postDelayed({
+        binding.apply {
+            ivBack.setOnClickListener {
+                appNavigation.navigateUp()
+            }
+            etGender.setOnClickListener {
+                onGenderClick(it)
+            }
+            btnSave.setOnClickListener{
+                context?.let{
+                    Dialog.showCongratulationDialog(it, getString(R.string.string_edit_profile_successfully), true)
+                    // after 3 seconds, navigate to home screen
+                    binding.btnSave.postDelayed({
 //                    appNavigation.openSignUpProfileToHomeContainerScreen()
-                }, 3000)
+                    }, 3000)
 
+                }
             }
         }
     }

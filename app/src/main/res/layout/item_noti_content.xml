@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/common_size_30dp"
+        android:layout_marginTop="@dimen/common_size_15dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgNoti"
+            android:layout_width="@dimen/common_size_60dp"
+            android:layout_height="@dimen/common_size_60dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_noti_success"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgNoti"
+            android:text="Appointment Success"
+            android:textSize="@dimen/common_text_size_16sp"
+            android:textColor="@color/color_1C2A3A"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/common_size_20dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="1h"
+            android:textSize="@dimen/common_text_size_14sp"
+            android:textColor="@color/color_6b7280"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_5dp"
+            android:text="You have successfully booked your appointment with Dr. Emily Walker."
+            android:textColor="@color/color_6b7280"
+            android:textSize="@dimen/common_text_size_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgNoti"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
