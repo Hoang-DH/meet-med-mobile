@@ -10,9 +10,4 @@
         android:name="com.example.doctorapp.presentation.homeContainer.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/editProfileFragment"
-        android:name="com.example.doctorapp.presentation.homeContainer.profile.editProfile.EditProfileFragment"
-        android:label="EditProfileFragment"
-        tools:layout="@layout/fragment_edit_profile"/>
 </navigation>

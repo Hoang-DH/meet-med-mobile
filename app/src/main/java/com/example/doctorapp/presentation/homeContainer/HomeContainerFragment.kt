@@ -26,10 +26,6 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding, BaseVie
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         navController = (childFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment).findNavController()
-
-
-
-
         binding.bottomNav.apply {
             setupWithNavController(navController)
 
@@ -37,7 +33,6 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding, BaseVie
                 when (item.itemId) {
                     R.id.tabHome -> {
                         navController.navigate(R.id.home_fragment)
-                        item.actionView?.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_selected_icon_bottom_nav, null)
                         true
                     }
 
@@ -56,7 +51,6 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding, BaseVie
                     }
                 }
             }
-            itemIconTintList = null
         }
 
     }
