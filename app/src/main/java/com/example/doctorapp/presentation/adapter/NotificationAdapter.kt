@@ -10,7 +10,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.data.model.Notification
 import com.example.doctorapp.data.model.NotificationData
 import com.example.doctorapp.data.model.NotificationTimeStamp
-import com.example.doctorapp.databinding.FragmentNotificationBinding
 import com.example.doctorapp.databinding.ItemNotiContentBinding
 import com.example.doctorapp.databinding.ItemNotiTimestampBinding
 import com.example.doctorapp.presentation.diffUtil.NotificationDiffUtil
