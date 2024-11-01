@@ -16,4 +16,6 @@ interface AppNavigation: BaseNavigator {
     fun openHomeContainerToSignIn(bundle: Bundle? = null)
     fun openProfileToEditProfile(bundle: Bundle? = null)
     fun openProfileToNotificationScreen(bundle: Bundle? = null)
+    fun openProfileToFavoriteScreen(bundle: Bundle? = null)
+    fun openFavoriteToDoctorDetailScreen(bundle: Bundle? = null)
 }

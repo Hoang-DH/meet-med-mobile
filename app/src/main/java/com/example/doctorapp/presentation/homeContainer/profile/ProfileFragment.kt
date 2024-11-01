@@ -123,6 +123,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
             tvNotification.setOnClickListener {
                 appNavigation.openProfileToNotificationScreen()
             }
+            tvFavorite.setOnClickListener {
+                appNavigation.openProfileToFavoriteScreen()
+            }
         }
 
     }

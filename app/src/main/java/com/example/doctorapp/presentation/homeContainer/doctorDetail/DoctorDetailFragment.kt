@@ -60,11 +60,12 @@ class DoctorDetailFragment : BaseFragment<FragmentDoctorDetailBinding, DoctorDet
         super.setOnClick()
         binding.apply {
             ivBack.setOnClickListener {
-                appNavigation.openDoctorDetailToSearchDoctorScreen()
+                appNavigation.navigateUp()
             }
             btnBookAppointment.setOnClickListener {
                 appNavigation.openDoctorDetailToBookingAppointmentScreen()
             }
+
         }
     }
 

@@ -15,6 +15,7 @@ data class Doctor(
     val reviewCount: Int,
     val imageUrl: String,
     val yoe: Int,
+    val isFavorite: Boolean = false
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

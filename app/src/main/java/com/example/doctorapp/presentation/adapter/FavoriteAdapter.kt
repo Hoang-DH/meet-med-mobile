@@ -11,13 +11,12 @@ import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.databinding.DoctorItemBinding
 import com.example.doctorapp.presentation.diffUtil.DoctorDiffUtil
 
-class SearchDoctorAdapter(
+class FavoriteAdapter(
     private val context: Context,
     private val onDoctorClickListener: ((Doctor) -> Unit)? = null
-) :
-    ListAdapter<Doctor, SearchDoctorAdapter.SearchDoctorViewHolder>(DoctorDiffUtil()) {
-    inner class SearchDoctorViewHolder(private val binding: DoctorItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+): ListAdapter<Doctor, FavoriteAdapter.FavoriteViewHolder>(DoctorDiffUtil()){
+
+    inner class FavoriteViewHolder(private val binding: DoctorItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(doctor: Doctor) {
             binding.apply {
                 Glide.with(context)
@@ -39,30 +38,18 @@ class SearchDoctorAdapter(
                 itemView.setOnClickListener {
                     onDoctorClickListener?.invoke(doctor)
                 }
+                ivHeart.isActivated = doctor.isFavorite
             }
         }
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): SearchDoctorViewHolder {
-        val binding = DoctorItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return SearchDoctorViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
+        val binding = DoctorItemBinding.inflate(LayoutInflater.from(context), parent, false)
+        return FavoriteViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: SearchDoctorViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    interface onDoctorClickListenr {
-        fun onDoctorClick(doctor: Doctor)
-    }
 }
