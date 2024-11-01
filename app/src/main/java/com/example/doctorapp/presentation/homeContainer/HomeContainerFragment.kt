@@ -25,32 +25,9 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding, BaseVie
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        navController = (childFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment).findNavController()
+        navController = (childFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment).navController
         binding.bottomNav.apply {
             setupWithNavController(navController)
-
-            setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.tabHome -> {
-                        navController.navigate(R.id.home_fragment)
-                        true
-                    }
-
-                    R.id.tabProfile -> {
-                        navController.navigate(R.id.profile_fragment)
-                        true
-                    }
-
-                    R.id.tabBooking -> {
-                        navController.navigate(R.id.booking_fragment)
-                        true
-                    }
-
-                    else -> {
-                        false
-                    }
-                }
-            }
         }
 
     }
