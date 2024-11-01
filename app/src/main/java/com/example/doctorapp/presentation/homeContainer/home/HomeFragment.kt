@@ -38,6 +38,7 @@ class HomeFragment :
                     4
                 )
             rvDepartment.adapter = mAdapter
+
         }
     }
 

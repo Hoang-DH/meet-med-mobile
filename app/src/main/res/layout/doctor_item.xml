@@ -7,8 +7,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/common_size_10dp"
-        app:cardElevation="@dimen/common_size_5dp"
-        app:cardCornerRadius="@dimen/common_size_12dp">
+        app:elevation="@dimen/common_size_0dp"
+        app:cardCornerRadius="@dimen/common_size_12dp"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,7 +29,6 @@
                     android:id="@+id/ivAvatar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/ic_profile_disabled" />

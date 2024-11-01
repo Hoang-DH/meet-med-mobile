@@ -69,6 +69,7 @@ class NotificationAdapter(private val context: Context): ListAdapter<Notificatio
                     .into(imgNoti)
                 tvTimestamp.text = DateUtils.calculateTimeStampDifference(notification.timeStamp)
                 tvContent.text = notification.content
+                clNotiItem.isActivated = notification.isRead
             }
         }
     }

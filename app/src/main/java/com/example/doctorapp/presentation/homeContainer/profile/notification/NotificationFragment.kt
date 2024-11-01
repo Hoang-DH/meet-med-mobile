@@ -30,5 +30,4 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
             rvNotification.layoutManager = LinearLayoutManager(requireContext())
         }
     }
-
 }

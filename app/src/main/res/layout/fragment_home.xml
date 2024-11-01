@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common_size_20dp"
             android:layout_marginEnd="@dimen/common_size_20dp"
-            android:src="@drawable/ic_has_noti"
+            android:src="@drawable/ic_noti"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
