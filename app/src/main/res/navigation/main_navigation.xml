@@ -84,6 +84,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_profileFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/doctorDetailFragment"
@@ -137,4 +144,17 @@
         android:name="com.example.doctorapp.presentation.homeContainer.profile.notification.NotificationFragment"
         android:label="NotificationFragment"
         tools:layout="@layout/fragment_notification"/>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.doctorapp.presentation.homeContainer.profile.favorite.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite">
+        <action
+            android:id="@+id/action_favoriteFragment_to_doctorDetailFragment"
+            app:destination="@id/doctorDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 </navigation>

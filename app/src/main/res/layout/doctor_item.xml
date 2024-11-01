@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/common_size_10dp"
-        android:elevation="15dp"
+        app:cardElevation="@dimen/common_size_5dp"
         app:cardCornerRadius="@dimen/common_size_12dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
                 android:id="@+id/cv_layout_avatar"
                 android:layout_width="@dimen/img_doctor_avatar_size"
                 android:layout_height="@dimen/img_doctor_avatar_size"
-                android:elevation="0dp"
+                app:cardElevation="@dimen/common_size_0dp"
                 app:cardCornerRadius="@dimen/common_size_12dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -28,6 +28,7 @@
                     android:id="@+id/ivAvatar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/ic_profile_disabled" />
@@ -50,7 +51,7 @@
                 android:id="@+id/iv_heart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_heart"
+                android:src="@drawable/ic_favorite"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:layout_marginStart="@dimen/common_size_15dp"
-                android:layout_marginTop="@dimen/common_size_20dp"
+                android:layout_marginTop="@dimen/common_size_10dp"
                 android:background="@color/color_divider"
                 app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
                 app:layout_constraintTop_toBottomOf="@id/iv_heart" />

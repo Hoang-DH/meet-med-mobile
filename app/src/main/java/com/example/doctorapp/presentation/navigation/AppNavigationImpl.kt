@@ -57,4 +57,12 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
         openScreen(R.id.action_profileFragment_to_notificationFragment, bundle)
     }
 
+    override fun openProfileToFavoriteScreen(bundle: Bundle?) {
+        openScreen(R.id.action_profileFragment_to_favoriteFragment, bundle)
+    }
+
+    override fun openFavoriteToDoctorDetailScreen(bundle: Bundle?) {
+        openScreen(R.id.action_favoriteFragment_to_doctorDetailFragment, bundle)
+    }
+
 }

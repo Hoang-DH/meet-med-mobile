@@ -76,4 +76,10 @@ dependencies {
 
     //Glide
     implementation(libs.glide)
+
+    //EventBus
+    implementation(libs.eventbus)
+
+
+
 }
