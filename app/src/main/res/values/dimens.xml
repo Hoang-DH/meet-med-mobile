@@ -34,4 +34,6 @@
     <dimen name="common_size_0dp">0dp</dimen>
     <dimen name="common_size_1dp">1dp</dimen>
     <dimen name="common_size_22dp">22dp</dimen>
+    <dimen name="string_common_size_200dp">200dp</dimen>
+    <dimen name="string_common_size_100dp">100dp</dimen>
 </resources>

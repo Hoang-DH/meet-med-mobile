@@ -5,7 +5,7 @@ import android.os.Parcelable
 
 data class Doctor(
     val id: Int,
-    val name: String,
+    var name: String,
     val speciality: String,
     val description: String,
     val phone: String,
@@ -32,12 +32,23 @@ data class Doctor(
     ) {
     }
 
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeString(name)
+        parcel.writeString(speciality)
+        parcel.writeString(description)
+        parcel.writeString(phone)
+        parcel.writeString(email)
+        parcel.writeFloat(rating)
+        parcel.writeInt(numberOfPatients)
+        parcel.writeInt(reviewCount)
+        parcel.writeString(imageUrl)
+        parcel.writeInt(yoe)
+        parcel.writeByte(if (isFavorite) 1 else 0)
     }
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        TODO("Not yet implemented")
+    override fun describeContents(): Int {
+        return 0
     }
 
     companion object CREATOR : Parcelable.Creator<Doctor> {
@@ -49,4 +60,6 @@ data class Doctor(
             return arrayOfNulls(size)
         }
     }
+
+
 }

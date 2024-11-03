@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/common_size_20dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvDoctor"
+            android:layout_width="@dimen/common_size_60dp"
+            android:layout_height="@dimen/common_size_60dp"
+            android:elevation="@dimen/common_size_10dp"
+            app:cardCornerRadius="@dimen/common_size_10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivDoctor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDoctorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Dr.John"
+            android:textColor="@color/color_4B5563"
+            android:textSize="@dimen/common_text_size_12dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/cvDoctor"
+            app:layout_constraintStart_toStartOf="@id/cvDoctor"
+            app:layout_constraintEnd_toEndOf="@id/cvDoctor"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

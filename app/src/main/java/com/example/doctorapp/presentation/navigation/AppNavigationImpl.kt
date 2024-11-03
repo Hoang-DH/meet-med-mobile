@@ -65,4 +65,10 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
         openScreen(R.id.action_favoriteFragment_to_doctorDetailFragment, bundle)
     }
 
+    override fun openHomeToDoctorDetailScreen(bundle: Bundle?) {
+        openScreen(R.id.action_homeContainerFragment_to_doctorDetailFragment, bundle)
+    }
+
+
+
 }

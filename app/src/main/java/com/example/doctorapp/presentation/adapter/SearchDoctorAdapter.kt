@@ -62,7 +62,5 @@ class SearchDoctorAdapter(
         holder.bind(getItem(position))
     }
 
-    interface onDoctorClickListenr {
-        fun onDoctorClick(doctor: Doctor)
-    }
+
 }

@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import com.example.doctorapp.R
@@ -56,13 +57,16 @@ object Dialog {
         val dialog = builder.create()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         try {
-            dialog.show()
-            dialog.setCancelable(true)
-            dialog.setCanceledOnTouchOutside(true)
-            dialog.window?.setLayout(
-                (context.resources.displayMetrics.widthPixels * 0.85).toInt(),
-                (context.resources.displayMetrics.heightPixels * 0.5).toInt()
-            )
+            dialog.apply {
+                show()
+                setCancelable(true)
+                setCanceledOnTouchOutside(true)
+                window?.setLayout(
+                    (context.resources.displayMetrics.widthPixels * 0.85).toInt(),
+                    (context.resources.displayMetrics.heightPixels * 0.3).toInt()
+                )
+                window?.setGravity(Gravity.CENTER)
+            }
             customView.findViewById<View>(R.id.btnCamera).setOnClickListener {
                 onClickCamera.invoke()
                 dialog.dismiss()
