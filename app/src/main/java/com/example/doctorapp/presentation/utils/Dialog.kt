@@ -6,16 +6,20 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.PopupWindow
+import androidx.databinding.DataBindingUtil
 import com.example.doctorapp.R
+import com.example.doctorapp.databinding.DialogSortTypeBinding
 
 object Dialog {
     fun showCongratulationDialog(
         context: Context,
         message: String,
         isShowLoading: Boolean,
-        onLoading: (() -> Unit) ? = null,
-        onClickDone: (() -> Unit) ? = null,
-        onClickEdit: (() -> Unit) ? = null
+        onLoading: (() -> Unit)? = null,
+        onClickDone: (() -> Unit)? = null,
+        onClickEdit: (() -> Unit)? = null
     ) {
         val builder = AlertDialog.Builder(context)
         val customView = LayoutInflater.from(context).inflate(
@@ -80,8 +84,8 @@ object Dialog {
         context: Context,
         title: String,
         message: String,
-        onClickOk: (() -> Unit) ? = null,
-        onClickCancel: (() -> Unit) ? = null
+        onClickOk: (() -> Unit)? = null,
+        onClickCancel: (() -> Unit)? = null
     ) {
         val builder = AlertDialog.Builder(context)
         builder.apply {
@@ -97,6 +101,60 @@ object Dialog {
         }
         val dialog = builder.create()
         dialog.show()
+    }
+
+
+    fun showSortTypeDialog(
+        onClickSortDefault: () -> Unit,
+        onClickSortStarDes: () -> Unit,
+        onClickSortStarAsc: () -> Unit,
+        onClickSortReviewDes: () -> Unit,
+        onClickSortReviewAsc: () -> Unit,
+        view: View
+    ) {
+        var popupMenu: PopupWindow? = null
+        fun dismissPopup() {
+            if (popupMenu?.isShowing == true) {
+                popupMenu?.dismiss()
+            }
+        }
+
+        val binding = DataBindingUtil.inflate<DialogSortTypeBinding>(
+            LayoutInflater.from(view.context),
+            R.layout.dialog_sort_type,
+            null,
+            false
+        )
+        binding.apply {
+            layoutDefault.setOnClickListener {
+                onClickSortDefault.invoke()
+                dismissPopup()
+            }
+            layoutStartDescending.setOnClickListener {
+                onClickSortStarDes.invoke()
+                dismissPopup()
+            }
+            layoutStarAscending.setOnClickListener {
+                onClickSortStarAsc.invoke()
+                dismissPopup()
+            }
+            layoutReviewDescending.setOnClickListener {
+                onClickSortReviewDes.invoke()
+                dismissPopup()
+            }
+            layoutReviewtAscending.setOnClickListener {
+                onClickSortReviewAsc.invoke()
+                dismissPopup()
+            }
+        }
+
+        dismissPopup()
+        popupMenu =
+            PopupWindow(binding.root, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                isOutsideTouchable = true
+                isFocusable = true
+            }
+        popupMenu.showAsDropDown(view)
     }
 
 
