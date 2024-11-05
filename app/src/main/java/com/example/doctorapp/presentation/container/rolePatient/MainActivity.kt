@@ -1,4 +1,4 @@
-package com.example.doctorapp.presentation.container
+package com.example.doctorapp.presentation.container.rolePatient
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -21,9 +21,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>() 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-        appNavigation.bind(navHostFragment.navController)
+        setupNavigation()
     }
 
     override val layoutId: Int = R.layout.activity_main
+
+    fun setupNavigation() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        appNavigation.bind(navHostFragment.navController)
+    }
 }

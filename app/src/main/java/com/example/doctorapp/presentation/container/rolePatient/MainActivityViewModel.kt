@@ -1,4 +1,4 @@
-package com.example.doctorapp.presentation.container
+package com.example.doctorapp.presentation.container.rolePatient
 
 import com.example.doctorapp.domain.core.base.BaseViewModel
 

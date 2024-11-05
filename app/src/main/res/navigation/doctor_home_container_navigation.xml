@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/doctor_home_container_navigation"
+    app:startDestination="@+id/tab_doctor_home">
+
+    <include app:graph="@navigation/tab_doctor_home" />
+    <include app:graph="@navigation/tab_doctor_appointment" />
+    <include app:graph="@navigation/tab_doctor_profile" />
+    <include app:graph="@navigation/tab_doctor_working" />
+</navigation>

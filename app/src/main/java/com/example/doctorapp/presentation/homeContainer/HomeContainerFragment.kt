@@ -29,7 +29,5 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding, BaseVie
         binding.bottomNav.apply {
             setupWithNavController(navController)
         }
-
     }
-
 }

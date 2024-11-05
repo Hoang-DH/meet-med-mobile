@@ -11,6 +11,7 @@ import com.auth0.android.provider.WebAuthProvider
 import com.auth0.android.result.Credentials
 import com.auth0.android.result.UserProfile
 import com.example.doctorapp.R
+import com.example.doctorapp.constant.UserRole
 import com.example.doctorapp.databinding.FragmentSignInBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.presentation.navigation.AppNavigation
@@ -25,6 +26,7 @@ class SignInFragment :
     @Inject
     lateinit var appNavigation: AppNavigation
     private lateinit var account: Auth0
+    private var userRole: UserRole = UserRole.DOCTOR
 
     private val viewModel: SignInViewModel by viewModels()
     override fun getVM() = viewModel
@@ -84,6 +86,10 @@ class SignInFragment :
                     Log.d("HoangDH", "name: $name")
                 }
             })
+    }
+
+    private fun setupNavigation(){
+
     }
 
 
