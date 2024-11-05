@@ -24,10 +24,10 @@
         android:theme="@style/Theme.DoctorApp"
         tools:targetApi="31" >
         <activity
-            android:name=".presentation.container.roleDoctor.MainDoctorActivity"
+            android:name=".moduleDoctor.presentation.container.MainDoctorActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.container.rolePatient.MainActivity"
+            android:name=".presentation.container.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:taskAffinity="" >
