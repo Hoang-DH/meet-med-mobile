@@ -1,5 +1,6 @@
 package com.example.doctorapp.presentation.auth.signIn
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.viewModels
@@ -11,9 +12,12 @@ import com.auth0.android.provider.WebAuthProvider
 import com.auth0.android.result.Credentials
 import com.auth0.android.result.UserProfile
 import com.example.doctorapp.R
+import com.example.doctorapp.constant.UserRole
 import com.example.doctorapp.databinding.FragmentSignInBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
+import com.example.doctorapp.moduleDoctor.presentation.container.MainDoctorActivity
 import com.example.doctorapp.presentation.navigation.AppNavigation
+import com.example.doctorapp.presentation.utils.Prefs
 import com.example.doctorapp.presentation.utils.Utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -25,6 +29,7 @@ class SignInFragment :
     @Inject
     lateinit var appNavigation: AppNavigation
     private lateinit var account: Auth0
+    private var userRole: UserRole = UserRole.DOCTOR
 
     private val viewModel: SignInViewModel by viewModels()
     override fun getVM() = viewModel
@@ -35,6 +40,13 @@ class SignInFragment :
             resources.getString(R.string.com_auth0_client_id),
             resources.getString(R.string.com_auth0_domain)
         )
+    }
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+        if(Prefs.getInstance(requireContext()).isUserLogin){
+            decentralizeUser()
+        }
     }
 
     override fun bindingAction() {
@@ -56,12 +68,14 @@ class SignInFragment :
                 }
 
                 override fun onSuccess(result: Credentials) {
-//                    cachedCredentials = credentials
                     showSnackBar("Success: ${result.accessToken}", binding.root)
-//                    updateUI()
+                    Prefs.getInstance(requireContext()).apply {
+                        accessToken = result.accessToken
+                        isUserLogin = true
+                    }
                     val accessToken = result.accessToken
                     showUserProfile(accessToken)
-                    appNavigation.openSignInToHomeContainerScreen()
+                    decentralizeUser()
                 }
             })
     }
@@ -84,6 +98,16 @@ class SignInFragment :
                     Log.d("HoangDH", "name: $name")
                 }
             })
+    }
+
+    private fun decentralizeUser(){
+        when(userRole){
+            UserRole.PATIENT -> appNavigation.openSignInToHomeContainerScreen()
+            UserRole.DOCTOR -> {
+                val intent = Intent(requireContext(), MainDoctorActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
 

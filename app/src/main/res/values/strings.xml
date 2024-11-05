@@ -69,6 +69,8 @@
     <string name="string_reviews_descending">Review Descending</string>
     <string name="string_review_ascending">Review Ascending</string>
     <string name="string_default">Default</string>
+    <string name="string_appointment">Appointment</string>
+    <string name="string_working">Working</string>
 
     <string-array name="gender_options">
         <item>Male</item>

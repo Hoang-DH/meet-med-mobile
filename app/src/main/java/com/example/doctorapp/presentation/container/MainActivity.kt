@@ -26,4 +26,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>() 
     }
 
     override val layoutId: Int = R.layout.activity_main
+
+
 }

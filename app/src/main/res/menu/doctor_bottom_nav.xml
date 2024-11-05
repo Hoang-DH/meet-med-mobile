@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/tab_doctor_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/string_home" />
+    <item
+        android:id="@+id/tab_doctor_appointment"
+        android:icon="@drawable/ic_tab_calendar"
+        android:title="@string/string_appointment" />
+    <item
+        android:id="@+id/tab_doctor_working"
+        android:icon="@drawable/ic_working"
+        android:title="@string/string_working" />
+    <item
+        android:id="@+id/tab_doctor_profile"
+        android:icon="@drawable/ic_tab_profile"
+        android:title="@string/string_profile" />
+</menu>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_doctor_navigation"
+    app:startDestination="@id/doctorHomeContainerFragment">
+    <fragment
+        android:id="@+id/doctorHomeContainerFragment"
+        android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.DoctorHomeContainerFragment"
+        android:label="DoctorHomeContainerFragment"
+        tools:layout="@layout/fragment_doctor_home_container"/>
+</navigation>

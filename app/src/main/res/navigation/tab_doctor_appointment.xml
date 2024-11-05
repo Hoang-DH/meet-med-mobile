@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tab_doctor_appointment"
+    app:startDestination="@id/doctorAppointmentFragment">
+
+    <fragment
+        android:id="@+id/doctorAppointmentFragment"
+        android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.appointment.DoctorAppointmentFragment"
+        android:label="fragment_doctor_appointment"
+        tools:layout="@layout/fragment_doctor_appointment" />
+
+</navigation>
