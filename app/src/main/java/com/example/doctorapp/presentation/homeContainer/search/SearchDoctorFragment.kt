@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
-import com.example.doctorapp.constant.Constant
 import com.example.doctorapp.constant.SortType
 import com.example.doctorapp.data.model.Department
 import com.example.doctorapp.data.model.Doctor
@@ -18,6 +17,7 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.presentation.adapter.DepartmentCategoryAdapter
 import com.example.doctorapp.presentation.adapter.SearchDoctorAdapter
 import com.example.doctorapp.presentation.navigation.AppNavigation
+import com.example.doctorapp.presentation.utils.Define
 import com.example.doctorapp.presentation.utils.Dialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -42,7 +42,7 @@ class SearchDoctorFragment :
         super.initView(savedInstanceState)
         mDoctorAdapter = SearchDoctorAdapter(requireContext()) { doctor ->
             val bundle = Bundle()
-            bundle.putParcelable(Constant.BundleKey.DOCTOR, doctor)
+            bundle.putParcelable(Define.BundleKey.DOCTOR, doctor)
             appNavigation.openSearchDoctorToDoctorDetailScreen(bundle)
         }
         mDepartmentCategoryAdapter = DepartmentCategoryAdapter(requireContext()) { position ->
