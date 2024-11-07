@@ -6,5 +6,5 @@ data class DoctorShift (
     val id: Int,
     val startTime: Instant,
     val endTime: Instant,
-    val isRegistered: Boolean
+    var isRegistered: Boolean
 )

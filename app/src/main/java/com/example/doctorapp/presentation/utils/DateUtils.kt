@@ -27,7 +27,7 @@ object DateUtils {
     }
 
     fun convertInstantToDate(time: Instant): String {
-        val formatterDate = DateTimeFormatter.ofPattern("EEEE, dd-MMM-yyyy")
+        val formatterDate = DateTimeFormatter.ofPattern("EEEE, dd-MMMM-yyyy")
         val dateTime = LocalDateTime.ofInstant(time, ZoneId.systemDefault())
         return formatterDate.format(dateTime)
     }

@@ -76,7 +76,8 @@
     <string name="string_to_date">To: %1$s</string>
     <string name="string_add_shift">Add Shift</string>
     <string name="string_select_all">Select all</string>
-    <string name="string_date_time_of_shift">%1$s - %2$s, %3$s</string>
+    <string name="string_date_time_of_shift">%1$s - %2$s\n%3$s</string>
+    <string name="string_clear_all">Clear all</string>
 
 
     <string-array name="gender_options">

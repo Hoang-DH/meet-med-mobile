@@ -11,17 +11,27 @@ import com.example.doctorapp.databinding.ShiftItemBinding
 import com.example.doctorapp.moduleDoctor.presentation.diffUtil.DoctorShiftDiffUtil
 import com.example.doctorapp.presentation.utils.DateUtils
 
-class RegisterShiftAdapter(private val context: Context): ListAdapter<DoctorShift, RegisterShiftAdapter.RegisterShiftViewHolder>(DoctorShiftDiffUtil()) {
+class RegisterShiftAdapter(
+    private val context: Context,
 
-    inner class RegisterShiftViewHolder(private val binding: ShiftItemBinding): RecyclerView.ViewHolder(binding.root) {
+) : ListAdapter<DoctorShift, RegisterShiftAdapter.RegisterShiftViewHolder>(DoctorShiftDiffUtil()) {
+
+    private var onShiftClickListener: OnShiftClickListener? = null
+
+    inner class RegisterShiftViewHolder(private val binding: ShiftItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(shift: DoctorShift) {
-          binding.apply {
-              tvShift.text = String.format(
-                  context.getString(R.string.string_date_time_of_shift),
-                  DateUtils.convertInstantToTime(shift.startTime),
-                  DateUtils.convertInstantToTime(shift.endTime),
-                  DateUtils.convertInstantToDate(shift.startTime))
-          }
+            binding.apply {
+                tvShift.text = String.format(
+                    context.getString(R.string.string_date_time_of_shift),
+                    DateUtils.convertInstantToTime(shift.startTime),
+                    DateUtils.convertInstantToTime(shift.endTime),
+                    DateUtils.convertInstantToDate(shift.startTime)
+                )
+                clShift.isActivated = shift.isRegistered
+                clShift.setOnClickListener {
+                    onShiftClickListener?.onShiftClick(shift)
+                }
+            }
         }
     }
 
@@ -32,6 +42,14 @@ class RegisterShiftAdapter(private val context: Context): ListAdapter<DoctorShif
 
     override fun onBindViewHolder(holder: RegisterShiftViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    fun setOnShiftClickListener(onShiftClickListener: OnShiftClickListener) {
+        this.onShiftClickListener = onShiftClickListener
+    }
+
+    interface OnShiftClickListener {
+        fun onShiftClick(doctorShift: DoctorShift)
     }
 
 }

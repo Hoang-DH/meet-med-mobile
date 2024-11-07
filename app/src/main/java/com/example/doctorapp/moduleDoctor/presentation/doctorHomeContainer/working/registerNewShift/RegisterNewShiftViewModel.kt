@@ -1,5 +1,6 @@
 package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.working.registerNewShift
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.doctorapp.data.model.DoctorShift
 import com.example.doctorapp.domain.core.base.BaseViewModel
@@ -10,7 +11,15 @@ import java.time.ZoneId
 
 class RegisterNewShiftViewModel : BaseViewModel() {
     private var _shiftList: MutableLiveData<List<DoctorShift>> = MutableLiveData()
-    val shiftList: MutableLiveData<List<DoctorShift>> get() = _shiftList
+    val shiftList: LiveData<List<DoctorShift>> get() = _shiftList
+
+    private var _isSelectedAll: MutableLiveData<Boolean> = MutableLiveData()
+    val isSelectedAll: LiveData<Boolean> get() = _isSelectedAll
+
+
+    fun setSelectAll(isSelectAll: Boolean) {
+        _isSelectedAll.value = isSelectAll
+    }
 
     fun generateShifts() {
         val shifts = mutableListOf<DoctorShift>()
@@ -32,5 +41,23 @@ class RegisterNewShiftViewModel : BaseViewModel() {
         }
 
         _shiftList.value = shifts
+    }
+
+    fun selectAllShift() {
+        val currentList = _shiftList.value
+        currentList?.forEach { it.isRegistered = true }
+        _shiftList.postValue(currentList!!)
+    }
+
+    fun clearAllShift() {
+        val currentList = _shiftList.value
+        currentList?.forEach { it.isRegistered = false }
+        _shiftList.postValue(currentList!!)
+    }
+
+    fun selectShift(doctorShift: DoctorShift) {
+        val currentList = _shiftList.value
+        currentList?.find { it.id == doctorShift.id }?.isRegistered = !doctorShift.isRegistered
+        _shiftList.postValue(currentList!!)
     }
 }
