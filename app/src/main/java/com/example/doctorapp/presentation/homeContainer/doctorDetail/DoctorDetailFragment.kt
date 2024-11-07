@@ -8,11 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.doctorapp.R
-import com.example.doctorapp.constant.Constant
 import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.databinding.FragmentDoctorDetailBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.presentation.navigation.AppNavigation
+import com.example.doctorapp.presentation.utils.Define
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,7 +32,7 @@ class DoctorDetailFragment : BaseFragment<FragmentDoctorDetailBinding, DoctorDet
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         val bundle = arguments
-        val doctor = bundle?.getParcelable<Doctor>(Constant.BundleKey.DOCTOR)
+        val doctor = bundle?.getParcelable<Doctor>(Define.BundleKey.DOCTOR)
         binding.doctorDetail.apply {
             Glide.with(requireContext())
                 .load(doctor?.imageUrl)

@@ -1,17 +1,35 @@
 package com.example.doctorapp.presentation.utils
 
-import com.example.doctorapp.data.model.NotificationData
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 
 object DateUtils {
 
-    private val format = SimpleDateFormat("EEEE, MMMM d, yyyy")
+    private val format = SimpleDateFormat("EEEE, MMMM d, yyyy, HH:mm", java.util.Locale.getDefault()).apply {
+        timeZone = Calendar.getInstance().timeZone
+    }
 
     fun convertLongToDate(time: Long): String {
         val date = Date(time)
         return format.format(date)
+    }
+
+
+    fun convertInstantToTime(time: Instant): String {
+        val formatterTime = DateTimeFormatter.ofPattern("hh:mm a")
+        val dateTime = LocalDateTime.ofInstant(time, ZoneId.systemDefault())
+        return formatterTime.format(dateTime)
+    }
+
+    fun convertInstantToDate(time: Instant): String {
+        val formatterDate = DateTimeFormatter.ofPattern("EEEE, dd-MMMM-yyyy")
+        val dateTime = LocalDateTime.ofInstant(time, ZoneId.systemDefault())
+        return formatterDate.format(dateTime)
     }
 
     fun checkDateIsSameDay(date1: Long, date2: Long): Boolean {
