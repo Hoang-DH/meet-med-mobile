@@ -1,4 +1,4 @@
-package com.example.doctorapp.presentation.utils
+package com.example.doctorapp.utils
 
 import androidx.fragment.app.FragmentManager
 import com.example.doctorapp.R

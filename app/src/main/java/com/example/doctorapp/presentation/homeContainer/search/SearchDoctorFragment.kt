@@ -17,8 +17,9 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.presentation.adapter.DepartmentCategoryAdapter
 import com.example.doctorapp.presentation.adapter.SearchDoctorAdapter
 import com.example.doctorapp.presentation.navigation.AppNavigation
-import com.example.doctorapp.presentation.utils.Define
-import com.example.doctorapp.presentation.utils.Dialog
+
+import com.example.doctorapp.utils.Define
+import com.example.doctorapp.utils.Dialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -47,14 +48,16 @@ class SearchDoctorFragment :
         }
         mDepartmentCategoryAdapter = DepartmentCategoryAdapter(requireContext()) { position ->
             val selectedCategory = getDepartments()[position]
-            if(selectedCategory.name == "All") {
+            if (selectedCategory.name == "All") {
                 mDoctorAdapter?.submitList(getDoctors())
-                binding.tvDoctorCount.text = String.format(getString(R.string.string_search_doctor_count), getDoctors().size)
+                binding.tvDoctorCount.text =
+                    String.format(getString(R.string.string_search_doctor_count), getDoctors().size)
                 return@DepartmentCategoryAdapter
             }
             val filterDoctors = getDoctors().filter { it.speciality == selectedCategory.name }
             mDoctorAdapter?.submitList(filterDoctors)
-            binding.tvDoctorCount.text = String.format(getString(R.string.string_search_doctor_count), filterDoctors.size)
+            binding.tvDoctorCount.text =
+                String.format(getString(R.string.string_search_doctor_count), filterDoctors.size)
         }
         mDepartmentCategoryAdapter?.submitList(getDepartments())
         mDoctorAdapter?.submitList(getDoctors())
@@ -113,18 +116,22 @@ class SearchDoctorFragment :
                 mDoctorAdapter?.submitList(getDoctors().sortedBy { it.rating })
                 binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0)
             }
+
             SortType.STAR_DESC -> {
                 mDoctorAdapter?.submitList(getDoctors().sortedByDescending { it.rating })
                 binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down, 0)
             }
+
             SortType.REVIEW_ASC -> {
                 mDoctorAdapter?.submitList(getDoctors().sortedBy { it.reviewCount })
                 binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0)
             }
+
             SortType.REVIEW_DESC -> {
                 mDoctorAdapter?.submitList(getDoctors().sortedByDescending { it.reviewCount })
                 binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down, 0)
             }
+
             else -> {
                 mDoctorAdapter?.submitList(getDoctors())
                 binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_sort_default, 0)

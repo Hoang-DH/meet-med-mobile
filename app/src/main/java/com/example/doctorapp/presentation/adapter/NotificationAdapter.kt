@@ -13,7 +13,7 @@ import com.example.doctorapp.data.model.NotificationTimeStamp
 import com.example.doctorapp.databinding.ItemNotiContentBinding
 import com.example.doctorapp.databinding.ItemNotiTimestampBinding
 import com.example.doctorapp.presentation.diffUtil.NotificationDiffUtil
-import com.example.doctorapp.presentation.utils.DateUtils
+import com.example.doctorapp.utils.DateUtils
 
 class NotificationAdapter(private val context: Context): ListAdapter<Notification, RecyclerView.ViewHolder>(NotificationDiffUtil()) {
 

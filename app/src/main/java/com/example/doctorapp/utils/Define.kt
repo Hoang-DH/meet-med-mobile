@@ -1,4 +1,4 @@
-package com.example.doctorapp.presentation.utils
+package com.example.doctorapp.utils
 
 object Define {
     object Fields{
@@ -19,6 +19,10 @@ object Define {
     object WorkingTab {
         const val MY_SHIFTS = "my_shifts"
         const val REGISTER_NEW_SHIFT = "register_new_shift"
+    }
+
+    object Network {
+        const val BASE_URL = "https://api.example.com/"
     }
 
 }

@@ -21,8 +21,9 @@ import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentProfileBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.presentation.navigation.AppNavigation
-import com.example.doctorapp.presentation.utils.Dialog
-import com.example.doctorapp.presentation.utils.Utils.showSnackBar
+import com.example.doctorapp.utils.Dialog
+import com.example.doctorapp.utils.Prefs
+import com.example.doctorapp.utils.Utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -193,6 +194,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
                 }
 
                 override fun onSuccess(result: Void?) {
+                    Prefs.getInstance(requireContext()).isUserLogin = false
                     appNavigation.openHomeContainerToSignIn()
                     showSnackBar("Logout success", binding.root)
                 }

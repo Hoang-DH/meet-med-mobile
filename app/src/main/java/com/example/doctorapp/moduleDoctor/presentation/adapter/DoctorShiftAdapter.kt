@@ -9,12 +9,13 @@ import com.example.doctorapp.R
 import com.example.doctorapp.data.model.DoctorShift
 import com.example.doctorapp.databinding.ShiftItemBinding
 import com.example.doctorapp.moduleDoctor.presentation.diffUtil.DoctorShiftDiffUtil
-import com.example.doctorapp.presentation.utils.DateUtils
+import com.example.doctorapp.utils.DateUtils
+import com.example.doctorapp.utils.Define
 
-class RegisterShiftAdapter(
+class DoctorShiftAdapter(
     private val context: Context,
-
-) : ListAdapter<DoctorShift, RegisterShiftAdapter.RegisterShiftViewHolder>(DoctorShiftDiffUtil()) {
+    private val tab: String
+) : ListAdapter<DoctorShift, DoctorShiftAdapter.RegisterShiftViewHolder>(DoctorShiftDiffUtil()) {
 
     private var onShiftClickListener: OnShiftClickListener? = null
 

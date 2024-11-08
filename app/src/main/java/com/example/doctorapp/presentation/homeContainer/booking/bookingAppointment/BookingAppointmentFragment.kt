@@ -5,8 +5,8 @@ import androidx.fragment.app.viewModels
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentBookingAppointmentBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
-import com.example.doctorapp.presentation.utils.DateUtils
-import com.example.doctorapp.presentation.utils.DateTimePickerDialog
+import com.example.doctorapp.utils.DateUtils
+import com.example.doctorapp.utils.DateTimePickerDialog
 import java.util.Calendar
 
 class BookingAppointmentFragment : BaseFragment<FragmentBookingAppointmentBinding, BookingAppointmentViewModel>(R.layout.fragment_booking_appointment), DateTimePickerDialog.OnDateTimePickerListener {

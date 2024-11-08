@@ -1,7 +1,9 @@
-package com.example.doctorapp.presentation.utils
+package com.example.doctorapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.doctorapp.data.model.Doctor
+import com.google.gson.Gson
 
 class Prefs(context: Context, preFileName: String) {
     private val mPrefs: SharedPreferences by lazy { context.getSharedPreferences(preFileName, Context.MODE_PRIVATE) }
