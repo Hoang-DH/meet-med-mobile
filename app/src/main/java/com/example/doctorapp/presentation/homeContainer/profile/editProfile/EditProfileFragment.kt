@@ -14,7 +14,7 @@ import com.example.doctorapp.databinding.FragmentEditProfileBinding
 import com.example.doctorapp.databinding.PopupGenderBinding
 import com.example.doctorapp.presentation.constants.Gender
 import com.example.doctorapp.presentation.navigation.AppNavigation
-import com.example.doctorapp.presentation.utils.Dialog
+import com.example.doctorapp.utils.Dialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

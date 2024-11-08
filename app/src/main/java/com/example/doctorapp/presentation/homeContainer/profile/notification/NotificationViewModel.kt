@@ -6,7 +6,7 @@ import com.example.doctorapp.data.model.Notification
 import com.example.doctorapp.data.model.NotificationData
 import com.example.doctorapp.data.model.NotificationTimeStamp
 import com.example.doctorapp.domain.core.base.BaseViewModel
-import com.example.doctorapp.presentation.utils.DateUtils
+import com.example.doctorapp.utils.DateUtils
 
 class NotificationViewModel : BaseViewModel() {
     // TODO: Implement the ViewModel

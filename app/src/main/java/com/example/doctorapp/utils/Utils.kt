@@ -1,4 +1,4 @@
-package com.example.doctorapp.presentation.utils
+package com.example.doctorapp.utils
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar

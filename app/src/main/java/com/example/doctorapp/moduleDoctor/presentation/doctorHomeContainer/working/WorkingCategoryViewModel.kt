@@ -1,15 +1,17 @@
-package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.working.registerNewShift
+package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.working
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.doctorapp.data.model.DoctorShift
 import com.example.doctorapp.domain.core.base.BaseViewModel
+import com.example.doctorapp.utils.Define
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
 
-class RegisterNewShiftViewModel : BaseViewModel() {
+
+class WorkingCategoryViewModel : BaseViewModel() {
     private var _shiftList: MutableLiveData<List<DoctorShift>> = MutableLiveData()
     val shiftList: LiveData<List<DoctorShift>> get() = _shiftList
 
@@ -43,15 +45,23 @@ class RegisterNewShiftViewModel : BaseViewModel() {
         _shiftList.value = shifts
     }
 
-    fun selectAllShift() {
+    fun selectAllShift(tab: String?) {
         val currentList = _shiftList.value
-        currentList?.forEach { it.isRegistered = true }
+        if(tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
+            currentList?.forEach { it.isRegistered = true }
+        } else {
+            currentList?.forEach { it.isRegistered = false }
+        }
         _shiftList.postValue(currentList!!)
     }
 
-    fun clearAllShift() {
+    fun clearAllShift(tab: String?) {
         val currentList = _shiftList.value
-        currentList?.forEach { it.isRegistered = false }
+        if (tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
+            currentList?.forEach { it.isRegistered = false }
+        } else {
+            currentList?.forEach { it.isRegistered = true }
+        }
         _shiftList.postValue(currentList!!)
     }
 

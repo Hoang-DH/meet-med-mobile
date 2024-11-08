@@ -22,12 +22,14 @@ android {
 
         manifestPlaceholders["auth0Domain"] = "@string/com_auth0_domain"
         manifestPlaceholders["auth0Scheme"] = "@string/com_auth0_scheme"
+        buildConfigField("String", "BASE_URL", "\"https://api.example.com/\"")
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+
         }
     }
     compileOptions {
@@ -77,9 +79,7 @@ dependencies {
     //Glide
     implementation(libs.glide)
 
-    //EventBus
-    implementation(libs.eventbus)
-
-
-
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converterGson)
 }

@@ -1,4 +1,4 @@
-package com.example.doctorapp.presentation.utils
+package com.example.doctorapp.utils
 
 import java.text.SimpleDateFormat
 import java.time.Instant

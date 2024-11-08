@@ -1,34 +1,43 @@
-package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.working.registerNewShift
+package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.working
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.data.model.DoctorShift
-import com.example.doctorapp.databinding.FragmentRegisterNewShiftBinding
+import com.example.doctorapp.databinding.FragmentWorkingCategoryBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
-import com.example.doctorapp.moduleDoctor.presentation.adapter.RegisterShiftAdapter
-import com.example.doctorapp.presentation.utils.DateUtils
+import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorShiftAdapter
+import com.example.doctorapp.utils.DateUtils
+import com.example.doctorapp.utils.Define
 
-class RegisterNewShiftFragment :
-    BaseFragment<FragmentRegisterNewShiftBinding, RegisterNewShiftViewModel>(R.layout.fragment_register_new_shift), RegisterShiftAdapter.OnShiftClickListener {
+class WorkingCategoryFragment : BaseFragment<FragmentWorkingCategoryBinding, WorkingCategoryViewModel >(R.layout.fragment_working_category), DoctorShiftAdapter.OnShiftClickListener {
 
     companion object {
-        fun newInstance() = RegisterNewShiftFragment()
+        fun newInstance(category: String) : WorkingCategoryFragment {
+            val fragment = WorkingCategoryFragment()
+            val bundle = Bundle()
+            bundle.putString(Define.Fields.CATEGORY, category)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
-    private val viewModel: RegisterNewShiftViewModel by viewModels()
+    private val viewModel: WorkingCategoryViewModel by viewModels()
     override fun getVM() = viewModel
-//    private var isSelectAll = false
+    private var tab: String = Define.WorkingTab.REGISTER_NEW_SHIFT
+
     private val shiftAdapter by lazy {
-        RegisterShiftAdapter(requireContext())
+        DoctorShiftAdapter(requireContext(), arguments?.getString(Define.Fields.CATEGORY)!!)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        tab = arguments?.getString(Define.Fields.CATEGORY).toString()
         viewModel.generateShifts()
         shiftAdapter.submitList(viewModel.shiftList.value)
         shiftAdapter.setOnShiftClickListener(this)
@@ -52,10 +61,10 @@ class RegisterNewShiftFragment :
                 //change text base on isSelectAll
                 if (!viewModel.isSelectedAll.value!!) {
                     binding.tvSelectAll.text = getString(R.string.string_clear_all)
-                    viewModel.selectAllShift()
+                    viewModel.selectAllShift(tab)
                 } else {
                     binding.tvSelectAll.text = getString(R.string.string_select_all)
-                    viewModel.clearAllShift()
+                    viewModel.clearAllShift(tab)
                 }
                 viewModel.setSelectAll(!viewModel.isSelectedAll.value!!)
             }

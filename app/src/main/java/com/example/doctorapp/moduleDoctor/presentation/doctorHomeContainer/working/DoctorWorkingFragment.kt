@@ -6,9 +6,8 @@ import androidx.fragment.app.Fragment
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentDoctorWorkingBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
-import com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.working.myShift.MyShiftsFragment
-import com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.working.registerNewShift.RegisterNewShiftFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.WorkingPagerAdapter
+import com.example.doctorapp.utils.Define
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DoctorWorkingFragment : BaseFragment<FragmentDoctorWorkingBinding, DoctorWorkingViewModel>(R.layout.fragment_doctor_working) {
@@ -23,8 +22,8 @@ class DoctorWorkingFragment : BaseFragment<FragmentDoctorWorkingBinding, DoctorW
     override fun getVM() = viewModel
 
     init {
-        fragmentList.add(RegisterNewShiftFragment.newInstance())
-        fragmentList.add(MyShiftsFragment.newInstance())
+        fragmentList.add(WorkingCategoryFragment.newInstance(Define.WorkingTab.REGISTER_NEW_SHIFT))
+        fragmentList.add(WorkingCategoryFragment.newInstance(Define.WorkingTab.MY_SHIFTS))
     }
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -17,8 +17,8 @@ import com.example.doctorapp.databinding.FragmentSignInBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.container.MainDoctorActivity
 import com.example.doctorapp.presentation.navigation.AppNavigation
-import com.example.doctorapp.presentation.utils.Prefs
-import com.example.doctorapp.presentation.utils.Utils.showSnackBar
+import com.example.doctorapp.utils.Prefs
+import com.example.doctorapp.utils.Utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,7 +29,7 @@ class SignInFragment :
     @Inject
     lateinit var appNavigation: AppNavigation
     private lateinit var account: Auth0
-    private var userRole: UserRole = UserRole.DOCTOR
+    private var userRole: UserRole = UserRole.PATIENT
 
     private val viewModel: SignInViewModel by viewModels()
     override fun getVM() = viewModel
@@ -75,7 +75,7 @@ class SignInFragment :
                     }
                     val accessToken = result.accessToken
                     showUserProfile(accessToken)
-                    decentralizeUser()
+
                 }
             })
     }
@@ -86,16 +86,20 @@ class SignInFragment :
         // With the access token, call `userInfo` and get the profile from Auth0.
         client.userInfo(accessToken)
             .start(object : Callback<UserProfile, AuthenticationException> {
-                override fun onFailure(exception: AuthenticationException) {
+                override fun onFailure(error: AuthenticationException) {
                     // Something went wrong!
                 }
 
-                override fun onSuccess(profile: UserProfile) {
+                override fun onSuccess(result: UserProfile) {
                     // We have the user's profile!
-                    val email = profile.email
-                    val name = profile.name
-                    Log.d("HoangDH", "email: $email")
-                    Log.d("HoangDH", "name: $name")
+                    userRole = if(result.getExtraInfo()["system_role"] == "Head Doctor"){
+                        UserRole.DOCTOR
+                    } else {
+                        UserRole.PATIENT
+                    }
+                    decentralizeUser()
+                    Log.d("HoangDH", "profile: ${result.getExtraInfo()}")
+                    Log.d("HoangDH", "accessToken: $accessToken")
                 }
             })
     }
