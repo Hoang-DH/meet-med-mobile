@@ -28,8 +28,9 @@ class DoctorShiftAdapter(
                     DateUtils.convertInstantToTime(shift.endTime),
                     DateUtils.convertInstantToDate(shift.startTime)
                 )
-                clShift.isActivated = shift.isRegistered
-                clShift.setOnClickListener {
+                cbShift.isChecked = shift.isRegistered
+                cbShift.setOnCheckedChangeListener { _, isChecked ->
+                    shift.isRegistered = isChecked
                     onShiftClickListener?.onShiftClick(shift)
                 }
             }

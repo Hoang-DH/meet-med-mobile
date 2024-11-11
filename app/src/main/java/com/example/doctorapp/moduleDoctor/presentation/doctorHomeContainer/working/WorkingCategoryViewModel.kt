@@ -36,8 +36,8 @@ class WorkingCategoryViewModel : BaseViewModel() {
             val afternoonShiftStart = LocalDateTime.of(currentDate, LocalTime.of(13, 0)).atZone(ZoneId.systemDefault()).toInstant()
             val afternoonShiftEnd = LocalDateTime.of(currentDate, LocalTime.of(17, 0)).atZone(ZoneId.systemDefault()).toInstant()
 
-            shifts.add(DoctorShift(idCounter++, morningShiftStart, morningShiftEnd, false))
-            shifts.add(DoctorShift(idCounter++, afternoonShiftStart, afternoonShiftEnd, false))
+            shifts.add(DoctorShift(idCounter++, morningShiftStart, morningShiftEnd))
+            shifts.add(DoctorShift(idCounter++, afternoonShiftStart, afternoonShiftEnd))
 
             currentDate = currentDate.plusDays(1)
         }
@@ -52,9 +52,9 @@ class WorkingCategoryViewModel : BaseViewModel() {
         } else {
             currentList?.forEach { it.isRegistered = false }
         }
-        _shiftList.postValue(currentList!!)
+        _shiftList.value = (currentList!!)
     }
-
+//
     fun clearAllShift(tab: String?) {
         val currentList = _shiftList.value
         if (tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
@@ -62,12 +62,12 @@ class WorkingCategoryViewModel : BaseViewModel() {
         } else {
             currentList?.forEach { it.isRegistered = true }
         }
-        _shiftList.postValue(currentList!!)
+        _shiftList.value = (currentList!!)
     }
-
+//
     fun selectShift(doctorShift: DoctorShift) {
         val currentList = _shiftList.value
         currentList?.find { it.id == doctorShift.id }?.isRegistered = !doctorShift.isRegistered
-        _shiftList.postValue(currentList!!)
+        _shiftList.value = (currentList!!)
     }
 }

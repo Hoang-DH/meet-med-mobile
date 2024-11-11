@@ -4,8 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.doctorapp.data.model.Doctor
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.ActivityScoped
+import javax.inject.Inject
 
-class Prefs(context: Context, preFileName: String) {
+@ActivityScoped
+class Prefs @Inject constructor(context: Context, preFileName: String) {
     private val mPrefs: SharedPreferences by lazy { context.getSharedPreferences(preFileName, Context.MODE_PRIVATE) }
 
     var isUserLogin: Boolean

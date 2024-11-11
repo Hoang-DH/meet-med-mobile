@@ -9,8 +9,6 @@ import retrofit2.http.Query
 
 private const val PATH_DOCTOR = "doctor"
 interface DoctorApiService {
-
-
     @GET("registered-shift/$PATH_DOCTOR")
     suspend fun getDoctorRegisteredShifts(
         @Query("doctorId") doctorId: String,
