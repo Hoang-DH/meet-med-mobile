@@ -22,12 +22,15 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(context: Context): OkHttpClient =
-        OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).addInterceptor(AuthInterceptor(context)).build()
+        OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS).addInterceptor(AuthInterceptor(context)).build()
 
     @Provides
     @Singleton
     fun provideApiService(context: Context): DoctorApiService {
-        return Retrofit.Builder().baseUrl(Define.Network.BASE_URL).client(provideOkHttpClient(context))
-            .addConverterFactory(GsonConverterFactory.create()).build().create(DoctorApiService::class.java)
+        return Retrofit.Builder().baseUrl(Define.Network.BASE_URL)
+            .client(provideOkHttpClient(context))
+            .addConverterFactory(GsonConverterFactory.create()).build()
+            .create(DoctorApiService::class.java)
     }
 }

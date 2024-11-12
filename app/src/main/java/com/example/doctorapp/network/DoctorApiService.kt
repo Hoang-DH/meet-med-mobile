@@ -12,7 +12,7 @@ interface DoctorApiService {
     @GET("registered-shift/$PATH_DOCTOR")
     suspend fun getDoctorRegisteredShifts(
         @Query("doctorId") doctorId: String,
-    ): Response<List<DoctorShift>>
+    ): com.example.doctorapp.utils.Response<List<DoctorShift>>
 
     @GET("$PATH_DOCTOR/shifts/can-register")
     suspend fun getShiftListToRegister(): Response<List<DoctorShift>>
