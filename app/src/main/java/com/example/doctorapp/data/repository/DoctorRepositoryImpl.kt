@@ -1,9 +1,10 @@
 package com.example.doctorapp.data.repository
 
+import com.example.doctorapp.data.dto.DoctorShiftToRegister
 import com.example.doctorapp.data.model.DoctorShift
 import com.example.doctorapp.domain.repository.DoctorRepository
 import com.example.doctorapp.network.DoctorApiService
-import com.example.doctorapp.utils.Response
+import retrofit2.Response
 import javax.inject.Inject
 
 class DoctorRepositoryImpl @Inject constructor(private val doctorApi: DoctorApiService) : DoctorRepository {
@@ -11,7 +12,7 @@ class DoctorRepositoryImpl @Inject constructor(private val doctorApi: DoctorApiS
         TODO("Not yet implemented")
     }
 
-    override suspend fun getShiftListToRegister(): Response<List<DoctorShift>> {
+    override suspend fun getShiftListToRegister(): Response<DoctorShiftToRegister> {
         return doctorApi.getShiftListToRegister()
     }
 

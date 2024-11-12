@@ -1,21 +1,22 @@
 package com.example.doctorapp.network
 
+import com.example.doctorapp.data.dto.DoctorShiftToRegister
 import com.example.doctorapp.data.model.DoctorShift
-import com.example.doctorapp.utils.Response
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-private const val PATH_DOCTOR = "doctor"
+private const val PATH_DOCTOR = "/api/doctor"
 interface DoctorApiService {
     @GET("registered-shift/$PATH_DOCTOR")
     suspend fun getDoctorRegisteredShifts(
         @Query("doctorId") doctorId: String,
-    ): com.example.doctorapp.utils.Response<List<DoctorShift>>
+    ): Response<List<DoctorShift>>
 
     @GET("$PATH_DOCTOR/shifts/can-register")
-    suspend fun getShiftListToRegister(): Response<List<DoctorShift>>
+    suspend fun getShiftListToRegister(): Response<DoctorShiftToRegister>
 
     suspend fun getShiftListOfDoctor()
 

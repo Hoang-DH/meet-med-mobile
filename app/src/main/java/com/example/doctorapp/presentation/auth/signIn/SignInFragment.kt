@@ -29,7 +29,7 @@ class SignInFragment :
     @Inject
     lateinit var appNavigation: AppNavigation
     private lateinit var account: Auth0
-    private var userRole: UserRole = UserRole.PATIENT
+    private val userRole: UserRole by lazy { Prefs.getInstance(requireContext()).userRole }
 
     private val viewModel: SignInViewModel by viewModels()
     override fun getVM() = viewModel
@@ -44,7 +44,7 @@ class SignInFragment :
 
     override fun bindingStateView() {
         super.bindingStateView()
-        if(Prefs.getInstance(requireContext()).isUserLogin){
+        if (Prefs.getInstance(requireContext()).isUserLogin) {
             decentralizeUser()
         }
     }
@@ -75,7 +75,6 @@ class SignInFragment :
                     }
                     val accessToken = result.accessToken
                     showUserProfile(accessToken)
-
                 }
             })
     }
@@ -92,10 +91,10 @@ class SignInFragment :
 
                 override fun onSuccess(result: UserProfile) {
                     // We have the user's profile!
-                    userRole = if(result.getExtraInfo()["system_role"] == "Head Doctor"){
-                        UserRole.DOCTOR
+                    if (result.getExtraInfo()["system_role"] == "Head Doctor") {
+                        Prefs.getInstance(requireContext()).userRole = UserRole.DOCTOR
                     } else {
-                        UserRole.PATIENT
+                        Prefs.getInstance(requireContext()).userRole = UserRole.PATIENT
                     }
                     decentralizeUser()
                     Log.d("HoangDH", "profile: ${result.getExtraInfo()}")
@@ -104,8 +103,8 @@ class SignInFragment :
             })
     }
 
-    private fun decentralizeUser(){
-        when(userRole){
+    private fun decentralizeUser() {
+        when (userRole) {
             UserRole.PATIENT -> appNavigation.openSignInToHomeContainerScreen()
             UserRole.DOCTOR -> {
                 val intent = Intent(requireContext(), MainDoctorActivity::class.java)

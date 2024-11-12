@@ -1,11 +1,12 @@
 package com.example.doctorapp.domain.repository
 
+import com.example.doctorapp.data.dto.DoctorShiftToRegister
 import com.example.doctorapp.data.model.DoctorShift
-import com.example.doctorapp.utils.Response
+import retrofit2.Response
 
 interface DoctorRepository {
     suspend fun getDoctorRegisteredShifts(doctorId: String): Response<List<DoctorShift>>
-    suspend fun getShiftListToRegister(): Response<List<DoctorShift>>
+    suspend fun getShiftListToRegister(): Response<DoctorShiftToRegister>
     suspend fun getShiftListOfDoctor()
     suspend fun registerNewShift(doctorShifts: List<DoctorShift>): Response<DoctorShift>
 }

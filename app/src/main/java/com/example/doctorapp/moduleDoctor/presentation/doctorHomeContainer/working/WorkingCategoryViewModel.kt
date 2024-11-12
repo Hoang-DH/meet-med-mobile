@@ -7,21 +7,22 @@ import com.example.doctorapp.data.model.DoctorShift
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.DoctorRepository
 import com.example.doctorapp.utils.Define
-import com.example.doctorapp.utils.Response
+import com.example.doctorapp.utils.MyResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class WorkingCategoryViewModel @Inject constructor(private val doctorRepository: DoctorRepository) : BaseViewModel() {
-    private var _shiftListResponse: MutableLiveData<Response<List<DoctorShift>>> = MutableLiveData()
-    val shiftListResponse: LiveData<Response<List<DoctorShift>>> get() = _shiftListResponse
+    private var _shiftListResponse: MutableLiveData<MyResponse<List<DoctorShift>>> = MutableLiveData()
+    val shiftListResponse: LiveData<MyResponse<List<DoctorShift>>> get() = _shiftListResponse
 
     private var _isSelectedAll: MutableLiveData<Boolean> = MutableLiveData()
     val isSelectedAll: LiveData<Boolean> get() = _isSelectedAll
 
-    private var _isLoadingComplete = MutableLiveData(false)
-    val isLoadingComplete: LiveData<Boolean> get() = _isLoadingComplete
+    private var _shiftListToRegister: MutableLiveData<List<DoctorShift>> = MutableLiveData()
+    val shiftListToRegister: LiveData<List<DoctorShift>> get() = _shiftListToRegister
 
     fun setSelectAll(isSelectAll: Boolean) {
         _isSelectedAll.value = isSelectAll
@@ -51,39 +52,43 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
 
     fun getListShiftToRegister() {
         viewModelScope.launch {
-            _shiftListResponse.value = Response.Loading
-            _shiftListResponse.value = doctorRepository.getShiftListToRegister()
-            checkLoadingComplete()
+            _shiftListResponse.value = MyResponse.Loading
+            doctorRepository.getShiftListToRegister().let { response ->
+                if(response.isSuccessful){
+                    _shiftListResponse.value = response.body()?.let { MyResponse.Success(it.data) }
+                    _shiftListToRegister.value = response.body()?.data
+                } else {
+                    _shiftListResponse.value = MyResponse.Error(Exception(response.errorBody().toString()))
+                }
+            }
         }
     }
 
     fun selectAllShift(tab: String?) {
-        val currentList = _shiftListResponse.value as Response.Success<List<DoctorShift>>
-        if(tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
-            currentList.data.forEach { it.isRegistered = true }
-        } else {
-            currentList.data.forEach { it.isRegistered = false }
+        val currentList = _shiftListToRegister.value
+        if ( tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
+            currentList?.forEach { it.isRegistered = true }
         }
-        _shiftListResponse.value = (currentList)
-    }
-//
-    fun clearAllShift(tab: String?) {
-        val currentList = _shiftListResponse.value as Response.Success<List<DoctorShift>>
-        if (tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
-            currentList.data.forEach { it.isRegistered = false }
-        } else {
-            currentList.data.forEach { it.isRegistered = true }
+        else if(tab == Define.WorkingTab.MY_SHIFTS){
+            currentList?.forEach { it.isRegistered = false }
         }
-        _shiftListResponse.value = (currentList)
-    }
-//
-    fun selectShift(doctorShift: DoctorShift) {
-        val currentList = _shiftListResponse.value as Response.Success<List<DoctorShift>>
-        currentList.data.find { it.id == doctorShift.id }?.isRegistered = !doctorShift.isRegistered
-        _shiftListResponse.value = (currentList)
+        _shiftListToRegister.value = (currentList)
     }
 
-    private fun checkLoadingComplete() {
-        _isLoadingComplete.value = (_shiftListResponse.value is Response.Success || _shiftListResponse.value is Response.Error)
+//    fun clearAllShift(tab: String?) {
+//        val currentList = _shiftListResponse.value as MyResponse.Success<List<DoctorShift>>
+//        if (tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
+//            currentList.data.forEach { it.isRegistered = false }
+//        } else {
+//            currentList.data.forEach { it.isRegistered = true }
+//        }
+//        _shiftListResponse.value = currentList
+//    }
+
+    fun selectShift(doctorShift: DoctorShift) {
+        val currentList = _shiftListToRegister.value
+        currentList?.find { it.id == doctorShift.id }?.isRegistered = !doctorShift.isRegistered
+        _shiftListToRegister.value = (currentList)
     }
+
 }

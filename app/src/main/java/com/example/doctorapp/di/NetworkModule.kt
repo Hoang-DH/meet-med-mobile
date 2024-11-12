@@ -5,10 +5,12 @@ import android.content.Context
 import com.example.doctorapp.network.AuthInterceptor
 import com.example.doctorapp.network.DoctorApiService
 import com.example.doctorapp.utils.Define
+import com.example.doctorapp.utils.Prefs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,7 +25,16 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(context: Context): OkHttpClient =
         OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS).addInterceptor(AuthInterceptor(context)).build()
+            .readTimeout(60, TimeUnit.SECONDS).addInterceptor(Interceptor {
+                val originalRequest = it.request()
+                val prefs = Prefs.getInstance(context)
+                val requestBuilder = originalRequest.newBuilder().apply {
+                    val authToken = prefs.accessToken
+                    addHeader("Authorization", "Bearer $authToken")
+                }
+                val modifiedRequest = requestBuilder.build()
+                it.proceed(modifiedRequest)
+            }).build()
 
     @Provides
     @Singleton

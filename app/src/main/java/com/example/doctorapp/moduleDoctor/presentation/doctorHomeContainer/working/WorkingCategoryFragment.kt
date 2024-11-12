@@ -11,12 +11,13 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorShiftAdapter
 import com.example.doctorapp.utils.DateUtils
 import com.example.doctorapp.utils.Define
-import com.example.doctorapp.utils.Response
+import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WorkingCategoryFragment :
-    BaseFragment<FragmentWorkingCategoryBinding, WorkingCategoryViewModel>(R.layout.fragment_working_category),
-    DoctorShiftAdapter.OnShiftClickListener {
+    BaseFragment<FragmentWorkingCategoryBinding, WorkingCategoryViewModel>(R.layout.fragment_working_category){
 
     companion object {
         fun newInstance(category: String): WorkingCategoryFragment {
@@ -31,16 +32,17 @@ class WorkingCategoryFragment :
     private val viewModel: WorkingCategoryViewModel by viewModels()
     override fun getVM() = viewModel
     private var tab: String = Define.WorkingTab.REGISTER_NEW_SHIFT
-    private var listShift: Response.Success<List<DoctorShift>> = Response.Success(listOf())
+    private var listShift: List<DoctorShift> = listOf()
     private val shiftAdapter by lazy {
-        DoctorShiftAdapter(requireContext(), arguments?.getString(Define.Fields.CATEGORY)!!)
+        DoctorShiftAdapter(requireContext(), onShiftClickListener = { shift ->
+            viewModel.selectShift(shift)
+        })
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         tab = arguments?.getString(Define.Fields.CATEGORY).toString()
         viewModel.getListShiftToRegister()
-        shiftAdapter.setOnShiftClickListener(this)
         binding.apply {
             rvShift.adapter = shiftAdapter
             rvShift.layoutManager = LinearLayoutManager(requireContext())
@@ -59,7 +61,7 @@ class WorkingCategoryFragment :
                     viewModel.selectAllShift(tab)
                 } else {
                     binding.tvSelectAll.text = getString(R.string.string_select_all)
-                    viewModel.clearAllShift(tab)
+//                    viewModel.clearAllShift(tab)
                 }
                 viewModel.setSelectAll(!viewModel.isSelectedAll.value!!)
             }
@@ -71,32 +73,30 @@ class WorkingCategoryFragment :
         viewModel.apply {
             shiftListResponse.observe(viewLifecycleOwner) { response ->
                 when (response) {
-                    is Response.Success -> {
-                        listShift = response
+                    is MyResponse.Success -> {
                         binding.apply {
+                            progressBar.visibility = View.GONE
                             tvFromDate.text = String.format(getString(R.string.string_from_date),
-                                listShift.data[0].startTime.let { DateUtils.convertInstantToDate(it) })
+                                response.data[0].startTime.let { DateUtils.convertInstantToDate(it) })
                             tvToDate.text = String.format(
                                 getString(R.string.string_to_date),
-                                listShift.data[listShift.data.size - 1]
+                                response.data[response.data.size - 1]
                                     .let { DateUtils.convertInstantToDate(it.startTime) })
-                            if (listShift.data.all { shift -> shift.isRegistered }) {
+                            if (response.data.all { shift -> shift.isRegistered }) {
                                 viewModel.setSelectAll(true)
                             } else {
                                 viewModel.setSelectAll(false)
                             }
-                            shiftAdapter.submitList(listShift.data)
-                            shiftAdapter.notifyDataSetChanged()
+                            shiftAdapter.submitList(response.data)
                         }
                     }
 
-                    is Response.Error -> {
+                    is MyResponse.Error -> {
                         Utils.showSnackBar(response.exception.toString(), binding.root)
                     }
 
-                    is Response.Loading -> {
+                    is MyResponse.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
-                        binding.rvShift.visibility = View.GONE
                     }
                 }
 
@@ -106,30 +106,10 @@ class WorkingCategoryFragment :
                 binding.tvSelectAll.text =
                     if (it) getString(R.string.string_clear_all) else getString(R.string.string_select_all)
             }
-            isLoadingComplete.observe(viewLifecycleOwner) {
-                when (it) {
-                    true -> {
-                        binding.progressBar.visibility = View.GONE
-                        binding.rvShift.visibility = View.VISIBLE
-                    }
 
-                    false -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                        binding.rvShift.visibility = View.GONE
-                    }
-                }
-            }
+
         }
 
 
-    }
-
-
-    override fun onShiftClick(doctorShift: DoctorShift) {
-        viewModel.selectShift(doctorShift)
-    }
-
-    private fun initShiftList() {
-        viewModel.getListShiftToRegister()
     }
 }

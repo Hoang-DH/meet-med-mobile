@@ -22,7 +22,7 @@ object Define {
     }
 
     object Network {
-        const val BASE_URL = "https://api.example.com/"
+        const val BASE_URL = "https://6a39-171-224-179-76.ngrok-free.app"
     }
 
 }
