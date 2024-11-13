@@ -17,7 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WorkingCategoryFragment :
-    BaseFragment<FragmentWorkingCategoryBinding, WorkingCategoryViewModel>(R.layout.fragment_working_category){
+    BaseFragment<FragmentWorkingCategoryBinding, WorkingCategoryViewModel>(R.layout.fragment_working_category),
+    DoctorShiftAdapter.OnShiftClickListener {
 
     companion object {
         fun newInstance(category: String): WorkingCategoryFragment {
@@ -34,9 +35,7 @@ class WorkingCategoryFragment :
     private var tab: String = Define.WorkingTab.REGISTER_NEW_SHIFT
     private var listShift: List<DoctorShift> = listOf()
     private val shiftAdapter by lazy {
-        DoctorShiftAdapter(requireContext(), onShiftClickListener = { shift ->
-            viewModel.selectShift(shift)
-        })
+        DoctorShiftAdapter(requireContext())
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -61,9 +60,8 @@ class WorkingCategoryFragment :
                     viewModel.selectAllShift(tab)
                 } else {
                     binding.tvSelectAll.text = getString(R.string.string_select_all)
-//                    viewModel.clearAllShift(tab)
+                    viewModel.clearAllShift(tab)
                 }
-                viewModel.setSelectAll(!viewModel.isSelectedAll.value!!)
             }
         }
     }
@@ -88,6 +86,7 @@ class WorkingCategoryFragment :
                                 viewModel.setSelectAll(false)
                             }
                             shiftAdapter.submitList(response.data)
+                            shiftAdapter.notifyDataSetChanged()
                         }
                     }
 
@@ -111,5 +110,9 @@ class WorkingCategoryFragment :
         }
 
 
+    }
+
+    override fun onShiftClick(shift: DoctorShift) {
+        viewModel.selectShift(shift)
     }
 }

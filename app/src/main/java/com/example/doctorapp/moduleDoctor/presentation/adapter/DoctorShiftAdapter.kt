@@ -14,10 +14,9 @@ import com.example.doctorapp.utils.Define
 
 class DoctorShiftAdapter(
     private val context: Context,
-    private val onShiftClickListener: ((DoctorShift) -> Unit)? = null
 ) : ListAdapter<DoctorShift, DoctorShiftAdapter.RegisterShiftViewHolder>(DoctorShiftDiffUtil()) {
 
-
+    private var onShiftClickListener: OnShiftClickListener? = null
     inner class RegisterShiftViewHolder(private val binding: ShiftItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(shift: DoctorShift) {
             binding.apply {
@@ -29,7 +28,7 @@ class DoctorShiftAdapter(
                 )
                 cbShift.isChecked = shift.isRegistered
                 cbShift.setOnCheckedChangeListener { _, _ ->
-                    onShiftClickListener?.let { it(shift) }
+                    onShiftClickListener?.onShiftClick(shift)
                 }
             }
         }
@@ -45,4 +44,7 @@ class DoctorShiftAdapter(
         holder.bind(getItem(position))
     }
 
+    interface OnShiftClickListener {
+        fun onShiftClick(shift: DoctorShift)
+    }
 }

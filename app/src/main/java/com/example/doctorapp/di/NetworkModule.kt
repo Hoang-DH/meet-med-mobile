@@ -2,7 +2,7 @@ package com.example.doctorapp.di
 
 
 import android.content.Context
-import com.example.doctorapp.network.AuthInterceptor
+import android.util.Log
 import com.example.doctorapp.network.DoctorApiService
 import com.example.doctorapp.utils.Define
 import com.example.doctorapp.utils.Prefs
@@ -12,6 +12,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -23,7 +24,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(context: Context): OkHttpClient =
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor { message ->
+        Log.d("okhttp", message)
+    }.setLevel(
+        HttpLoggingInterceptor.Level.BODY
+    )
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(
+        context: Context,
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient =
         OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS).addInterceptor(Interceptor {
                 val originalRequest = it.request()
@@ -34,13 +46,13 @@ object NetworkModule {
                 }
                 val modifiedRequest = requestBuilder.build()
                 it.proceed(modifiedRequest)
-            }).build()
+            }).addInterceptor(loggingInterceptor).build()
 
     @Provides
     @Singleton
-    fun provideApiService(context: Context): DoctorApiService {
+    fun provideApiService(okHttpClient: OkHttpClient): DoctorApiService {
         return Retrofit.Builder().baseUrl(Define.Network.BASE_URL)
-            .client(provideOkHttpClient(context))
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
             .create(DoctorApiService::class.java)
     }
