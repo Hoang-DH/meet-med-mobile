@@ -20,15 +20,17 @@ object DateUtils {
     }
 
 
-    fun convertInstantToTime(time: Instant): String {
+    fun convertInstantToTime(time: String): String {
+        val instant = Instant.parse(time)
         val formatterTime = DateTimeFormatter.ofPattern("hh:mm a")
-        val dateTime = LocalDateTime.ofInstant(time, ZoneId.systemDefault())
+        val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
         return formatterTime.format(dateTime)
     }
 
-    fun convertInstantToDate(time: Instant): String {
+    fun convertInstantToDate(time: String): String {
+        val instant = Instant.parse(time)
         val formatterDate = DateTimeFormatter.ofPattern("EEEE, dd-MMMM-yyyy")
-        val dateTime = LocalDateTime.ofInstant(time, ZoneId.systemDefault())
+        val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
         return formatterDate.format(dateTime)
     }
 

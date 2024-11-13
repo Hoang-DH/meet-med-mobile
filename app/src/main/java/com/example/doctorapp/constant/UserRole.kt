@@ -1,6 +1,6 @@
 package com.example.doctorapp.constant
 
-enum class UserRole {
-    DOCTOR,
-    PATIENT
+enum class UserRole(value: String) {
+    DOCTOR("doctor"),
+    PATIENT("patient")
 }

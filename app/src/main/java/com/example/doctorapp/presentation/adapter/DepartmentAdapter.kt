@@ -47,8 +47,4 @@ class DepartmentAdapter(
             }
         }
     }
-
-    fun setOnDepartmentClickListener(listener: (Department) -> Unit) {
-        onDepartmentClickListener = listener
-    }
 }

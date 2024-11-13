@@ -14,11 +14,9 @@ import com.example.doctorapp.utils.Define
 
 class DoctorShiftAdapter(
     private val context: Context,
-    private val tab: String
 ) : ListAdapter<DoctorShift, DoctorShiftAdapter.RegisterShiftViewHolder>(DoctorShiftDiffUtil()) {
 
     private var onShiftClickListener: OnShiftClickListener? = null
-
     inner class RegisterShiftViewHolder(private val binding: ShiftItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(shift: DoctorShift) {
             binding.apply {
@@ -28,13 +26,14 @@ class DoctorShiftAdapter(
                     DateUtils.convertInstantToTime(shift.endTime),
                     DateUtils.convertInstantToDate(shift.startTime)
                 )
-                clShift.isActivated = shift.isRegistered
-                clShift.setOnClickListener {
+                cbShift.isChecked = shift.isRegistered
+                cbShift.setOnClickListener {
                     onShiftClickListener?.onShiftClick(shift)
                 }
             }
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RegisterShiftViewHolder {
         val binding = ShiftItemBinding.inflate(LayoutInflater.from(context), parent, false)
@@ -50,7 +49,6 @@ class DoctorShiftAdapter(
     }
 
     interface OnShiftClickListener {
-        fun onShiftClick(doctorShift: DoctorShift)
+        fun onShiftClick(shift: DoctorShift)
     }
-
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
 import com.example.doctorapp.R
+import com.example.doctorapp.databinding.DialogCongratulationBinding
 import com.example.doctorapp.databinding.DialogSortTypeBinding
 
 object Dialog {
@@ -17,17 +18,31 @@ object Dialog {
         context: Context,
         message: String,
         isShowLoading: Boolean,
-        onLoading: (() -> Unit)? = null,
         onClickDone: (() -> Unit)? = null,
         onClickEdit: (() -> Unit)? = null
     ) {
         val builder = AlertDialog.Builder(context)
-        val customView = LayoutInflater.from(context).inflate(
-            R.layout.dialog_congratulation, null
+        val binding = DataBindingUtil.inflate<DialogCongratulationBinding>(
+            LayoutInflater.from(context),
+            R.layout.dialog_congratulation,
+            null,
+            false
         )
-        builder.setView(customView)
+
+        builder.setView(binding.root)
         val dialog = builder.create()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        binding.apply {
+            llBtn.visibility = if(onClickEdit != null || onClickDone != null) View.VISIBLE else View.GONE
+            btnDone.visibility = if(onClickDone != null) View.VISIBLE else View.GONE
+            tvEditAppointment.visibility = if(onClickEdit != null) View.VISIBLE else View.GONE
+            tvDescription.text = message
+            progressBar.visibility = if (isShowLoading) View.VISIBLE else View.GONE
+            btnDone.setOnClickListener {
+                onClickDone?.invoke()
+                dialog.dismiss()
+            }
+        }
         try {
             dialog.show()
             dialog.setCancelable(false)
@@ -36,12 +51,6 @@ object Dialog {
                 (context.resources.displayMetrics.widthPixels * 0.85).toInt(),
                 (context.resources.displayMetrics.heightPixels * 0.5).toInt()
             )
-            //dialog disappear after 3 seconds
-            customView.postDelayed({
-                dialog.dismiss()
-//                onClickDone?.invoke()
-            }, 3000)
-
         } catch (e: Exception) {
             e.printStackTrace()
         }

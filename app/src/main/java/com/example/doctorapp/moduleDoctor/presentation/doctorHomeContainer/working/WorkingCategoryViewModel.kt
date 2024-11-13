@@ -2,72 +2,108 @@ package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.work
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.data.model.DoctorShift
 import com.example.doctorapp.domain.core.base.BaseViewModel
+import com.example.doctorapp.domain.repository.DoctorRepository
 import com.example.doctorapp.utils.Define
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.ZoneId
+import com.example.doctorapp.utils.MyResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import java.lang.Exception
+import javax.inject.Inject
 
-
-class WorkingCategoryViewModel : BaseViewModel() {
-    private var _shiftList: MutableLiveData<List<DoctorShift>> = MutableLiveData()
-    val shiftList: LiveData<List<DoctorShift>> get() = _shiftList
+@HiltViewModel
+class WorkingCategoryViewModel @Inject constructor(private val doctorRepository: DoctorRepository) : BaseViewModel() {
+    private var _shiftListResponse: MutableLiveData<MyResponse<List<DoctorShift>>> = MutableLiveData()
+    val shiftListResponse: LiveData<MyResponse<List<DoctorShift>>> get() = _shiftListResponse
 
     private var _isSelectedAll: MutableLiveData<Boolean> = MutableLiveData()
     val isSelectedAll: LiveData<Boolean> get() = _isSelectedAll
 
+    private var _registeredShiftResponse: MutableLiveData<MyResponse<List<DoctorShift>>> = MutableLiveData()
+    val registeredShiftResponse: LiveData<MyResponse<List<DoctorShift>>> get() = _registeredShiftResponse
 
     fun setSelectAll(isSelectAll: Boolean) {
         _isSelectedAll.value = isSelectAll
     }
 
-    fun generateShifts() {
-        val shifts = mutableListOf<DoctorShift>()
-        val startDate = LocalDate.now().plusDays(1)
-        val endDate = startDate.plusDays(6)
-        var currentDate = startDate
-        var idCounter = 1
+    fun getListShiftToRegister() {
+        viewModelScope.launch {
+            _shiftListResponse.value = MyResponse.Loading
+            doctorRepository.getShiftListToRegister().let { response ->
+                if(response.isSuccessful){
+                    _shiftListResponse.value = MyResponse.Success(response.body()?.data ?: emptyList())
+                } else {
+                    when(response.body()?.statusCode){
+                        Define.HttpResponseCode.UNAUTHORIZED -> {
+                            _shiftListResponse.value = MyResponse.Error(Exception("Unauthorized"))
+                        }
+                        Define.HttpResponseCode.BAD_REQUEST -> {
+                            _shiftListResponse.value = MyResponse.Error(Exception(response.body()?.message ?: "Error occurred"))
+                        }
+                        else -> {
+                            _shiftListResponse.value = MyResponse.Error(Exception(response.errorBody().toString()))
+                        }
+                    }
 
-        while (!currentDate.isAfter(endDate)) {
-            val morningShiftStart = LocalDateTime.of(currentDate, LocalTime.of(8, 0)).atZone(ZoneId.systemDefault()).toInstant()
-            val morningShiftEnd = LocalDateTime.of(currentDate, LocalTime.of(12, 0)).atZone(ZoneId.systemDefault()).toInstant()
-            val afternoonShiftStart = LocalDateTime.of(currentDate, LocalTime.of(13, 0)).atZone(ZoneId.systemDefault()).toInstant()
-            val afternoonShiftEnd = LocalDateTime.of(currentDate, LocalTime.of(17, 0)).atZone(ZoneId.systemDefault()).toInstant()
-
-            shifts.add(DoctorShift(idCounter++, morningShiftStart, morningShiftEnd, false))
-            shifts.add(DoctorShift(idCounter++, afternoonShiftStart, afternoonShiftEnd, false))
-
-            currentDate = currentDate.plusDays(1)
+                }
+            }
         }
-
-        _shiftList.value = shifts
     }
 
     fun selectAllShift(tab: String?) {
-        val currentList = _shiftList.value
-        if(tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
-            currentList?.forEach { it.isRegistered = true }
-        } else {
-            currentList?.forEach { it.isRegistered = false }
+        val currentList = _shiftListResponse.value as MyResponse.Success<List<DoctorShift>>
+        if ( tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
+            currentList.data.forEach { it.isRegistered = true }
         }
-        _shiftList.postValue(currentList!!)
+        else if(tab == Define.WorkingTab.MY_SHIFTS){
+            currentList.data.forEach { it.isRegistered = false }
+        }
+        _shiftListResponse.value = currentList
     }
 
     fun clearAllShift(tab: String?) {
-        val currentList = _shiftList.value
-        if (tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
-            currentList?.forEach { it.isRegistered = false }
-        } else {
-            currentList?.forEach { it.isRegistered = true }
+        val currentList = _shiftListResponse.value as MyResponse.Success<List<DoctorShift>>
+        if ( tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
+            currentList.data.forEach { it.isRegistered = false }
         }
-        _shiftList.postValue(currentList!!)
+        else if(tab == Define.WorkingTab.MY_SHIFTS){
+            currentList.data.forEach { it.isRegistered = true }
+        }
+        _shiftListResponse.value = currentList
     }
 
     fun selectShift(doctorShift: DoctorShift) {
-        val currentList = _shiftList.value
-        currentList?.find { it.id == doctorShift.id }?.isRegistered = !doctorShift.isRegistered
-        _shiftList.postValue(currentList!!)
+        val currentList = _shiftListResponse.value as MyResponse.Success<List<DoctorShift>>
+        currentList.data.find { it.id == doctorShift.id }?.isRegistered = !doctorShift.isRegistered
+        _shiftListResponse.value = currentList
     }
+
+    fun registerNewShift() {
+        viewModelScope.launch {
+            _registeredShiftResponse.value = MyResponse.Loading
+            val currentList = _shiftListResponse.value as MyResponse.Success<List<DoctorShift>>
+            val listRegisteredShift = currentList.data.filter { it.isRegistered }
+            doctorRepository.registerNewShift(listRegisteredShift).let { response ->
+                if(response.isSuccessful){
+                    _registeredShiftResponse.value = MyResponse.Success(currentList.data)
+                } else {
+                    when(response.body()?.statusCode){
+                        Define.HttpResponseCode.UNAUTHORIZED -> {
+                            _registeredShiftResponse.value = MyResponse.Error(Exception("Error occurred"))
+                        }
+                        Define.HttpResponseCode.BAD_REQUEST -> {
+                            _registeredShiftResponse.value = MyResponse.Error(Exception(response.body()?.message ?: "Error occurred"))
+                        }
+                        else -> {
+                            _registeredShiftResponse.value = MyResponse.Error(Exception(response.errorBody().toString()))
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
 }

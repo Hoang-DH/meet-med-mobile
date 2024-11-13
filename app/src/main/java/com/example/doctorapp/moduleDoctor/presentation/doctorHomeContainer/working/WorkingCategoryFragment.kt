@@ -1,11 +1,8 @@
 package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.working
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.data.model.DoctorShift
@@ -14,11 +11,18 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorShiftAdapter
 import com.example.doctorapp.utils.DateUtils
 import com.example.doctorapp.utils.Define
+import com.example.doctorapp.utils.Dialog
+import com.example.doctorapp.utils.MyResponse
+import com.example.doctorapp.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 
-class WorkingCategoryFragment : BaseFragment<FragmentWorkingCategoryBinding, WorkingCategoryViewModel >(R.layout.fragment_working_category), DoctorShiftAdapter.OnShiftClickListener {
+@AndroidEntryPoint
+class WorkingCategoryFragment :
+    BaseFragment<FragmentWorkingCategoryBinding, WorkingCategoryViewModel>(R.layout.fragment_working_category),
+    DoctorShiftAdapter.OnShiftClickListener {
 
     companion object {
-        fun newInstance(category: String) : WorkingCategoryFragment {
+        fun newInstance(category: String): WorkingCategoryFragment {
             val fragment = WorkingCategoryFragment()
             val bundle = Bundle()
             bundle.putString(Define.Fields.CATEGORY, category)
@@ -30,27 +34,20 @@ class WorkingCategoryFragment : BaseFragment<FragmentWorkingCategoryBinding, Wor
     private val viewModel: WorkingCategoryViewModel by viewModels()
     override fun getVM() = viewModel
     private var tab: String = Define.WorkingTab.REGISTER_NEW_SHIFT
-
     private val shiftAdapter by lazy {
-        DoctorShiftAdapter(requireContext(), arguments?.getString(Define.Fields.CATEGORY)!!)
+        DoctorShiftAdapter(requireContext())
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         tab = arguments?.getString(Define.Fields.CATEGORY).toString()
-        viewModel.generateShifts()
-        shiftAdapter.submitList(viewModel.shiftList.value)
+        viewModel.getListShiftToRegister()
         shiftAdapter.setOnShiftClickListener(this)
         binding.apply {
             rvShift.adapter = shiftAdapter
             rvShift.layoutManager = LinearLayoutManager(requireContext())
             rvShift.itemAnimator = null
-            tvFromDate.text = String.format(getString(R.string.string_from_date),
-                viewModel.shiftList.value?.get(0)?.startTime?.let { DateUtils.convertInstantToDate(it) })
-            tvToDate.text = String.format(
-                getString(R.string.string_to_date),
-                viewModel.shiftList.value?.get(viewModel.shiftList.value!!.size - 1)
-                    ?.let { DateUtils.convertInstantToDate(it.startTime) })
+
         }
     }
 
@@ -66,7 +63,9 @@ class WorkingCategoryFragment : BaseFragment<FragmentWorkingCategoryBinding, Wor
                     binding.tvSelectAll.text = getString(R.string.string_select_all)
                     viewModel.clearAllShift(tab)
                 }
-                viewModel.setSelectAll(!viewModel.isSelectedAll.value!!)
+            }
+            btnAddShift.setOnClickListener {
+                viewModel.registerNewShift()
             }
         }
     }
@@ -74,27 +73,73 @@ class WorkingCategoryFragment : BaseFragment<FragmentWorkingCategoryBinding, Wor
     override fun bindingStateView() {
         super.bindingStateView()
         viewModel.apply {
-            shiftList.observe(viewLifecycleOwner) {
-                //check if all list is selected
-                if(it.all { shift -> shift.isRegistered }) {
-                    viewModel.setSelectAll(true)
-                } else {
-                    viewModel.setSelectAll(false)
+            shiftListResponse.observe(viewLifecycleOwner) { response ->
+                when (response) {
+                    is MyResponse.Success -> {
+                        binding.apply {
+                            progressBar.visibility = View.GONE
+                            tvFromDate.text = String.format(getString(R.string.string_from_date),
+                                response.data[0].startTime.let { DateUtils.convertInstantToDate(it) })
+                            tvToDate.text = String.format(
+                                getString(R.string.string_to_date),
+                                response.data[response.data.size - 1]
+                                    .let { DateUtils.convertInstantToDate(it.startTime) })
+                            if (response.data.all { shift -> shift.isRegistered }) {
+                                viewModel.setSelectAll(true)
+                            } else {
+                                viewModel.setSelectAll(false)
+                            }
+                            shiftAdapter.submitList(response.data)
+                            shiftAdapter.notifyDataSetChanged()
+                        }
+                    }
+
+                    is MyResponse.Error -> {
+                        Utils.showSnackBar(response.exception.toString(), binding.root)
+                    }
+
+                    is MyResponse.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
                 }
-                shiftAdapter.submitList(it)
-                shiftAdapter.notifyDataSetChanged()
+
             }
+
             isSelectedAll.observe(viewLifecycleOwner) {
-                binding.tvSelectAll.text = if (it) getString(R.string.string_clear_all) else getString(R.string.string_select_all)
+                binding.tvSelectAll.text =
+                    if (it) getString(R.string.string_clear_all) else getString(R.string.string_select_all)
             }
+
+            registeredShiftResponse.observe(viewLifecycleOwner) { response ->
+                when (response) {
+                    is MyResponse.Success -> {
+                        Dialog.showCongratulationDialog(
+                            requireContext(),
+                            "Register shift successfully",
+                            false,
+                            onClickDone = {
+                                // navigate to MY_SHIFTS tab
+                                (requireParentFragment() as DoctorWorkingFragment).changeTab(Define.WorkingTab.MY_SHIFTS)
+                            }
+
+                        )
+                    }
+
+                    is MyResponse.Error -> {
+                        Utils.showSnackBar(response.exception.toString(), binding.root)
+                    }
+
+                    is MyResponse.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                }
+            }
+
         }
 
 
     }
-
-
-    override fun onShiftClick(doctorShift: DoctorShift) {
-        viewModel.selectShift(doctorShift)
+    override fun onShiftClick(shift: DoctorShift) {
+        viewModel.selectShift(shift)
     }
-
 }
