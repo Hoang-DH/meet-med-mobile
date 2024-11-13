@@ -41,4 +41,16 @@ class DoctorWorkingFragment : BaseFragment<FragmentDoctorWorkingBinding, DoctorW
         }
     }
 
+    // change tab
+    fun changeTab(tab: String) {
+        when (tab) {
+            Define.WorkingTab.REGISTER_NEW_SHIFT -> {
+                binding.vpWorking.setCurrentItem(0, true)
+            }
+            Define.WorkingTab.MY_SHIFTS -> {
+                binding.vpWorking.setCurrentItem(1, true)
+            }
+        }
+    }
+
 }

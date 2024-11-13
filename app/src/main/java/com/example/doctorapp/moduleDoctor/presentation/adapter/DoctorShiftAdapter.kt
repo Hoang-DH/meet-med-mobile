@@ -27,7 +27,7 @@ class DoctorShiftAdapter(
                     DateUtils.convertInstantToDate(shift.startTime)
                 )
                 cbShift.isChecked = shift.isRegistered
-                cbShift.setOnCheckedChangeListener { _, _ ->
+                cbShift.setOnClickListener {
                     onShiftClickListener?.onShiftClick(shift)
                 }
             }
@@ -42,6 +42,10 @@ class DoctorShiftAdapter(
 
     override fun onBindViewHolder(holder: RegisterShiftViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    fun setOnShiftClickListener(onShiftClickListener: OnShiftClickListener) {
+        this.onShiftClickListener = onShiftClickListener
     }
 
     interface OnShiftClickListener {

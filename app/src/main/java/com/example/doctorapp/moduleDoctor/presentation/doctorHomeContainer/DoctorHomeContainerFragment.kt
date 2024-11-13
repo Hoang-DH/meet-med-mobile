@@ -29,5 +29,6 @@ class DoctorHomeContainerFragment : BaseFragment<FragmentDoctorHomeContainerBind
         binding.bottomNav.apply {
             setupWithNavController(navHostFragment.navController)
         }
+        Log.d("HoangDH", Prefs.getInstance(requireContext()).accessToken)
     }
 }

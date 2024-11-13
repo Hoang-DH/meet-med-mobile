@@ -1,5 +1,6 @@
 package com.example.doctorapp.data.repository
 
+import com.example.doctorapp.data.dto.ApiArrayResponse
 import com.example.doctorapp.data.dto.DoctorShiftToRegister
 import com.example.doctorapp.data.model.DoctorShift
 import com.example.doctorapp.domain.repository.DoctorRepository
@@ -12,7 +13,7 @@ class DoctorRepositoryImpl @Inject constructor(private val doctorApi: DoctorApiS
         TODO("Not yet implemented")
     }
 
-    override suspend fun getShiftListToRegister(): Response<DoctorShiftToRegister> {
+    override suspend fun getShiftListToRegister(): Response<ApiArrayResponse<DoctorShift>> {
         return doctorApi.getShiftListToRegister()
     }
 
@@ -20,7 +21,7 @@ class DoctorRepositoryImpl @Inject constructor(private val doctorApi: DoctorApiS
         TODO("Not yet implemented")
     }
 
-    override suspend fun registerNewShift(doctorShifts: List<DoctorShift>): Response<DoctorShift> {
-        TODO("Not yet implemented")
+    override suspend fun registerNewShift(doctorShifts: List<DoctorShift>): Response<ApiArrayResponse<DoctorShift>> {
+        return doctorApi.registerNewShift(doctorShifts)
     }
 }

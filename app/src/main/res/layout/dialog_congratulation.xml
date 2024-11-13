@@ -31,7 +31,7 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_congratulation" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_account_ready"
+                android:id="@+id/tvDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_size_10dp"
@@ -46,28 +46,29 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_congratulation" />
 
             <ProgressBar
+                android:id="@+id/progressBar"
                 android:layout_width="@dimen/common_size_57dp"
                 android:layout_height="@dimen/common_size_57dp"
                 android:layout_marginTop="@dimen/common_size_20dp"
                 android:indeterminateTint="@color/color_primary"
-                app:layout_constraintEnd_toEndOf="@id/tv_account_ready"
-                app:layout_constraintStart_toStartOf="@id/tv_account_ready"
-                app:layout_constraintTop_toBottomOf="@id/tv_account_ready" />
+                app:layout_constraintEnd_toEndOf="@id/tvDescription"
+                app:layout_constraintStart_toStartOf="@id/tvDescription"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
             <LinearLayout
+                android:id="@+id/llBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@id/tv_account_ready"
-                app:layout_constraintStart_toStartOf="@id/tv_account_ready"
-                app:layout_constraintTop_toBottomOf="@id/tv_account_ready">
+                app:layout_constraintEnd_toEndOf="@id/tvDescription"
+                app:layout_constraintStart_toStartOf="@id/tvDescription"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_done"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_marginHorizontal="@dimen/common_size_50dp"
                     android:layout_marginTop="@dimen/common_size_30dp"
                     android:background="@drawable/bg_button_enable"
@@ -75,6 +76,7 @@
                     android:textColor="@color/white" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEditAppointment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

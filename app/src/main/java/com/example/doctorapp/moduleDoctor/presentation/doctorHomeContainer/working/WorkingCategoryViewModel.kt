@@ -21,6 +21,9 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
     private var _isSelectedAll: MutableLiveData<Boolean> = MutableLiveData()
     val isSelectedAll: LiveData<Boolean> get() = _isSelectedAll
 
+    private var _registeredShiftResponse: MutableLiveData<MyResponse<List<DoctorShift>>> = MutableLiveData()
+    val registeredShiftResponse: LiveData<MyResponse<List<DoctorShift>>> get() = _registeredShiftResponse
+
     fun setSelectAll(isSelectAll: Boolean) {
         _isSelectedAll.value = isSelectAll
     }
@@ -30,9 +33,20 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
             _shiftListResponse.value = MyResponse.Loading
             doctorRepository.getShiftListToRegister().let { response ->
                 if(response.isSuccessful){
-                    _shiftListResponse.value = response.body()?.let { MyResponse.Success(it.data) }
+                    _shiftListResponse.value = MyResponse.Success(response.body()?.data ?: emptyList())
                 } else {
-                    _shiftListResponse.value = MyResponse.Error(Exception(response.errorBody().toString()))
+                    when(response.body()?.statusCode){
+                        Define.HttpResponseCode.UNAUTHORIZED -> {
+                            _shiftListResponse.value = MyResponse.Error(Exception("Unauthorized"))
+                        }
+                        Define.HttpResponseCode.BAD_REQUEST -> {
+                            _shiftListResponse.value = MyResponse.Error(Exception(response.body()?.message ?: "Error occurred"))
+                        }
+                        else -> {
+                            _shiftListResponse.value = MyResponse.Error(Exception(response.errorBody().toString()))
+                        }
+                    }
+
                 }
             }
         }
@@ -64,6 +78,32 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
         val currentList = _shiftListResponse.value as MyResponse.Success<List<DoctorShift>>
         currentList.data.find { it.id == doctorShift.id }?.isRegistered = !doctorShift.isRegistered
         _shiftListResponse.value = currentList
+    }
+
+    fun registerNewShift() {
+        viewModelScope.launch {
+            _registeredShiftResponse.value = MyResponse.Loading
+            val currentList = _shiftListResponse.value as MyResponse.Success<List<DoctorShift>>
+            val listRegisteredShift = currentList.data.filter { it.isRegistered }
+            doctorRepository.registerNewShift(listRegisteredShift).let { response ->
+                if(response.isSuccessful){
+                    _registeredShiftResponse.value = MyResponse.Success(currentList.data)
+                } else {
+                    when(response.body()?.statusCode){
+                        Define.HttpResponseCode.UNAUTHORIZED -> {
+                            _registeredShiftResponse.value = MyResponse.Error(Exception("Error occurred"))
+                        }
+                        Define.HttpResponseCode.BAD_REQUEST -> {
+                            _registeredShiftResponse.value = MyResponse.Error(Exception(response.body()?.message ?: "Error occurred"))
+                        }
+                        else -> {
+                            _registeredShiftResponse.value = MyResponse.Error(Exception(response.errorBody().toString()))
+                        }
+                    }
+
+                }
+            }
+        }
     }
 
 }

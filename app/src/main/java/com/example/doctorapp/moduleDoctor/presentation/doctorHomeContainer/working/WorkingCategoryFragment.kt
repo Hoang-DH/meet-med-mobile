@@ -11,6 +11,7 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorShiftAdapter
 import com.example.doctorapp.utils.DateUtils
 import com.example.doctorapp.utils.Define
+import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +34,6 @@ class WorkingCategoryFragment :
     private val viewModel: WorkingCategoryViewModel by viewModels()
     override fun getVM() = viewModel
     private var tab: String = Define.WorkingTab.REGISTER_NEW_SHIFT
-    private var listShift: List<DoctorShift> = listOf()
     private val shiftAdapter by lazy {
         DoctorShiftAdapter(requireContext())
     }
@@ -42,6 +42,7 @@ class WorkingCategoryFragment :
         super.initView(savedInstanceState)
         tab = arguments?.getString(Define.Fields.CATEGORY).toString()
         viewModel.getListShiftToRegister()
+        shiftAdapter.setOnShiftClickListener(this)
         binding.apply {
             rvShift.adapter = shiftAdapter
             rvShift.layoutManager = LinearLayoutManager(requireContext())
@@ -62,6 +63,9 @@ class WorkingCategoryFragment :
                     binding.tvSelectAll.text = getString(R.string.string_select_all)
                     viewModel.clearAllShift(tab)
                 }
+            }
+            btnAddShift.setOnClickListener {
+                viewModel.registerNewShift()
             }
         }
     }
@@ -106,12 +110,35 @@ class WorkingCategoryFragment :
                     if (it) getString(R.string.string_clear_all) else getString(R.string.string_select_all)
             }
 
+            registeredShiftResponse.observe(viewLifecycleOwner) { response ->
+                when (response) {
+                    is MyResponse.Success -> {
+                        Dialog.showCongratulationDialog(
+                            requireContext(),
+                            "Register shift successfully",
+                            false,
+                            onClickDone = {
+                                // navigate to MY_SHIFTS tab
+                                (requireParentFragment() as DoctorWorkingFragment).changeTab(Define.WorkingTab.MY_SHIFTS)
+                            }
+
+                        )
+                    }
+
+                    is MyResponse.Error -> {
+                        Utils.showSnackBar(response.exception.toString(), binding.root)
+                    }
+
+                    is MyResponse.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                }
+            }
 
         }
 
 
     }
-
     override fun onShiftClick(shift: DoctorShift) {
         viewModel.selectShift(shift)
     }

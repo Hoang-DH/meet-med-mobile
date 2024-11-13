@@ -1,5 +1,6 @@
 package com.example.doctorapp.network
 
+import com.example.doctorapp.data.dto.ApiArrayResponse
 import com.example.doctorapp.data.dto.DoctorShiftToRegister
 import com.example.doctorapp.data.model.DoctorShift
 import retrofit2.Response
@@ -16,10 +17,10 @@ interface DoctorApiService {
     ): Response<List<DoctorShift>>
 
     @GET("$PATH_DOCTOR/shifts/can-register")
-    suspend fun getShiftListToRegister(): Response<DoctorShiftToRegister>
+    suspend fun getShiftListToRegister(): Response<ApiArrayResponse<DoctorShift>>
 
     suspend fun getShiftListOfDoctor()
 
     @POST("$PATH_DOCTOR/shifts/register")
-    suspend fun registerNewShift(@Body doctorShifts: List<DoctorShift>): Response<DoctorShift>
+    suspend fun registerNewShift(@Body doctorShifts: List<DoctorShift>): Response<ApiArrayResponse<DoctorShift>>
 }
