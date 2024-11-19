@@ -1,7 +1,6 @@
 package com.example.doctorapp.domain.repository
 
 import com.example.doctorapp.data.dto.ApiArrayResponse
-import com.example.doctorapp.data.dto.DoctorShiftToRegister
 import com.example.doctorapp.data.model.DoctorShift
 import retrofit2.Response
 

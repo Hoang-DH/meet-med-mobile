@@ -27,7 +27,7 @@
             android:name=".moduleDoctor.presentation.container.MainDoctorActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.container.MainActivity"
+            android:name=".modulePatient.presentation.container.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:taskAffinity="" >

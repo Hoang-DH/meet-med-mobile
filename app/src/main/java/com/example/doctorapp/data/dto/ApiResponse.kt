@@ -8,7 +8,7 @@ class ApiResponse<T> {
     var data: T? = null
 
     @SerializedName(Define.Fields.STATUS_CODE)
-    var statusCode: Define.HttpResponseCode? = null
+    var statusCode: Int? = null
 
     @SerializedName(Define.Fields.MESSAGE)
     var message: String? = null

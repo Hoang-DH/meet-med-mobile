@@ -32,18 +32,27 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
         viewModelScope.launch {
             _shiftListResponse.value = MyResponse.Loading
             doctorRepository.getShiftListToRegister().let { response ->
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     _shiftListResponse.value = MyResponse.Success(response.body()?.data ?: emptyList())
                 } else {
-                    when(response.body()?.statusCode){
+                    when (response.body()?.statusCode) {
                         Define.HttpResponseCode.UNAUTHORIZED -> {
-                            _shiftListResponse.value = MyResponse.Error(Exception("Unauthorized"))
+                            _shiftListResponse.value =
+                                MyResponse.Error(Exception("Unauthorized"), Define.HttpResponseCode.UNAUTHORIZED)
                         }
+
                         Define.HttpResponseCode.BAD_REQUEST -> {
-                            _shiftListResponse.value = MyResponse.Error(Exception(response.body()?.message ?: "Error occurred"))
+                            _shiftListResponse.value = MyResponse.Error(
+                                Exception(response.body()?.message ?: "Error occurred"),
+                                Define.HttpResponseCode.BAD_REQUEST
+                            )
                         }
+
                         else -> {
-                            _shiftListResponse.value = MyResponse.Error(Exception(response.errorBody().toString()))
+                            _shiftListResponse.value = MyResponse.Error(
+                                Exception(response.errorBody().toString()),
+                                Define.HttpResponseCode.INTERNAL_SERVER_ERROR
+                            )
                         }
                     }
 
@@ -54,10 +63,9 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
 
     fun selectAllShift(tab: String?) {
         val currentList = _shiftListResponse.value as MyResponse.Success<List<DoctorShift>>
-        if ( tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
+        if (tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
             currentList.data.forEach { it.isRegistered = true }
-        }
-        else if(tab == Define.WorkingTab.MY_SHIFTS){
+        } else if (tab == Define.WorkingTab.MY_SHIFTS) {
             currentList.data.forEach { it.isRegistered = false }
         }
         _shiftListResponse.value = currentList
@@ -65,10 +73,9 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
 
     fun clearAllShift(tab: String?) {
         val currentList = _shiftListResponse.value as MyResponse.Success<List<DoctorShift>>
-        if ( tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
+        if (tab == Define.WorkingTab.REGISTER_NEW_SHIFT) {
             currentList.data.forEach { it.isRegistered = false }
-        }
-        else if(tab == Define.WorkingTab.MY_SHIFTS){
+        } else if (tab == Define.WorkingTab.MY_SHIFTS) {
             currentList.data.forEach { it.isRegistered = true }
         }
         _shiftListResponse.value = currentList
@@ -86,18 +93,22 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
             val currentList = _shiftListResponse.value as MyResponse.Success<List<DoctorShift>>
             val listRegisteredShift = currentList.data.filter { it.isRegistered }
             doctorRepository.registerNewShift(listRegisteredShift).let { response ->
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     _registeredShiftResponse.value = MyResponse.Success(currentList.data)
                 } else {
-                    when(response.body()?.statusCode){
+                    when (response.body()?.statusCode) {
                         Define.HttpResponseCode.UNAUTHORIZED -> {
-                            _registeredShiftResponse.value = MyResponse.Error(Exception("Error occurred"))
+                            _registeredShiftResponse.value = MyResponse.Error(Exception("Error occurred"), Define.HttpResponseCode.UNAUTHORIZED)
                         }
+
                         Define.HttpResponseCode.BAD_REQUEST -> {
-                            _registeredShiftResponse.value = MyResponse.Error(Exception(response.body()?.message ?: "Error occurred"))
+                            _registeredShiftResponse.value =
+                                MyResponse.Error(Exception(response.body()?.message ?: "Error occurred"), Define.HttpResponseCode.BAD_REQUEST)
                         }
+
                         else -> {
-                            _registeredShiftResponse.value = MyResponse.Error(Exception(response.errorBody().toString()))
+                            _registeredShiftResponse.value =
+                                MyResponse.Error(Exception(response.errorBody().toString()), Define.HttpResponseCode.INTERNAL_SERVER_ERROR)
                         }
                     }
 

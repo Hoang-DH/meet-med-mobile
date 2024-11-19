@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.doctorapp.presentation.splash.SplashFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.splash.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.doctorapp.presentation.auth.signIn.SignInFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.auth.signIn.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.doctorapp.presentation.auth.signUp.SignUpFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.auth.signUp.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeContainerFragment"
-        android:name="com.example.doctorapp.presentation.homeContainer.HomeContainerFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.HomeContainerFragment"
         android:label="HomeContainerFragment"
         tools:layout="@layout/fragment_home_container">
         <action
@@ -94,7 +94,7 @@
     </fragment>
     <fragment
         android:id="@+id/doctorDetailFragment"
-        android:name="com.example.doctorapp.presentation.homeContainer.doctorDetail.DoctorDetailFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.doctorDetail.DoctorDetailFragment"
         android:label="fragment_doctor_detail"
         tools:layout="@layout/fragment_doctor_detail" >
         <action
@@ -108,11 +108,11 @@
     </fragment>
     <fragment
         android:id="@+id/bookingFragment"
-        android:name="com.example.doctorapp.presentation.homeContainer.booking.BookingFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.booking.BookingFragment"
         android:label="BookingFragment" />
     <fragment
         android:id="@+id/searchDoctorFragment"
-        android:name="com.example.doctorapp.presentation.homeContainer.search.SearchDoctorFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.search.SearchDoctorFragment"
         android:label="fragment_search_doctor"
         tools:layout="@layout/fragment_search_doctor" >
         <action
@@ -127,12 +127,12 @@
     </fragment>
     <fragment
         android:id="@+id/bookingAppointmentFragment"
-        android:name="com.example.doctorapp.presentation.homeContainer.booking.bookingAppointment.BookingAppointmentFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.booking.bookingAppointment.BookingAppointmentFragment"
         android:label="BookingAppointmentFragment"
         tools:layout="@layout/fragment_booking_appointment"/>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.doctorapp.presentation.homeContainer.profile.editProfile.EditProfileFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.profile.editProfile.EditProfileFragment"
         android:label="EditProfileFragment"
         tools:layout="@layout/fragment_edit_profile">
         <action
@@ -141,12 +141,12 @@
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.example.doctorapp.presentation.homeContainer.profile.notification.NotificationFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.profile.notification.NotificationFragment"
         android:label="NotificationFragment"
         tools:layout="@layout/fragment_notification"/>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.doctorapp.presentation.homeContainer.profile.favorite.FavoriteFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.profile.favorite.FavoriteFragment"
         android:label="FavoriteFragment"
         tools:layout="@layout/fragment_favorite">
         <action

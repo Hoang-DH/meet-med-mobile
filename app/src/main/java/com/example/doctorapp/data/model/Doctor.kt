@@ -4,23 +4,19 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Doctor(
-    val id: Int,
-    val name: String,
+    val user: User?,
     val speciality: String,
     val description: String,
     val phone: String,
-    val email: String,
     val rating: Float,
     val numberOfPatients: Int,
     val reviewCount: Int,
     val imageUrl: String,
     val yoe: Int,
-    val isFavorite: Boolean = false
-) : Parcelable {
+    val isFavorite: Boolean = false,
+): Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readInt(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
+        parcel.readParcelable(User::class.java.classLoader),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -28,16 +24,26 @@ data class Doctor(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readString().toString(),
-        parcel.readInt()
+        parcel.readInt(),
+        parcel.readByte() != 0.toByte()
     ) {
     }
 
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeParcelable(user, flags)
+        parcel.writeString(speciality)
+        parcel.writeString(description)
+        parcel.writeString(phone)
+        parcel.writeFloat(rating)
+        parcel.writeInt(numberOfPatients)
+        parcel.writeInt(reviewCount)
+        parcel.writeString(imageUrl)
+        parcel.writeInt(yoe)
+        parcel.writeByte(if (isFavorite) 1 else 0)
     }
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        TODO("Not yet implemented")
+    override fun describeContents(): Int {
+        return 0
     }
 
     companion object CREATOR : Parcelable.Creator<Doctor> {

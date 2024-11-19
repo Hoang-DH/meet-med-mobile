@@ -3,7 +3,7 @@ package com.example.doctorapp.di
 
 import android.content.Context
 import android.util.Log
-import com.example.doctorapp.network.DoctorApiService
+import com.example.doctorapp.moduleDoctor.network.DoctorApiService
 import com.example.doctorapp.utils.Define
 import com.example.doctorapp.utils.Prefs
 import dagger.Module

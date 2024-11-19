@@ -3,7 +3,7 @@ package com.example.doctorapp.di
 import androidx.lifecycle.ViewModel
 import com.example.doctorapp.data.repository.DoctorRepositoryImpl
 import com.example.doctorapp.domain.repository.DoctorRepository
-import com.example.doctorapp.network.DoctorApiService
+import com.example.doctorapp.moduleDoctor.network.DoctorApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
