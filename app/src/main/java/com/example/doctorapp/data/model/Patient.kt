@@ -6,20 +6,20 @@ import com.google.gson.annotations.SerializedName
 data class Patient(
 
     @SerializedName("id")
-    val id: String = "",
+    val id: String? = null,
 
     @SerializedName("user")
-    val user: User = User(),
+    var user: User? = null,
 
     @SerializedName("addressLine")
-    val addressLine: String = "",
+    val addressLine: String? = null,
 
     @SerializedName("district")
-    val district: String = "",
+    val district: String? = null,
 
     @SerializedName("city")
-    val city: String = "",
+    val city: String? = null,
 
     @SerializedName("insuranceCode")
-    val insuranceCode: String = "",
+    val insuranceCode: String? = null,
 )

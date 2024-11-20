@@ -22,7 +22,7 @@ class FavoriteAdapter(
                 Glide.with(context)
                     .load(doctor.imageUrl)
                     .into(ivAvatar)
-                tvDoctorName.text = doctor.fullName
+                tvDoctorName.text = doctor.user?.fullName ?: "Doctor"
                 tvSpeciality.text = doctor.speciality
                 tvRating.text = doctor.rating.toString()
                 tvReview.text = when (doctor.reviewCount) {

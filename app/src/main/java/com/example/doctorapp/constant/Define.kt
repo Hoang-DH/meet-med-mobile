@@ -1,4 +1,4 @@
-package com.example.doctorapp.utils
+package com.example.doctorapp.constant
 
 object Define {
     object HttpResponseCode {
@@ -12,12 +12,17 @@ object Define {
         const val INTERNAL_SERVER_ERROR = 500
     }
 
+    object HttpResponseMessage {
+        const val PATIENT_PROFILE_NOT_FOUND = "Patient profile not found"
+    }
+
     object Fields{
         const val CATEGORY = "category"
         const val DATA = "data"
         const val META = "meta"
         const val MESSAGE = "message"
-        const val STATUS_CODE = "status_code"
+        const val STATUS_CODE = "statusCode"
+        const val SUCCESS = "success"
     }
 
     object BookingStatus{

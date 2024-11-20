@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.data.model.DoctorShift
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.DoctorRepository
-import com.example.doctorapp.utils.Define
+import com.example.doctorapp.constant.Define
 import com.example.doctorapp.utils.MyResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

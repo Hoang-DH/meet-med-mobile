@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.example.doctorapp.constant.UserRole
 import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.data.model.Patient
+import com.example.doctorapp.data.model.User
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.scopes.ActivityScoped
@@ -57,6 +58,23 @@ class Prefs @Inject constructor(context: Context, preFileName: String) {
             mPrefs.edit().putString(PREFS_KEY_PATIENT, Gson().toJson(value)).apply()
         }
 
+    var user: User?
+        get() {
+            val userJson = mPrefs.getString(PREFS_KEY_USER, "")
+            return if (userJson.isNullOrEmpty()) {
+                null
+            } else {
+                Gson().fromJson(userJson, User::class.java)
+            }
+        }
+        set(value) {
+            mPrefs.edit().putString(PREFS_KEY_USER, Gson().toJson(value)).apply()
+        }
+
+    var isFirstTimeUsingApp: Boolean
+        get() = mPrefs.getBoolean(PREFS_KEY_IS_FIRST_TIME_USING_APP, true)
+        set(value) = mPrefs.edit().putBoolean(PREFS_KEY_IS_FIRST_TIME_USING_APP, value).apply()
+
     companion object{
         private const val SHARE_PREFS_FILE_NAME = "prefs"
         private const val PREFS_KEY_IS_USER_LOGIN = "isUserLogin"
@@ -64,6 +82,8 @@ class Prefs @Inject constructor(context: Context, preFileName: String) {
         private const val PREFS_KEY_USER_ROLE = "userRole"
         private const val PREFS_KEY_DOCTOR = "doctor"
         private const val PREFS_KEY_PATIENT = "patient"
+        private const val PREFS_KEY_IS_FIRST_TIME_USING_APP = "isFirstTimeUsingApp"
+        private const val PREFS_KEY_USER = "user"
         private var mInstance: Prefs? = null
 
         fun getInstance(context: Context): Prefs {

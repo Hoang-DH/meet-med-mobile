@@ -14,7 +14,7 @@ import com.example.doctorapp.modulePatient.presentation.adapter.DepartmentCatego
 import com.example.doctorapp.modulePatient.presentation.adapter.SearchDoctorAdapter
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 
-import com.example.doctorapp.utils.Define
+import com.example.doctorapp.constant.Define
 import com.example.doctorapp.utils.Dialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -71,7 +71,7 @@ class SearchDoctorFragment :
             tvDoctorCount.text = String.format(getString(R.string.string_search_doctor_count), getDoctors().size)
             etSearch.addTextChangedListener { text ->
                 val filterDoctors = getDoctors().filter { doctor ->
-                    doctor.user?.fullName?.contains(text.toString(), true) == true || doctor.speciality.contains(text.toString(), true)
+                    doctor.user?.fullName?.contains(text.toString(), true) == true || doctor.speciality?.contains(text.toString(), true) ?: false
                 }
                 mDoctorAdapter?.submitList(filterDoctors)
             }

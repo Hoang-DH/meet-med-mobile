@@ -1,6 +1,6 @@
 package com.example.doctorapp.data.dto
 
-import com.example.doctorapp.utils.Define
+import com.example.doctorapp.constant.Define
 import com.google.gson.annotations.SerializedName
 
 class ApiArrayResponse<T> {

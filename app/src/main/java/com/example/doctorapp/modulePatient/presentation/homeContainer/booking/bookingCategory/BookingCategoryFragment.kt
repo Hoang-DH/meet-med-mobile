@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.doctorapp.R
-import com.example.doctorapp.utils.Define
+import com.example.doctorapp.constant.Define
 
 class BookingCategoryFragment : Fragment() {
 

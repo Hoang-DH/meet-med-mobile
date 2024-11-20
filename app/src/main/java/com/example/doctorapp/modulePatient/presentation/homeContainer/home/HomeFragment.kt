@@ -8,6 +8,7 @@ import com.example.doctorapp.databinding.FragmentHomeBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.DepartmentAdapter
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import com.example.doctorapp.utils.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,7 +39,9 @@ class HomeFragment :
                     4
                 )
             rvDepartment.adapter = mAdapter
-
+            tvName.text = Prefs.getInstance(requireContext()).patient?.user?.fullName ?: "Guest"
+            // handle text good morning base on time in day
+            tvGreeting.text = getGreeting()
         }
     }
 
@@ -97,6 +100,16 @@ class HomeFragment :
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
             )
         )
+    }
+
+    // Function to get greeting based on time of day
+    private fun getGreeting(): String {
+        val currentHour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
+        return when (currentHour) {
+            in 0..11 -> "Good Morning"
+            in 12..17 -> "Good Afternoon"
+            else -> "Good Evening"
+        }
     }
 
 }

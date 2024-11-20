@@ -7,17 +7,19 @@ import com.google.gson.annotations.SerializedName
 
 data class User(
     @SerializedName("id")
-    val id: String = "",
+    val id: String? = null,
     @SerializedName("fullName")
-    val fullName: String= "",
+    val fullName: String? = null,
     @SerializedName("email")
-    val email: String = "",
+    val email: String? = null,
     @SerializedName("gender")
     val gender: Gender = Gender.MALE,
     @SerializedName("role")
-    val role: String = "",
+    val role: String? = null,
     @SerializedName("age")
-    val age: Int = 0
+    val age: Int? = null,
+    @SerializedName("phone")
+    val phone: String? = null,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),

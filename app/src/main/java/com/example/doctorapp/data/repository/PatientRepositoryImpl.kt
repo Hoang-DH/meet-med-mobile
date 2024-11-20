@@ -4,6 +4,8 @@ import com.example.doctorapp.data.dto.ApiResponse
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.domain.repository.PatientRepository
 import com.example.doctorapp.modulePatient.network.PatientApiService
+import com.example.doctorapp.utils.MyResponse
+import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -20,12 +22,13 @@ class PatientRepositoryImpl @Inject constructor(private val patientApi: PatientA
         TODO("Not yet implemented")
     }
 
-    override suspend fun createPatientProfile(): Response<Patient> {
+    override suspend fun createPatientProfile(): ApiResponse<Patient> {
         return patientApi.createPatientProfile()
     }
 
-    override suspend fun getPatientProfile(): Response<ApiResponse<Patient>> {
+    override suspend fun getPatientProfile(): ApiResponse<Patient> {
         return patientApi.getPatientProfile()
+
     }
 
     override suspend fun updatePatientProfile(): Patient {

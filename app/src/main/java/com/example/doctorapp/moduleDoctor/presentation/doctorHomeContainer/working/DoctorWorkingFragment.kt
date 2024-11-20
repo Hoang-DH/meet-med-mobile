@@ -7,7 +7,7 @@ import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentDoctorWorkingBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.WorkingPagerAdapter
-import com.example.doctorapp.utils.Define
+import com.example.doctorapp.constant.Define
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DoctorWorkingFragment : BaseFragment<FragmentDoctorWorkingBinding, DoctorWorkingViewModel>(R.layout.fragment_doctor_working) {

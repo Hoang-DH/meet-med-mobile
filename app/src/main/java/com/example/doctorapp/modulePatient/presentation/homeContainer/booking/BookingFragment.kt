@@ -8,7 +8,7 @@ import com.example.doctorapp.databinding.FragmentBookingBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.BookingPagerAdapter
 import com.example.doctorapp.modulePatient.presentation.homeContainer.booking.bookingCategory.BookingCategoryFragment
-import com.example.doctorapp.utils.Define
+import com.example.doctorapp.constant.Define
 import com.google.android.material.tabs.TabLayoutMediator
 
 class BookingFragment :

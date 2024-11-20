@@ -12,13 +12,19 @@ import com.auth0.android.provider.WebAuthProvider
 import com.auth0.android.result.Credentials
 import com.auth0.android.result.UserProfile
 import com.example.doctorapp.R
+import com.example.doctorapp.constant.Define
 import com.example.doctorapp.constant.UserRole
+import com.example.doctorapp.data.model.Doctor
+import com.example.doctorapp.data.model.Patient
+import com.example.doctorapp.data.model.User
 import com.example.doctorapp.databinding.FragmentSignInBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.container.MainDoctorActivity
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Prefs
 import com.example.doctorapp.utils.Utils.showSnackBar
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -42,10 +48,42 @@ class SignInFragment :
         )
     }
 
+    override fun initView(savedInstanceState: Bundle?) {
+        if (Prefs.getInstance(requireContext()).isUserLogin) {
+            if (userRole == UserRole.DOCTOR) {
+                startActivity(Intent(requireContext(), MainDoctorActivity::class.java))
+                requireActivity().finish()
+            } else {
+                viewModel.getPatientProfile()
+            }
+        }
+    }
+
     override fun bindingStateView() {
         super.bindingStateView()
-        if (Prefs.getInstance(requireContext()).isUserLogin) {
-            decentralizeUser()
+        viewModel.patientProfileResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is MyResponse.Loading -> {
+                    showHideLoading(true)
+                }
+
+                is MyResponse.Success -> {
+                    showHideLoading(false)
+                    Prefs.getInstance(requireContext()).patient = response.data
+                    appNavigation.openSignInToHomeContainerScreen()
+                }
+
+                is MyResponse.Error -> {
+                    showHideLoading(false)
+                    if (response.statusCode == Define.HttpResponseCode.BAD_REQUEST
+                        && response.exception.message == Define.HttpResponseMessage.PATIENT_PROFILE_NOT_FOUND
+                    ) {
+                        appNavigation.openHomeContainerToEditProfileScreen()
+                    }
+                }
+
+                else -> {}
+            }
         }
     }
 
@@ -91,26 +129,22 @@ class SignInFragment :
 
                 override fun onSuccess(result: UserProfile) {
                     // We have the user's profile!
+                    Prefs.getInstance(requireContext()).user = Gson().fromJson(
+                        Gson().toJson(result.getExtraInfo()["user_info"]),
+                        User::class.java
+                    )
                     if (result.getExtraInfo()["system_role"] == "Head Doctor") {
                         Prefs.getInstance(requireContext()).userRole = UserRole.DOCTOR
+
                     } else {
                         Prefs.getInstance(requireContext()).userRole = UserRole.PATIENT
+                        viewModel.getPatientProfile()
                     }
-                    decentralizeUser()
-                    Log.d("HoangDH", "profile: ${result.getExtraInfo()}")
+
                     Log.d("HoangDH", "accessToken: $accessToken")
+                    Log.d("HoangDH", "userRole: ${Prefs.getInstance(requireContext()).user?.fullName}")
                 }
             })
-    }
-
-    private fun decentralizeUser() {
-        when (userRole) {
-            UserRole.PATIENT -> appNavigation.openSignInToHomeContainerScreen()
-            UserRole.DOCTOR -> {
-                val intent = Intent(requireContext(), MainDoctorActivity::class.java)
-                startActivity(intent)
-            }
-        }
     }
 
 

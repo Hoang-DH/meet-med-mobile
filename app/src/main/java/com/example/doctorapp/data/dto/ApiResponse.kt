@@ -1,6 +1,6 @@
 package com.example.doctorapp.data.dto
 
-import com.example.doctorapp.utils.Define
+import com.example.doctorapp.constant.Define
 import com.google.gson.annotations.SerializedName
 
 class ApiResponse<T> {
@@ -12,4 +12,7 @@ class ApiResponse<T> {
 
     @SerializedName(Define.Fields.MESSAGE)
     var message: String? = null
+
+    @SerializedName(Define.Fields.SUCCESS)
+    var success: Boolean? = null
 }

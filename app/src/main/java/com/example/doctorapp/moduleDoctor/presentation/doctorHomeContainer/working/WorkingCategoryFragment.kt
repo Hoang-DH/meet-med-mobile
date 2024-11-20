@@ -10,7 +10,7 @@ import com.example.doctorapp.databinding.FragmentWorkingCategoryBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorShiftAdapter
 import com.example.doctorapp.utils.DateUtils
-import com.example.doctorapp.utils.Define
+import com.example.doctorapp.constant.Define
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Utils

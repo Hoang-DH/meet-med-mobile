@@ -8,7 +8,7 @@ import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.databinding.FragmentDoctorDetailBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
-import com.example.doctorapp.utils.Define
+import com.example.doctorapp.constant.Define
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,7 +33,9 @@ class DoctorDetailFragment : BaseFragment<FragmentDoctorDetailBinding, DoctorDet
             Glide.with(requireContext())
                 .load(doctor?.imageUrl)
                 .into(binding.doctorDetail.ivAvatar)
-            tvDoctorName.text = doctor?.fullName
+            if (doctor != null) {
+                tvDoctorName.text = doctor.user?.fullName ?: "Doctor"
+            }
             tvSpeciality.text = doctor?.speciality
             tvRating.text = doctor?.rating.toString()
             if (doctor != null) {

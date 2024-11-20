@@ -4,18 +4,20 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Doctor(
-    val user: User?,
-    val speciality: String,
-    val description: String,
-    val phone: String,
-    val rating: Float,
-    val numberOfPatients: Int,
-    val reviewCount: Int,
-    val imageUrl: String,
-    val yoe: Int,
+    val id: String? = null,
+    var user: User? = null,
+    val speciality: String? = null,
+    val description: String? = null,
+    val phone: String? = null,
+    val rating: Float? = null,
+    val numberOfPatients: Int = 0,
+    val reviewCount: Int = 0,
+    val imageUrl: String? = null ,
+    val yoe: Int? = null,
     val isFavorite: Boolean = false,
 ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString().toString(),
         parcel.readParcelable(User::class.java.classLoader),
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -34,11 +36,15 @@ data class Doctor(
         parcel.writeString(speciality)
         parcel.writeString(description)
         parcel.writeString(phone)
-        parcel.writeFloat(rating)
+        if (rating != null) {
+            parcel.writeFloat(rating)
+        }
         parcel.writeInt(numberOfPatients)
         parcel.writeInt(reviewCount)
         parcel.writeString(imageUrl)
-        parcel.writeInt(yoe)
+        if (yoe != null) {
+            parcel.writeInt(yoe)
+        }
         parcel.writeByte(if (isFavorite) 1 else 0)
     }
 
