@@ -1,6 +1,7 @@
 package com.example.doctorapp.data.repository
 
 import com.example.doctorapp.data.dto.ApiResponse
+import com.example.doctorapp.data.dto.PatientDTO
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.domain.repository.PatientRepository
 import com.example.doctorapp.modulePatient.network.PatientApiService
@@ -22,7 +23,7 @@ class PatientRepositoryImpl @Inject constructor(private val patientApi: PatientA
         TODO("Not yet implemented")
     }
 
-    override suspend fun createPatientProfile(): ApiResponse<Patient> {
+    override suspend fun createPatientProfile(patientDTO: PatientDTO): ApiResponse<Patient> {
         return patientApi.createPatientProfile()
     }
 
@@ -31,8 +32,8 @@ class PatientRepositoryImpl @Inject constructor(private val patientApi: PatientA
 
     }
 
-    override suspend fun updatePatientProfile(): Patient {
-        TODO("Not yet implemented")
+    override suspend fun updatePatientProfile(patientDTO: PatientDTO): ApiResponse<Patient> {
+        return patientApi.updatePatientProfile(patientDTO)
     }
 
 }

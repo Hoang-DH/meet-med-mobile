@@ -78,6 +78,13 @@
     <string name="string_select_all">Select all</string>
     <string name="string_date_time_of_shift">%1$s - %2$s\n%3$s</string>
     <string name="string_clear_all">Clear all</string>
+    <string name="string_hint_your_age">Your Age</string>
+    <string name="string_hint_your_date_of_birth">Your Date of Birth</string>
+    <string name="string_hint_your_address">Your Address</string>
+    <string name="string_hintyour_district">Your District</string>
+    <string name="string_hint_your_city">Your City</string>
+    <string name="string_hint_your_insurance_code">Your Insurance Code</string>
+    <string name="string_hint_your_phone_number">Your Phone Number</string>
 
 
     <string-array name="gender_options">

@@ -1,12 +1,7 @@
-package com.example.doctorapp.data.model
-
-import com.example.doctorapp.modulePatient.presentation.constants.Gender
+package com.example.doctorapp.data.dto
 import com.google.gson.annotations.SerializedName
 
-data class Patient(
-
-    @SerializedName("id")
-    val id: String? = null,
+data class PatientDTO(
 
     @SerializedName("addressLine")
     val addressLine: String? = null,
@@ -21,5 +16,5 @@ data class Patient(
     val insuranceCode: String? = null,
 
     @SerializedName("user")
-    var user: User? = null,
+    var user: UserDTO? = null,
 )

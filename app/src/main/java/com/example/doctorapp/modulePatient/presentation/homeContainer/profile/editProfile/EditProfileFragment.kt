@@ -7,8 +7,8 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,15 +21,18 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.cloudinary.android.MediaManager
-import com.cloudinary.android.callback.ErrorInfo
-import com.cloudinary.android.callback.UploadCallback
-import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.R
+import com.example.doctorapp.data.dto.PatientDTO
+import com.example.doctorapp.data.dto.UserDTO
 import com.example.doctorapp.databinding.FragmentEditProfileBinding
 import com.example.doctorapp.databinding.PopupGenderBinding
+import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.constants.Gender
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import com.example.doctorapp.utils.ApplicationMediaManager
 import com.example.doctorapp.utils.Dialog
+import com.example.doctorapp.utils.MyResponse
+import com.example.doctorapp.utils.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -105,7 +108,160 @@ class EditProfileFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MediaManager.init(requireContext())
+        // check if MediaManager is initialized
+        ApplicationMediaManager.startMediaManager(requireContext())
+
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        if (Prefs.getInstance(requireContext()).patient != null) {
+            val patient = Prefs.getInstance(requireContext()).patient
+            binding.apply {
+                etFullName.setText(patient?.user?.fullName)
+                etAge.setText(patient?.user?.age.toString())
+                etEmail.setText(patient?.user?.email)
+                etPhoneNumber.setText(patient?.user?.phone)
+                etDob.setText(patient?.user?.dob)
+                etPhoneNumber.setText(patient?.user?.phone)
+                etAddressLine.setText(patient?.addressLine)
+                etDistrict.setText(patient?.district)
+                etCity.setText(patient?.city)
+                etInsuranceCode.setText(patient?.insuranceCode)
+                etGender.text = patient?.user?.gender?.value ?: "Gender"
+            }
+        }
+    }
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+        viewModel.patientProfileResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is MyResponse.Loading -> {
+                    showHideLoading(true)
+                }
+
+                is MyResponse.Success -> {
+                    showHideLoading(false)
+                    context?.let {
+                        val dialog = Dialog.showCongratulationDialog(
+                            it,
+                            getString(R.string.string_edit_profile_successfully),
+                            true
+                        )
+                        // after 3 seconds, navigate to home screen
+                        Handler().postDelayed({
+                            if(Prefs.getInstance(requireContext()).isProfileExist) {
+                                appNavigation.navigateUp()
+                            } else {
+                                appNavigation.openEditProfileToHomeContainerScreen()
+                            }
+                            dialog.dismiss()
+
+                        }, 2000)
+
+
+
+                    }
+                }
+
+                is MyResponse.Error -> {
+                    showHideLoading(false)
+                    context?.let {
+                        Dialog.showAlertDialog(
+                            it,
+                            "Error",
+                            response.exception.message ?: "Error occurred, please try again!",
+                            onClickOk = {
+                                appNavigation.navigateUp()
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    override fun setOnClick() {
+        super.setOnClick()
+        binding.apply {
+            ivAvatar.setOnClickListener {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    mediaPermission.launch(takePhotoCameraPermissionSDK33)
+                } else {
+                    mediaPermission.launch(takePhotoCameraPermissions)
+                }
+            }
+            ivBack.setOnClickListener {
+                appNavigation.navigateUp()
+            }
+            etGender.setOnClickListener {
+                onGenderClick(it)
+            }
+            btnSave.setOnClickListener {
+                val user = UserDTO(
+                    fullName = binding.etFullName.text.toString(),
+                    email = binding.etEmail.text.toString(),
+                    age = binding.etAge.text.toString().toInt(),
+                    phone = binding.etPhoneNumber.text.toString(),
+                    gender = binding.etGender.text.toString()
+                )
+                val patient = PatientDTO(
+                    addressLine = binding.etAddressLine.text.toString(),
+                    district = binding.etDistrict.text.toString(),
+                    city = binding.etCity.text.toString(),
+                    insuranceCode = binding.etInsuranceCode.text.toString(),
+                    user = user
+                )
+
+                if (Prefs.getInstance(requireContext()).isProfileExist) {
+                    viewModel.updateProfile(patient)
+                } else {
+                    viewModel.createProfile(patient)
+                }
+//                MediaManager.get().upload(avatarImageUri).callback(object : UploadCallback {
+//                    override fun onStart(requestId: String?) {
+//                        Log.d("HoangDH", "onStart")
+//                    }
+//
+//                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
+//                        Log.d("HoangDH", "onProgress")
+//                    }
+//
+//                    override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+//                        Log.d("HoangDH", resultData.toString())
+//                        context?.let {
+//                            Dialog.showCongratulationDialog(
+//                                it,
+//                                getString(R.string.string_edit_profile_successfully),
+//                                true
+//                            )
+//                            // after 3 seconds, navigate to home screen
+//                            binding.btnSave.postDelayed({
+//                                appNavigation.openEditProfileToHomeContainerScreen()
+//                            }, 3000)
+//                        }
+//                    }
+//
+//                    override fun onError(requestId: String?, error: ErrorInfo?) {
+//                        Log.d("HoangDH", error.toString())
+//                    }
+//
+//                    override fun onReschedule(requestId: String?, error: ErrorInfo?) {
+//                        Log.d("HoangDH", error.toString())
+//                    }
+//
+//                }).dispatch()
+            }
+        }
+    }
+
+    private fun openCamera() {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, CAMERA_IMAGE_FILE_NAME)
+        avatarImageUri =
+            requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        cameraLauncher.launch(avatarImageUri)
     }
 
     private fun requestPermissions() {
@@ -150,65 +306,6 @@ class EditProfileFragment :
             }
         } else {
             Toast.makeText(requireContext(), "Read media storage permission granted", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun openCamera() {
-        val values = ContentValues()
-        values.put(MediaStore.Images.Media.TITLE, CAMERA_IMAGE_FILE_NAME)
-        avatarImageUri =
-            requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        cameraLauncher.launch(avatarImageUri)
-    }
-
-    override fun setOnClick() {
-        super.setOnClick()
-        binding.apply {
-            ivAvatar.setOnClickListener {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    mediaPermission.launch(takePhotoCameraPermissionSDK33)
-                } else {
-                    mediaPermission.launch(takePhotoCameraPermissions)
-                }
-            }
-            ivBack.setOnClickListener {
-                appNavigation.navigateUp()
-            }
-            etGender.setOnClickListener {
-                onGenderClick(it)
-            }
-            btnSave.setOnClickListener {
-//                context?.let {
-//                    Dialog.showCongratulationDialog(it, getString(R.string.string_edit_profile_successfully), true)
-//                    // after 3 seconds, navigate to home screen
-//                    binding.btnSave.postDelayed({
-////                    appNavigation.openSignUpProfileToHomeContainerScreen()
-//                    }, 3000)
-//
-//                }
-                MediaManager.get().upload(avatarImageUri).callback(object : UploadCallback {
-                    override fun onStart(requestId: String?) {
-                        Log.d("HoangDH", "onStart")
-                    }
-
-                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
-                        Log.d("HoangDH", "onProgress")
-                    }
-
-                    override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
-                        Log.d("HoangDH", resultData.toString())
-                    }
-
-                    override fun onError(requestId: String?, error: ErrorInfo?) {
-                        Log.d("HoangDH", error.toString())
-                    }
-
-                    override fun onReschedule(requestId: String?, error: ErrorInfo?) {
-                        Log.d("HoangDH", error.toString())
-                    }
-
-                }).dispatch()
-            }
         }
     }
 

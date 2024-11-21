@@ -70,6 +70,7 @@ class SignInFragment :
                 is MyResponse.Success -> {
                     showHideLoading(false)
                     Prefs.getInstance(requireContext()).patient = response.data
+                    Prefs.getInstance(requireContext()).isProfileExist = true
                     appNavigation.openSignInToHomeContainerScreen()
                 }
 
@@ -78,7 +79,8 @@ class SignInFragment :
                     if (response.statusCode == Define.HttpResponseCode.BAD_REQUEST
                         && response.exception.message == Define.HttpResponseMessage.PATIENT_PROFILE_NOT_FOUND
                     ) {
-                        appNavigation.openHomeContainerToEditProfileScreen()
+                        Prefs.getInstance(requireContext()).isProfileExist = false
+                        appNavigation.openSignInToEditProfileScreen()
                     }
                 }
 

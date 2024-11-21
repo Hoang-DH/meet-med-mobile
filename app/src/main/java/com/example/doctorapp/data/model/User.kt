@@ -20,6 +20,8 @@ data class User(
     val age: Int? = null,
     @SerializedName("phone")
     val phone: String? = null,
+    @SerializedName("dob")
+    val dob: String? = null,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),

@@ -36,7 +36,16 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/signInFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signInFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -60,48 +69,48 @@
         <action
             android:id="@+id/action_homeContainerFragment_to_searchDoctorFragment"
             app:destination="@id/searchDoctorFragment"
-            app:enterAnim="@anim/slide_in_bottom"/>
+            app:enterAnim="@anim/slide_in_bottom" />
         <action
             android:id="@+id/action_homeContainerFragment_to_signInFragment"
             app:destination="@id/signInFragment"
-            app:popUpTo="@id/homeContainerFragment"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/homeContainerFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_profileFragment_to_notificationFragment"
             app:destination="@id/notificationFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_profileFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/doctorDetailFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.doctorDetail.DoctorDetailFragment"
         android:label="fragment_doctor_detail"
-        tools:layout="@layout/fragment_doctor_detail" >
+        tools:layout="@layout/fragment_doctor_detail">
         <action
             android:id="@+id/action_doctorDetailFragment_to_searchDoctorFragment"
             app:destination="@id/searchDoctorFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/searchDoctorFragment"/>
+            app:popUpTo="@id/searchDoctorFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_doctorDetailFragment_to_bookingAppointmentFragment"
             app:destination="@id/bookingAppointmentFragment" />
@@ -114,13 +123,13 @@
         android:id="@+id/searchDoctorFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.search.SearchDoctorFragment"
         android:label="fragment_search_doctor"
-        tools:layout="@layout/fragment_search_doctor" >
+        tools:layout="@layout/fragment_search_doctor">
         <action
             android:id="@+id/action_searchDoctorFragment_to_homeContainerFragment"
             app:destination="@id/homeContainerFragment"
             app:exitAnim="@anim/slide_out_bottom"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/searchDoctorFragment"/>
+            app:popUpTo="@id/searchDoctorFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_searchDoctorFragment_to_doctorDetailFragment"
             app:destination="@id/doctorDetailFragment" />
@@ -129,7 +138,7 @@
         android:id="@+id/bookingAppointmentFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.booking.bookingAppointment.BookingAppointmentFragment"
         android:label="BookingAppointmentFragment"
-        tools:layout="@layout/fragment_booking_appointment"/>
+        tools:layout="@layout/fragment_booking_appointment" />
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.profile.editProfile.EditProfileFragment"
@@ -137,13 +146,20 @@
         tools:layout="@layout/fragment_edit_profile">
         <action
             android:id="@+id/action_editProfileFragment_to_homeContainerFragment"
-            app:destination="@id/homeContainerFragment" />
+            app:destination="@id/homeContainerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/editProfileFragment"
+            app:popUpToInclusive="true" />
+            />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.profile.notification.NotificationFragment"
         android:label="NotificationFragment"
-        tools:layout="@layout/fragment_notification"/>
+        tools:layout="@layout/fragment_notification" />
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.profile.favorite.FavoriteFragment"
@@ -155,6 +171,6 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

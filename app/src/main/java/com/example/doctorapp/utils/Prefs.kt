@@ -71,9 +71,10 @@ class Prefs @Inject constructor(context: Context, preFileName: String) {
             mPrefs.edit().putString(PREFS_KEY_USER, Gson().toJson(value)).apply()
         }
 
-    var isFirstTimeUsingApp: Boolean
-        get() = mPrefs.getBoolean(PREFS_KEY_IS_FIRST_TIME_USING_APP, true)
-        set(value) = mPrefs.edit().putBoolean(PREFS_KEY_IS_FIRST_TIME_USING_APP, value).apply()
+    var isProfileExist: Boolean
+        get() = mPrefs.getBoolean(PREFS_KEY_IS_PROFILE_EXIST, false)
+        set(value) = mPrefs.edit().putBoolean(PREFS_KEY_IS_PROFILE_EXIST, value).apply()
+
 
     companion object{
         private const val SHARE_PREFS_FILE_NAME = "prefs"
@@ -82,8 +83,8 @@ class Prefs @Inject constructor(context: Context, preFileName: String) {
         private const val PREFS_KEY_USER_ROLE = "userRole"
         private const val PREFS_KEY_DOCTOR = "doctor"
         private const val PREFS_KEY_PATIENT = "patient"
-        private const val PREFS_KEY_IS_FIRST_TIME_USING_APP = "isFirstTimeUsingApp"
         private const val PREFS_KEY_USER = "user"
+        private const val PREFS_KEY_IS_PROFILE_EXIST = "isProfileExist"
         private var mInstance: Prefs? = null
 
         fun getInstance(context: Context): Prefs {
