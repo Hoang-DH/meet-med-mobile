@@ -83,4 +83,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converterGson)
     implementation(libs.loggingInterceptor)
+
+    //cloudinary
+    implementation(libs.cloudinary)
 }
