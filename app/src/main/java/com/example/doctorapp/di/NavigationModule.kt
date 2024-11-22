@@ -1,8 +1,7 @@
 package com.example.doctorapp.di
 
-import android.app.Activity
-import com.example.doctorapp.presentation.navigation.AppNavigation
-import com.example.doctorapp.presentation.navigation.AppNavigationImpl
+import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigationImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

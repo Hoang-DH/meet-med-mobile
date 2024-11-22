@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Handler
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +22,7 @@ object Dialog {
         isShowLoading: Boolean,
         onClickDone: (() -> Unit)? = null,
         onClickEdit: (() -> Unit)? = null
-    ) {
+    ): AlertDialog {
         val builder = AlertDialog.Builder(context)
         val binding = DataBindingUtil.inflate<DialogCongratulationBinding>(
             LayoutInflater.from(context),
@@ -33,9 +35,9 @@ object Dialog {
         val dialog = builder.create()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         binding.apply {
-            llBtn.visibility = if(onClickEdit != null || onClickDone != null) View.VISIBLE else View.GONE
-            btnDone.visibility = if(onClickDone != null) View.VISIBLE else View.GONE
-            tvEditAppointment.visibility = if(onClickEdit != null) View.VISIBLE else View.GONE
+            llBtn.visibility = if (onClickEdit != null || onClickDone != null) View.VISIBLE else View.GONE
+            btnDone.visibility = if (onClickDone != null) View.VISIBLE else View.GONE
+            tvEditAppointment.visibility = if (onClickEdit != null) View.VISIBLE else View.GONE
             tvDescription.text = message
             progressBar.visibility = if (isShowLoading) View.VISIBLE else View.GONE
             btnDone.setOnClickListener {
@@ -54,6 +56,11 @@ object Dialog {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        return dialog
+    }
+
+    fun dismissDialog(dialog: AlertDialog) {
+        dialog.dismiss()
     }
 
     fun showChooseImageDialog(
@@ -72,10 +79,13 @@ object Dialog {
             dialog.show()
             dialog.setCancelable(true)
             dialog.setCanceledOnTouchOutside(true)
-            dialog.window?.setLayout(
-                (context.resources.displayMetrics.widthPixels * 0.85).toInt(),
-                (context.resources.displayMetrics.heightPixels * 0.5).toInt()
-            )
+            dialog.window?.apply {
+                setLayout(
+                    (context.resources.displayMetrics.widthPixels * 0.85).toInt(),
+                    (context.resources.displayMetrics.heightPixels * 0.7).toInt()
+                )
+                setGravity(Gravity.CENTER_VERTICAL)
+            }
             customView.findViewById<View>(R.id.btnCamera).setOnClickListener {
                 onClickCamera.invoke()
                 dialog.dismiss()

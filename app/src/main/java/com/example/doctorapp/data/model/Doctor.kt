@@ -4,23 +4,21 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Doctor(
-    val id: Int,
-    val name: String,
-    val speciality: String,
-    val description: String,
-    val phone: String,
-    val email: String,
-    val rating: Float,
-    val numberOfPatients: Int,
-    val reviewCount: Int,
-    val imageUrl: String,
-    val yoe: Int,
-    val isFavorite: Boolean = false
-) : Parcelable {
+    val id: String? = null,
+    var user: User? = null,
+    val speciality: String? = null,
+    val description: String? = null,
+    val phone: String? = null,
+    val rating: Float? = null,
+    val numberOfPatients: Int = 0,
+    val reviewCount: Int = 0,
+    val imageUrl: String? = null ,
+    val yoe: Int? = null,
+    val isFavorite: Boolean = false,
+): Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readInt(),
         parcel.readString().toString(),
-        parcel.readString().toString(),
+        parcel.readParcelable(User::class.java.classLoader),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -28,16 +26,30 @@ data class Doctor(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readString().toString(),
-        parcel.readInt()
+        parcel.readInt(),
+        parcel.readByte() != 0.toByte()
     ) {
     }
 
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeParcelable(user, flags)
+        parcel.writeString(speciality)
+        parcel.writeString(description)
+        parcel.writeString(phone)
+        if (rating != null) {
+            parcel.writeFloat(rating)
+        }
+        parcel.writeInt(numberOfPatients)
+        parcel.writeInt(reviewCount)
+        parcel.writeString(imageUrl)
+        if (yoe != null) {
+            parcel.writeInt(yoe)
+        }
+        parcel.writeByte(if (isFavorite) 1 else 0)
     }
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        TODO("Not yet implemented")
+    override fun describeContents(): Int {
+        return 0
     }
 
     companion object CREATOR : Parcelable.Creator<Doctor> {

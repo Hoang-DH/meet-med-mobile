@@ -22,12 +22,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorApp"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31" >
         <activity
             android:name=".moduleDoctor.presentation.container.MainDoctorActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.container.MainActivity"
+            android:name=".modulePatient.presentation.container.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:taskAffinity="" >
@@ -37,6 +38,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="CLOUDINARY_URL"
+            android:value="cloudinary://674511933645292:QiHL9qGpTb8LGFXE1byFdcU_va0@dl7onxqb1"/>
+
     </application>
 
 </manifest>

@@ -10,7 +10,6 @@ import com.example.doctorapp.data.model.DoctorShift
 import com.example.doctorapp.databinding.ShiftItemBinding
 import com.example.doctorapp.moduleDoctor.presentation.diffUtil.DoctorShiftDiffUtil
 import com.example.doctorapp.utils.DateUtils
-import com.example.doctorapp.utils.Define
 
 class DoctorShiftAdapter(
     private val context: Context,

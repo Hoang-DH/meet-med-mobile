@@ -6,7 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.ActivityMainDoctorBinding
 import com.example.doctorapp.domain.core.base.BaseActivity
-import com.example.doctorapp.presentation.navigation.AppNavigation
+import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
