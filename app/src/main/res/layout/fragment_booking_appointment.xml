@@ -63,7 +63,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/common_size_30dp"
-            android:layout_marginTop="@dimen/common_size_50dp"
             android:text="@string/string_select_time"
             android:textColor="@color/color_1C2A3A"
             android:textSize="@dimen/common_size_20sp"

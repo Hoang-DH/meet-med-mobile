@@ -1,7 +1,6 @@
 package com.example.doctorapp.modulePatient.network
 
 import com.example.doctorapp.data.dto.ApiResponse
-import com.example.doctorapp.data.dto.PatientDTO
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.utils.MyResponse
 import retrofit2.Response

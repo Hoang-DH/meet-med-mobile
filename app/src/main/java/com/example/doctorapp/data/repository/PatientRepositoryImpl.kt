@@ -1,7 +1,6 @@
 package com.example.doctorapp.data.repository
 
 import com.example.doctorapp.data.dto.ApiResponse
-import com.example.doctorapp.data.dto.PatientDTO
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.domain.repository.PatientRepository
 import com.example.doctorapp.modulePatient.network.PatientApiService

@@ -1,7 +1,6 @@
 package com.example.doctorapp.domain.repository
 
 import com.example.doctorapp.data.dto.ApiResponse
-import com.example.doctorapp.data.dto.PatientDTO
 import com.example.doctorapp.data.model.Patient
 import retrofit2.Response
 

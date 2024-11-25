@@ -24,30 +24,30 @@ class DoctorDetailFragment : BaseFragment<FragmentDoctorDetailBinding, DoctorDet
 
     private val viewModel: DoctorDetailViewModel by viewModels()
     override fun getVM() = viewModel
-
+    private var doctor : Doctor? = null
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         val bundle = arguments
-        val doctor = bundle?.getParcelable<Doctor>(Define.BundleKey.DOCTOR)
+        doctor = bundle?.getParcelable(Define.BundleKey.DOCTOR)
         binding.doctorDetail.apply {
             Glide.with(requireContext())
                 .load(doctor?.imageUrl)
                 .into(binding.doctorDetail.ivAvatar)
             if (doctor != null) {
-                tvDoctorName.text = doctor.user?.fullName ?: "Doctor"
+                tvDoctorName.text = doctor?.user?.fullName ?: "Doctor"
             }
             tvSpeciality.text = doctor?.speciality
             tvRating.text = doctor?.rating.toString()
             if (doctor != null) {
-                tvReview.text = when (doctor.reviewCount) {
+                tvReview.text = when (doctor?.reviewCount) {
                     1 -> String.format(
                         getString(R.string.string_review_num),
-                        doctor.reviewCount
+                        doctor?.reviewCount
                     )
 
                     else -> String.format(
                         getString(R.string.string_review_nums),
-                        doctor.reviewCount
+                        doctor?.reviewCount
                     )
                 }
             }
@@ -61,7 +61,9 @@ class DoctorDetailFragment : BaseFragment<FragmentDoctorDetailBinding, DoctorDet
                 appNavigation.navigateUp()
             }
             btnBookAppointment.setOnClickListener {
-                appNavigation.openDoctorDetailToBookingAppointmentScreen()
+                val bundle = Bundle()
+                bundle.putParcelable(Define.BundleKey.DOCTOR, doctor)
+                appNavigation.openDoctorDetailToBookingAppointmentScreen(bundle)
             }
 
         }
