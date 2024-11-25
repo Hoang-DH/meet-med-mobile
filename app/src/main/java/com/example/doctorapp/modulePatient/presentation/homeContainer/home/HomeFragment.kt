@@ -60,42 +60,42 @@ class HomeFragment :
     private fun getDepartments(): ArrayList<Department> {
         return arrayListOf(
             Department(
-                1,
+                "1",
                 "Cardiology",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
             ),
             Department(
-                2,
+                "2",
                 "Neurology",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
             ),
             Department(
-                3,
+                "3",
                 "Orthopedics",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
             ),
             Department(
-                4,
+                "4",
                 "Pediatrics",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
             ),
             Department(
-                5,
+                "5",
                 "Dermatology",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
             ),
             Department(
-                6,
+                "6",
                 "Radiology",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
             ),
             Department(
-                7,
+                "7",
                 "Oncology",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
             ),
             Department(
-                8,
+                "8",
                 "Gastroenterology",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
             )

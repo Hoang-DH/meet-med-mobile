@@ -28,13 +28,8 @@ class DoctorRepositoryImpl @Inject constructor(private val doctorApi: DoctorApiS
     }
 
     override suspend fun searchDoctor(
-        page: Int,
-        size: Int,
-        order: String,
-        orderBy: String,
-        name: String,
-        department: String
+        params: Map<String, Any>
     ): ApiResponse<PagingResponse<Doctor>> {
-        TODO("Not yet implemented")
+        return doctorApi.searchDoctor(params)
     }
 }

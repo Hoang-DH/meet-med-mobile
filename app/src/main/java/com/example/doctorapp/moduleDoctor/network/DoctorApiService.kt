@@ -2,14 +2,21 @@ package com.example.doctorapp.moduleDoctor.network
 
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.dto.ApiArrayResponse
+import com.example.doctorapp.data.dto.ApiResponse
+import com.example.doctorapp.data.dto.PagingResponse
+import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.data.model.DoctorShift
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.FieldMap
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 private const val PATH_DOCTOR = "/api/doctor"
+
 interface DoctorApiService {
     @GET("registered-shift/$PATH_DOCTOR")
     suspend fun getDoctorRegisteredShifts(
@@ -25,12 +32,8 @@ interface DoctorApiService {
     suspend fun registerNewShift(@Body doctorShifts: List<DoctorShift>): Response<ApiArrayResponse<DoctorShift>>
 
     @GET(PATH_DOCTOR)
+    @JvmSuppressWildcards
     suspend fun searchDoctor(
-        @Query(Define.Fields.PAGE) page: Int,
-        @Query(Define.Fields.SIZE) size: Int,
-        @Query(Define.Fields.ORDER) order: String,
-        @Query(Define.Fields.ORDER_BY) orderBy: String,
-        @Query(Define.Fields.NAME) name: String,
-        @Query(Define.Fields.DEPARTMENT) department: String,
-    ): Response<ApiArrayResponse<DoctorShift>>
+        @QueryMap params: Map<String, Any>
+    ): ApiResponse<PagingResponse<Doctor>>
 }

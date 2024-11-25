@@ -6,6 +6,7 @@ import com.example.doctorapp.data.dto.PagingResponse
 import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.data.model.DoctorShift
 import retrofit2.Response
+import retrofit2.http.Query
 
 interface DoctorRepository {
     suspend fun getDoctorRegisteredShifts(doctorId: String): Response<List<DoctorShift>>
@@ -13,11 +14,6 @@ interface DoctorRepository {
     suspend fun getShiftListOfDoctor()
     suspend fun registerNewShift(doctorShifts: List<DoctorShift>): Response<ApiArrayResponse<DoctorShift>>
     suspend fun searchDoctor(
-        page: Int,
-        size: Int,
-        order: String,
-        orderBy: String,
-        name: String,
-        department: String,
+       params: Map<String, Any>
     ): ApiResponse<PagingResponse<Doctor>>
 }

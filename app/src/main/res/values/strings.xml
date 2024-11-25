@@ -86,6 +86,7 @@
     <string name="string_hint_your_insurance_code">Your Insurance Code</string>
     <string name="string_hint_your_phone_number">Your Phone Number</string>
     <string name="string_ok">OK</string>
+    <string name="string_error">Error occured</string>
 
 
     <string-array name="gender_options">

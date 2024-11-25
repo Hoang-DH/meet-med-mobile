@@ -12,10 +12,10 @@ import com.example.doctorapp.modulePatient.presentation.diffUtil.DepartmentCateg
 
 class DepartmentCategoryAdapter(
     private val context: Context,
-    private val onDepartmentClick: ((Int) -> Unit)? = null
+
 ) : ListAdapter<Department, DepartmentCategoryAdapter.DepartmentCategoryViewHolder>(DepartmentCategoryDiffUtil()) {
     private var selectedPos = 0
-
+    private var onDepartmentClick: OnDepartmentClickListener? = null
     inner class DepartmentCategoryViewHolder(private val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(department: Department) {
@@ -31,15 +31,14 @@ class DepartmentCategoryAdapter(
                     notifyItemChanged(selectedPos)
                     selectedPos = adapterPosition
                     notifyItemChanged(selectedPos)
-                    onDepartmentClick?.invoke(adapterPosition)
+                    onDepartmentClick?.onDepartmentClick(adapterPosition)
                 }
             }
         }
     }
 
-    fun setSelectedDepartment(position: Int) {
-        val selectedPos = position
-        notifyItemChanged(selectedPos)
+    fun setOnDepartmentClickListener(onDepartmentClickListener: OnDepartmentClickListener) {
+        this.onDepartmentClick = onDepartmentClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DepartmentCategoryViewHolder {
@@ -53,5 +52,9 @@ class DepartmentCategoryAdapter(
 
     override fun onBindViewHolder(holder: DepartmentCategoryViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    interface OnDepartmentClickListener {
+        fun onDepartmentClick(position: Int)
     }
 }
