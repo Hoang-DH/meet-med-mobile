@@ -23,8 +23,8 @@ class PatientRepositoryImpl @Inject constructor(private val patientApi: PatientA
         TODO("Not yet implemented")
     }
 
-    override suspend fun createPatientProfile(patientDTO: PatientDTO): ApiResponse<Patient> {
-        return patientApi.createPatientProfile()
+    override suspend fun createPatientProfile(patient: Patient): ApiResponse<Patient> {
+        return patientApi.createPatientProfile(patient)
     }
 
     override suspend fun getPatientProfile(): ApiResponse<Patient> {
@@ -32,8 +32,8 @@ class PatientRepositoryImpl @Inject constructor(private val patientApi: PatientA
 
     }
 
-    override suspend fun updatePatientProfile(patientDTO: PatientDTO): ApiResponse<Patient> {
-        return patientApi.updatePatientProfile(patientDTO)
+    override suspend fun updatePatientProfile(patient: Patient): ApiResponse<Patient> {
+        return patientApi.updatePatientProfile(patient)
     }
 
 }

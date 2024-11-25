@@ -19,10 +19,10 @@ class EditProfileViewModel @Inject constructor(private val patientRepository: Pa
     private var _patientProfileResponse: MutableLiveData<MyResponse<Patient>> = MutableLiveData()
     val patientProfileResponse: LiveData<MyResponse<Patient>> = _patientProfileResponse
 
-    fun updateProfile(patientDTO: PatientDTO) {
+    fun updateProfile(patient: Patient) {
         viewModelScope.launch {
             _patientProfileResponse.value = MyResponse.Loading
-            patientRepository.updatePatientProfile(patientDTO).let { response ->
+            patientRepository.updatePatientProfile(patient).let { response ->
                 if(response.success == true){
                     _patientProfileResponse.value = MyResponse.Success(response.data ?: Patient())
                 } else {
@@ -46,10 +46,10 @@ class EditProfileViewModel @Inject constructor(private val patientRepository: Pa
         }
     }
 
-    fun createProfile(patientDTO: PatientDTO) {
+    fun createProfile(patient: Patient) {
         viewModelScope.launch {
             _patientProfileResponse.value = MyResponse.Loading
-            patientRepository.createPatientProfile(patientDTO).let { response ->
+            patientRepository.createPatientProfile(patient).let { response ->
                 if(response.success == true){
                     _patientProfileResponse.value = MyResponse.Success(response.data ?: Patient())
                 } else {

@@ -20,10 +20,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.cloudinary.android.MediaManager
 import com.example.doctorapp.R
-import com.example.doctorapp.data.dto.PatientDTO
-import com.example.doctorapp.data.dto.UserDTO
+import com.example.doctorapp.data.model.Patient
+import com.example.doctorapp.data.model.User
 import com.example.doctorapp.databinding.FragmentEditProfileBinding
 import com.example.doctorapp.databinding.PopupGenderBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
@@ -129,6 +128,7 @@ class EditProfileFragment :
                 etCity.setText(patient?.city)
                 etInsuranceCode.setText(patient?.insuranceCode)
                 etGender.text = patient?.user?.gender?.value ?: "Gender"
+                etGender.setTypeface(null, Typeface.NORMAL)
             }
         }
     }
@@ -151,7 +151,7 @@ class EditProfileFragment :
                         )
                         // after 3 seconds, navigate to home screen
                         Handler().postDelayed({
-                            if(Prefs.getInstance(requireContext()).isProfileExist) {
+                            if (Prefs.getInstance(requireContext()).isProfileExist) {
                                 appNavigation.navigateUp()
                             } else {
                                 appNavigation.openEditProfileToHomeContainerScreen()
@@ -161,16 +161,14 @@ class EditProfileFragment :
                         }, 2000)
 
 
-
                     }
                 }
 
                 is MyResponse.Error -> {
                     showHideLoading(false)
                     context?.let {
-                        Dialog.showAlertDialog(
+                        Dialog.showDialogError(
                             it,
-                            "Error",
                             response.exception.message ?: "Error occurred, please try again!",
                             onClickOk = {
                                 appNavigation.navigateUp()
@@ -199,14 +197,14 @@ class EditProfileFragment :
                 onGenderClick(it)
             }
             btnSave.setOnClickListener {
-                val user = UserDTO(
+                val user = User(
                     fullName = binding.etFullName.text.toString(),
                     email = binding.etEmail.text.toString(),
                     age = binding.etAge.text.toString().toInt(),
                     phone = binding.etPhoneNumber.text.toString(),
-                    gender = binding.etGender.text.toString()
+                    gender = Gender.fromString(binding.etGender.text.toString()),
                 )
-                val patient = PatientDTO(
+                val patient = Patient(
                     addressLine = binding.etAddressLine.text.toString(),
                     district = binding.etDistrict.text.toString(),
                     city = binding.etCity.text.toString(),
@@ -323,12 +321,11 @@ class EditProfileFragment :
             null,
             false
         )
-        binding.etGender.isAllCaps = false
         popupGenderBinding.llMale.setOnClickListener {
             dismissPopup()
             binding.etGender.apply {
                 text = Gender.MALE.value
-                setTextColor(resources.getColor(R.color.color_text_hint, null))
+                setTextColor(resources.getColor(R.color.black, null))
                 setTypeface(null, Typeface.NORMAL)
             }
         }
@@ -336,7 +333,7 @@ class EditProfileFragment :
             dismissPopup()
             binding.etGender.apply {
                 text = Gender.FEMALE.value
-                setTextColor(resources.getColor(R.color.color_text_hint, null))
+                setTextColor(resources.getColor(R.color.black, null))
                 setTypeface(null, Typeface.NORMAL)
             }
 
@@ -345,7 +342,7 @@ class EditProfileFragment :
             dismissPopup()
             binding.etGender.apply {
                 text = Gender.OTHER.value
-                setTextColor(resources.getColor(R.color.color_text_hint, null))
+                setTextColor(resources.getColor(R.color.black, null))
                 setTypeface(null, Typeface.NORMAL)
             }
         }

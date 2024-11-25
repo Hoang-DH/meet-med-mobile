@@ -23,6 +23,13 @@ object Define {
         const val MESSAGE = "message"
         const val STATUS_CODE = "statusCode"
         const val SUCCESS = "success"
+        const val DOCTOR_ID = "doctorId"
+        const val PAGE = "page"
+        const val SIZE = "size"
+        const val NAME = "name"
+        const val ORDER = "order"
+        const val ORDER_BY = "orderBy"
+        const val DEPARTMENT = "department"
     }
 
     object BookingStatus{

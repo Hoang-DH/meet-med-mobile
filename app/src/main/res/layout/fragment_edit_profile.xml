@@ -216,6 +216,8 @@
                     android:paddingHorizontal="@dimen/common_size_20dp"
                     android:textColorHint="@color/color_text_hint"
                     android:textSize="@dimen/common_text_size_14sp"
+                    android:textAllCaps="false"
+                    android:textStyle="normal"
                     app:layout_constraintTop_toBottomOf="@id/etInsuranceCode" />
 
                 <androidx.appcompat.widget.AppCompatButton

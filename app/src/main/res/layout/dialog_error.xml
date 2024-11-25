@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dialog_congratulation"
+        android:paddingVertical="@dimen/common_size_30dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ic_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_error"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_30dp"
+            android:text="Error"
+            android:textColor="@color/black"
+            android:textSize="@dimen/common_size_20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/ic_error"
+            app:layout_constraintStart_toStartOf="@id/ic_error"
+            app:layout_constraintTop_toBottomOf="@id/ic_error" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_10dp"
+            android:maxLines="3"
+            android:paddingHorizontal="50dp"
+            tools:text="@string/string_account_ready"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/common_size_14sp"
+            app:layout_constraintEnd_toEndOf="@id/tvError"
+            app:layout_constraintStart_toStartOf="@id/tvError"
+            app:layout_constraintTop_toBottomOf="@id/tvError" />
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnOk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/common_size_50dp"
+                android:layout_marginTop="@dimen/common_size_30dp"
+                android:background="@drawable/bg_category_checked"
+                android:text="@string/string_ok"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription"
+                android:textColor="@color/white" />
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</layout>

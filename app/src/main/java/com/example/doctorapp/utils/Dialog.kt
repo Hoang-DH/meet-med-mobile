@@ -13,6 +13,7 @@ import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.DialogCongratulationBinding
+import com.example.doctorapp.databinding.DialogErrorBinding
 import com.example.doctorapp.databinding.DialogSortTypeBinding
 
 object Dialog {
@@ -58,6 +59,43 @@ object Dialog {
         }
         return dialog
     }
+
+    fun showDialogError(
+        context: Context,
+        message: String,
+        onClickOk: (() -> Unit)? = null
+    ): AlertDialog {
+        val builder = AlertDialog.Builder(context)
+        val binding = DataBindingUtil.inflate<DialogErrorBinding>(
+            LayoutInflater.from(context),
+            R.layout.dialog_error,
+            null,
+            false
+        )
+        builder.setView(binding.root)
+        val dialog = builder.create()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        binding.apply {
+            tvDescription.text = message
+            btnOk.setOnClickListener {
+                onClickOk?.invoke()
+                dialog.dismiss()
+            }
+        }
+        try {
+            dialog.show()
+            dialog.setCancelable(false)
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.window?.setLayout(
+                (context.resources.displayMetrics.widthPixels * 0.85).toInt(),
+                (context.resources.displayMetrics.heightPixels * 0.5).toInt()
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return dialog
+    }
+
 
     fun dismissDialog(dialog: AlertDialog) {
         dialog.dismiss()

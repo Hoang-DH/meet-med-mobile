@@ -85,6 +85,7 @@
     <string name="string_hint_your_city">Your City</string>
     <string name="string_hint_your_insurance_code">Your Insurance Code</string>
     <string name="string_hint_your_phone_number">Your Phone Number</string>
+    <string name="string_ok">OK</string>
 
 
     <string-array name="gender_options">
