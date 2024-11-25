@@ -23,12 +23,12 @@ class Prefs @Inject constructor(context: Context, preFileName: String) {
         get() = mPrefs.getString(PREFS_KEY_ACCESS_TOKEN, "") ?: ""
         set(value) = mPrefs.edit().putString(PREFS_KEY_ACCESS_TOKEN, value).apply()
 
-    var userRole: UserRole
+    var userRole: UserRole?
         get() {
             val userRole = mPrefs.getString(PREFS_KEY_USER_ROLE, UserRole.PATIENT.name) ?: ""
             return UserRole.valueOf(userRole)
         }
-        set(value) = mPrefs.edit().putString(PREFS_KEY_USER_ROLE, value.name).apply()
+        set(value) = mPrefs.edit().putString(PREFS_KEY_USER_ROLE, value?.name).apply()
 
     //save doctor object to shared prefs
     var doctor: Doctor?

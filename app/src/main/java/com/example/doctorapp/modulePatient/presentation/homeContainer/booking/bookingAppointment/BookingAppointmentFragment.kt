@@ -9,7 +9,7 @@ import com.example.doctorapp.utils.DateUtils
 import com.example.doctorapp.utils.DateTimePickerDialog
 import java.util.Calendar
 
-class BookingAppointmentFragment : BaseFragment<FragmentBookingAppointmentBinding, BookingAppointmentViewModel>(R.layout.fragment_booking_appointment), DateTimePickerDialog.OnDateTimePickerListener {
+class BookingAppointmentFragment : BaseFragment<FragmentBookingAppointmentBinding, BookingAppointmentViewModel>(R.layout.fragment_booking_appointment) {
 
     companion object {
         fun newInstance() = BookingAppointmentFragment()
@@ -20,20 +20,15 @@ class BookingAppointmentFragment : BaseFragment<FragmentBookingAppointmentBindin
     private val fullSlotDay = mutableListOf<Long>(1728950400000, 1729209600000, 1729382400000, 1729468800000)
     override fun setOnClick() {
         super.setOnClick()
-        binding.tvDate.setOnClickListener {
-            DateTimePickerDialog.getInstance(fullSlotDay, this).showDatePickerDialog(childFragmentManager)
-        }
+
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         binding.apply {
-            tvDate.text = DateUtils.convertLongToDate(Calendar.getInstance().timeInMillis)
+
         }
     }
 
-    override fun onDateTimeSelected(date: Long) {
-        binding.tvDate.text = DateUtils.convertLongToDate(date)
-    }
 
 }

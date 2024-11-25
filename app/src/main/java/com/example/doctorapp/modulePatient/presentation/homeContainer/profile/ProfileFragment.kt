@@ -81,7 +81,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
                 }
 
                 override fun onSuccess(result: Void?) {
-                    Prefs.getInstance(requireContext()).isUserLogin = false
+                    Prefs.getInstance(requireContext()).apply {
+                        isUserLogin = false
+                        patient = null
+                        doctor = null
+                        user = null
+                        isProfileExist = false
+                        accessToken = ""
+                        userRole = null
+                    }
                     appNavigation.openHomeContainerToSignIn()
                     showSnackBar("Logout success", binding.root)
                 }

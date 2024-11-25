@@ -36,7 +36,7 @@ class SignInFragment :
     @Inject
     lateinit var appNavigation: AppNavigation
     private lateinit var account: Auth0
-    private val userRole: UserRole by lazy { Prefs.getInstance(requireContext()).userRole }
+    private val userRole: UserRole = UserRole.PATIENT
 
     private val viewModel: SignInViewModel by viewModels()
     override fun getVM() = viewModel

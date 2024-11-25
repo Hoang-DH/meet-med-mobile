@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="100dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="@dimen/common_size_10dp"
+        android:layout_marginHorizontal="@dimen/common_size_15dp"
         android:layout_marginBottom="@dimen/common_size_10dp"
         android:background="@drawable/bg_choose_date"
         android:paddingHorizontal="@dimen/common_size_10dp"
