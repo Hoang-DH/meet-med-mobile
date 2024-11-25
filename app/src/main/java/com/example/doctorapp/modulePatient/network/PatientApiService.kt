@@ -17,8 +17,8 @@ interface PatientApiService {
     suspend fun getPatientProfile(): ApiResponse<Patient>
 
     @POST("$PATH_PATIENT/profile")
-    suspend fun createPatientProfile(): ApiResponse<Patient>
+    suspend fun createPatientProfile(patient: Patient): ApiResponse<Patient>
 
     @PUT("$PATH_PATIENT/profile")
-    suspend fun updatePatientProfile(@Body patientDTO: PatientDTO): ApiResponse<Patient>
+    suspend fun updatePatientProfile(@Body patient: Patient): ApiResponse<Patient>
 }

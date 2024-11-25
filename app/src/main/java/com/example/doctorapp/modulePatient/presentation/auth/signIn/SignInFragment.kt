@@ -21,6 +21,7 @@ import com.example.doctorapp.databinding.FragmentSignInBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.container.MainDoctorActivity
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Prefs
 import com.example.doctorapp.utils.Utils.showSnackBar
@@ -54,7 +55,7 @@ class SignInFragment :
                 startActivity(Intent(requireContext(), MainDoctorActivity::class.java))
                 requireActivity().finish()
             } else {
-                viewModel.getPatientProfile()
+                appNavigation.openSignInToHomeContainerScreen()
             }
         }
     }
@@ -81,10 +82,11 @@ class SignInFragment :
                     ) {
                         Prefs.getInstance(requireContext()).isProfileExist = false
                         appNavigation.openSignInToEditProfileScreen()
+                    } else{
+                        Dialog.showDialogError(requireContext(), response.exception.message.toString())
                     }
                 }
 
-                else -> {}
             }
         }
     }
@@ -137,14 +139,16 @@ class SignInFragment :
                     )
                     if (result.getExtraInfo()["system_role"] == "Head Doctor") {
                         Prefs.getInstance(requireContext()).userRole = UserRole.DOCTOR
-
+//                        viewModel.getDoctorProfile()
+                        val intent = Intent(requireContext(), MainDoctorActivity::class.java)
+                        startActivity(intent)
                     } else {
                         Prefs.getInstance(requireContext()).userRole = UserRole.PATIENT
                         viewModel.getPatientProfile()
                     }
 
                     Log.d("HoangDH", "accessToken: $accessToken")
-                    Log.d("HoangDH", "userRole: ${Prefs.getInstance(requireContext()).user?.fullName}")
+                    Log.d("HoangDH", "userRole: ${result.getExtraInfo()["system_role"]}")
                 }
             })
     }

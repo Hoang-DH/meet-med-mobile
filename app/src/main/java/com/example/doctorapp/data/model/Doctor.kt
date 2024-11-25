@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Doctor(
-    val id: String? = null,
+    var id: String? = null,
     var user: User? = null,
     val speciality: String? = null,
     val description: String? = null,
@@ -15,6 +15,7 @@ data class Doctor(
     val imageUrl: String? = null ,
     val yoe: Int? = null,
     val isFavorite: Boolean = false,
+    var department: Department? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
@@ -27,7 +28,8 @@ data class Doctor(
         parcel.readInt(),
         parcel.readString().toString(),
         parcel.readInt(),
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte(),
+        parcel.readParcelable(Department::class.java.classLoader)
     ) {
     }
 

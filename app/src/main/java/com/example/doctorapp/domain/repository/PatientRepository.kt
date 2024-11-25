@@ -9,7 +9,7 @@ interface PatientRepository {
     suspend fun getPatientRegisteredShifts(patientId: String)
     suspend fun getShiftListOfPatient()
     suspend fun registerNewShift()
-    suspend fun createPatientProfile(patientDTO: PatientDTO): ApiResponse<Patient>
+    suspend fun createPatientProfile(patient: Patient): ApiResponse<Patient>
     suspend fun getPatientProfile(): ApiResponse<Patient>
-    suspend fun updatePatientProfile(patientDTO: PatientDTO): ApiResponse<Patient>
+    suspend fun updatePatientProfile(patient: Patient): ApiResponse<Patient>
 }
