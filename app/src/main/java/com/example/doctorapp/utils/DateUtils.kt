@@ -22,7 +22,7 @@ object DateUtils {
 
     fun convertInstantToTime(time: String): String {
         val instant = Instant.parse(time)
-        val formatterTime = DateTimeFormatter.ofPattern("hh:mm")
+        val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
         return formatterTime.format(dateTime)
     }

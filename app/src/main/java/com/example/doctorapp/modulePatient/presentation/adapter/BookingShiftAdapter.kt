@@ -14,7 +14,9 @@ class BookingShiftAdapter(
     ListAdapter<DoctorBookingShift, BookingShiftAdapter.BookingShiftViewHolder>(
         DoctorBookingShiftDiffUtil()
     ) {
+
     private var onShiftClick: OnShiftClick? = null
+    private var selectedPos = 0
     inner class BookingShiftViewHolder(private val binding: BookingDateItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(bookingShift: DoctorBookingShift) {
@@ -23,7 +25,18 @@ class BookingShiftAdapter(
                     bookingShift.shift?.startTime?.let { DateUtils.convertInstantToDate(it) }
                 tvDayOfWeek.text =
                     bookingShift.shift?.startTime?.let { DateUtils.convertInstantToDayOfWeek(it) }
+                tvDate.isSelected = selectedPos == adapterPosition
+                tvDate.setTextColor(
+                    if (selectedPos == adapterPosition) {
+                        root.context.resources.getColor(android.R.color.white, null)
+                    } else {
+                        root.context.resources.getColor(android.R.color.black, null)
+                    }
+                )
                 tvDate.setOnClickListener {
+                    notifyItemChanged(selectedPos)
+                    selectedPos = adapterPosition
+                    notifyItemChanged(selectedPos)
                     onShiftClick?.onShiftClick(bookingShift)
                 }
             }

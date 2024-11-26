@@ -1,6 +1,7 @@
 package com.example.doctorapp.modulePatient.network
 
 import com.example.doctorapp.data.dto.ApiResponse
+import com.example.doctorapp.data.dto.BookingShiftDTO
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.utils.MyResponse
 import retrofit2.Response
@@ -10,6 +11,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 
 private const val PATH_PATIENT = "/api/patient"
+private const val PATH_APPOINTMENT = "/api/appointment"
 interface PatientApiService {
 
     @GET("$PATH_PATIENT/profile")
@@ -20,4 +22,7 @@ interface PatientApiService {
 
     @PUT("$PATH_PATIENT/profile")
     suspend fun updatePatientProfile(@Body patient: Patient): ApiResponse<Patient>
+
+    @POST(PATH_APPOINTMENT)
+    suspend fun bookingAppointment(@Body bookingShiftDTO: BookingShiftDTO): ApiResponse<BookingShiftDTO>
 }

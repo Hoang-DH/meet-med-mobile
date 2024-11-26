@@ -26,7 +26,7 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
     }
 
     override fun openHomeContainerToSearchDoctorScreen(bundle: Bundle?) {
-        openScreen(R.id.action_homeContainerFragment_to_searchDoctorFragment)
+        openScreen(R.id.action_homeContainerFragment_to_searchDoctorFragment, bundle)
     }
 
     override fun openSearchDoctorToHomeContainerScreen(bundle: Bundle?) {
@@ -71,6 +71,10 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
 
     override fun openEditProfileToHomeContainerScreen(bundle: Bundle?) {
         openScreen(R.id.action_editProfileFragment_to_homeContainerFragment, bundle)
+    }
+
+    override fun openBookingAppointmentToMyBookingScreen(bundle: Bundle?) {
+        openScreen(R.id.action_bookingAppointmentFragment_to_bookingFragment, bundle)
     }
 
 }

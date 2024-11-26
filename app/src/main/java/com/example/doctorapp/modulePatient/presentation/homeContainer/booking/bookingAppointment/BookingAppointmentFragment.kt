@@ -6,8 +6,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
+import com.example.doctorapp.data.dto.BookingShiftDTO
 import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.data.model.DoctorBookingShift
+import com.example.doctorapp.data.model.TimeSlot
 import com.example.doctorapp.databinding.FragmentBookingAppointmentBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.BookingShiftAdapter
@@ -21,7 +23,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BookingAppointmentFragment :
     BaseFragment<FragmentBookingAppointmentBinding, BookingAppointmentViewModel>(R.layout.fragment_booking_appointment),
-    BookingShiftAdapter.OnShiftClick {
+    BookingShiftAdapter.OnShiftClick,
+    TimeSlotAdapter.OnTimeSlotClick {
 
     companion object {
         fun newInstance() = BookingAppointmentFragment()
@@ -36,7 +39,7 @@ class BookingAppointmentFragment :
     private var mBookingShiftAdapter: BookingShiftAdapter? = null
     private var mTimeSlotAdapter: TimeSlotAdapter? = null
     private var doctor: Doctor? = null
-
+    private var bookedTimeSlot: TimeSlot? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -47,6 +50,7 @@ class BookingAppointmentFragment :
         mBookingShiftAdapter = BookingShiftAdapter()
         mBookingShiftAdapter?.setOnShiftClick(this)
         mTimeSlotAdapter = TimeSlotAdapter()
+        mTimeSlotAdapter?.setOnTimeSlotClick(this)
 
         binding.apply {
             rvDate.apply {
@@ -63,6 +67,18 @@ class BookingAppointmentFragment :
         }
     }
 
+    override fun setOnClick() {
+        super.setOnClick()
+        binding.apply {
+            btnBookAppointment.setOnClickListener {
+                viewModel.bookAppointment(BookingShiftDTO(edtSymptom.text.toString(), bookedTimeSlot))
+            }
+            ivBack.setOnClickListener {
+                appNavigation.navigateUp()
+            }
+        }
+    }
+
     override fun bindingStateView() {
         super.bindingStateView()
         viewModel.doctorBookingShiftLiveData.observe(viewLifecycleOwner) { response ->
@@ -74,6 +90,8 @@ class BookingAppointmentFragment :
                 is MyResponse.Success -> {
                     showHideLoading(false)
                     mBookingShiftAdapter?.submitList(response.data)
+                    mTimeSlotAdapter?.submitList(response.data[0].timeSlot)
+                    bookedTimeSlot = response.data[0].timeSlot?.get(0)
                 }
 
                 is MyResponse.Error -> {
@@ -81,17 +99,36 @@ class BookingAppointmentFragment :
                     Dialog.showDialogError(requireContext(), response.exception.message.toString())
                 }
             }
+        }
 
+        viewModel.bookingAppointmentResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is MyResponse.Loading -> {
+                    showHideLoading(true)
+                }
+
+                is MyResponse.Success -> {
+                    showHideLoading(false)
+                    Dialog.showCongratulationDialog(requireContext(), "Your appointment has been booked successfully", false, {
+                        appNavigation.openBookingAppointmentToMyBookingScreen()
+                    })
+                }
+
+                is MyResponse.Error -> {
+                    showHideLoading(false)
+                    Dialog.showDialogError(requireContext(), response.exception.message.toString())
+                }
+            }
         }
     }
 
-    override fun setOnClick() {
-        super.setOnClick()
-
-    }
 
     override fun onShiftClick(bookingShift: DoctorBookingShift) {
         mTimeSlotAdapter?.submitList(bookingShift.timeSlot)
+    }
+
+    override fun onTimeSlotClick(timeSlot: TimeSlot) {
+       bookedTimeSlot = timeSlot
     }
 
 

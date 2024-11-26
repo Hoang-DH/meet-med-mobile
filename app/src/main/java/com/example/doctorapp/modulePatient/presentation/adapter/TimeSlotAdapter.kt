@@ -10,7 +10,8 @@ import com.example.doctorapp.databinding.TimeItemBinding
 import com.example.doctorapp.utils.DateUtils
 
 class TimeSlotAdapter() : ListAdapter<TimeSlot, TimeSlotAdapter.ShiftViewHolder>(TimeSlotDiffUtil()) {
-
+    private var selectedPos = 0
+    private var onTimeSlotClick: OnTimeSlotClick? = null
     inner class ShiftViewHolder(private val binding: TimeItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(timeSlot: TimeSlot, isFirstItem: Boolean = false) {
             binding.apply {
@@ -19,10 +20,18 @@ class TimeSlotAdapter() : ListAdapter<TimeSlot, TimeSlotAdapter.ShiftViewHolder>
                     append("-")
                     append(timeSlot.endTime?.let { DateUtils.convertInstantToTime(it) })
                 }
-                if(isFirstItem){
-                    root.isSelected = true
+                root.isSelected = selectedPos == adapterPosition
+                if (selectedPos == adapterPosition) {
+                    tvTime.setTextColor(root.context.resources.getColor(android.R.color.white, null))
+                } else {
+                    tvTime.setTextColor(root.context.resources.getColor(android.R.color.black, null))
                 }
-//                tvSlots.text = shift.slots.toString()
+                root.setOnClickListener {
+                    notifyItemChanged(selectedPos)
+                    selectedPos = adapterPosition
+                    notifyItemChanged(selectedPos)
+                    onTimeSlotClick?.onTimeSlotClick(timeSlot)
+                }
             }
 
         }
@@ -52,4 +61,13 @@ class TimeSlotAdapter() : ListAdapter<TimeSlot, TimeSlotAdapter.ShiftViewHolder>
 
     }
 
+    fun setOnTimeSlotClick(onTimeSlotClick: OnTimeSlotClick) {
+        this.onTimeSlotClick = onTimeSlotClick
+    }
+
+    interface OnTimeSlotClick {
+        fun onTimeSlotClick(timeSlot: TimeSlot)
+    }
+
 }
+

@@ -41,6 +41,7 @@ object Define {
     object BundleKey {
         const val DEPARTMENT = "department"
         const val DOCTOR = "doctor"
+        const val IS_FROM = "isFrom"
     }
 
     object WorkingTab {
@@ -50,6 +51,10 @@ object Define {
 
     object Network {
         const val BASE_URL = "http://clinic.thanhnguyen03.site"
+    }
+
+    object IsFrom {
+        const val IS_FROM_HOME_SCREEN = "isFromHomeScreen"
     }
 
 }

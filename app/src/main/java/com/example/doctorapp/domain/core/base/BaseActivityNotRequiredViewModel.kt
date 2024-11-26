@@ -49,10 +49,6 @@ abstract class BaseActivityNotRequiredViewModel<BD: ViewDataBinding> : AppCompat
         LoadingDialog.getInstance(this)?.hidden()
     }
 
-//    fun showDatePickerDialog(fullSlotDay: List<Long>) {
-//        DateTimePickerDialog.getInstance(fullSlotDay).showDatePickerDialog(supportFragmentManager)
-//    }
-
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         return super.dispatchTouchEvent(ev)
     }

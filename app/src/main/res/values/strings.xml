@@ -87,6 +87,8 @@
     <string name="string_hint_your_phone_number">Your Phone Number</string>
     <string name="string_ok">OK</string>
     <string name="string_error">Error occured</string>
+    <string name="string_your_symptoms">Your Symptoms</string>
+    <string name="string_describe_your_symptoms">Describe your symptoms</string>
 
 
     <string-array name="gender_options">
