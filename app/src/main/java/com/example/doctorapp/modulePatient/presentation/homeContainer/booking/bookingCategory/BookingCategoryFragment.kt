@@ -1,35 +1,21 @@
 package com.example.doctorapp.modulePatient.presentation.homeContainer.booking.bookingCategory
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
+import com.example.doctorapp.data.model.BookingShift
+import com.example.doctorapp.databinding.FragmentBookingCategoryBinding
+import com.example.doctorapp.domain.core.base.BaseFragment
 
-class BookingCategoryFragment : Fragment() {
+class BookingCategoryFragment :
+    BaseFragment<FragmentBookingCategoryBinding, BookingCategoryViewModel>(R.layout.fragment_booking_category) {
 
 
     private val viewModel: BookingCategoryViewModel by viewModels()
+    override fun getVM() = viewModel
+    private var allAppointmentList: List<BookingShift>? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(
-            R.layout.fragment_booking_category,
-            container,
-            false
-        )
-    }
 
     companion object {
         fun newInstance(category: String): BookingCategoryFragment {
@@ -39,5 +25,7 @@ class BookingCategoryFragment : Fragment() {
             fragment.arguments = bundle
             return fragment
         }
+
+
     }
 }

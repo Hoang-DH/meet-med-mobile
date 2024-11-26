@@ -1,10 +1,9 @@
 package com.example.doctorapp.modulePatient.network
 
+import com.example.doctorapp.data.dto.ApiArrayResponse
 import com.example.doctorapp.data.dto.ApiResponse
-import com.example.doctorapp.data.dto.BookingShiftDTO
+import com.example.doctorapp.data.model.BookingShift
 import com.example.doctorapp.data.model.Patient
-import com.example.doctorapp.utils.MyResponse
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -24,5 +23,8 @@ interface PatientApiService {
     suspend fun updatePatientProfile(@Body patient: Patient): ApiResponse<Patient>
 
     @POST(PATH_APPOINTMENT)
-    suspend fun bookingAppointment(@Body bookingShiftDTO: BookingShiftDTO): ApiResponse<BookingShiftDTO>
+    suspend fun bookingAppointment(@Body bookingShift: BookingShift): ApiResponse<BookingShift>
+
+    @GET(PATH_APPOINTMENT)
+    suspend fun getPatientBookedShifts(): ApiArrayResponse<BookingShift>
 }

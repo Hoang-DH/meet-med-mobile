@@ -1,13 +1,11 @@
 package com.example.doctorapp.data.repository
 
+import com.example.doctorapp.data.dto.ApiArrayResponse
 import com.example.doctorapp.data.dto.ApiResponse
-import com.example.doctorapp.data.dto.BookingShiftDTO
+import com.example.doctorapp.data.model.BookingShift
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.domain.repository.PatientRepository
 import com.example.doctorapp.modulePatient.network.PatientApiService
-import com.example.doctorapp.utils.MyResponse
-import retrofit2.HttpException
-import retrofit2.Response
 import javax.inject.Inject
 
 class PatientRepositoryImpl @Inject constructor(private val patientApi: PatientApiService): PatientRepository {
@@ -36,8 +34,12 @@ class PatientRepositoryImpl @Inject constructor(private val patientApi: PatientA
         return patientApi.updatePatientProfile(patient)
     }
 
-    override suspend fun bookingAppointment(bookingShiftDTO: BookingShiftDTO): ApiResponse<BookingShiftDTO> {
-        return patientApi.bookingAppointment(bookingShiftDTO)
+    override suspend fun bookingAppointment(bookingShift: BookingShift): ApiResponse<BookingShift> {
+        return patientApi.bookingAppointment(bookingShift)
+    }
+
+    override suspend fun getPatientBookedShifts(): ApiArrayResponse<BookingShift> {
+        return patientApi.getPatientBookedShifts()
     }
 
 }

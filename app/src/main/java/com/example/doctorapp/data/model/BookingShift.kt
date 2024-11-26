@@ -1,9 +1,8 @@
-package com.example.doctorapp.data.dto
+package com.example.doctorapp.data.model
 
-import com.example.doctorapp.data.model.TimeSlot
 import com.google.gson.annotations.SerializedName
 
-data class BookingShiftDTO (
+data class BookingShift (
     @SerializedName("symptoms")
     var symptoms: String? = null,
     @SerializedName("registeredShiftTimeSlot")

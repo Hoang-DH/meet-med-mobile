@@ -9,16 +9,22 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.BookingPagerAdapter
 import com.example.doctorapp.modulePatient.presentation.homeContainer.booking.bookingCategory.BookingCategoryFragment
 import com.example.doctorapp.constant.Define
+import com.example.doctorapp.data.model.BookingShift
+import com.example.doctorapp.utils.Dialog
+import com.example.doctorapp.utils.MyResponse
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BookingFragment :
     BaseFragment<FragmentBookingBinding, BookingViewModel>(R.layout.fragment_booking) {
-
-
     private val viewModel: BookingViewModel by viewModels()
     override fun getVM() = viewModel
     private val fragmentList = mutableListOf<Fragment>()
-
+    private var upcomingList: List<BookingShift>? = null
+    private var completedList: List<BookingShift>? = null
+    private var cancelledList: List<BookingShift>? = null
+    private var allAppointmentList: List<BookingShift>? = null
     init {
         fragmentList.add(BookingCategoryFragment.newInstance(Define.BookingStatus.UPCOMING))
         fragmentList.add(BookingCategoryFragment.newInstance(Define.BookingStatus.COMPLETED))
@@ -27,6 +33,7 @@ class BookingFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        viewModel.getAllPatientAppointments()
         binding.apply {
             vpBooking.adapter = BookingPagerAdapter(
                 this@BookingFragment,
@@ -38,6 +45,27 @@ class BookingFragment :
                     resources.getStringArray(R.array.booking_status)[position]
             }.attach()
         }
+    }
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+        viewModel.patientAppointmentResponse.observe(viewLifecycleOwner){ response ->
+            when(response) {
+                is MyResponse.Loading -> {
+                    showHideLoading(true)
+                }
+                is MyResponse.Success -> {
+                    showHideLoading(isShow = false)
+                    allAppointmentList = response.data
+
+                }
+                is MyResponse.Error -> {
+                    showHideLoading(false)
+                    Dialog.showDialogError(requireContext(), response.exception.message.toString())
+                }
+            }
+        }
+
     }
 
 //    companion object {

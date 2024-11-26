@@ -3,7 +3,7 @@ package com.example.doctorapp.modulePatient.presentation.homeContainer.booking.b
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.dto.BookingShiftDTO
+import com.example.doctorapp.data.model.BookingShift
 import com.example.doctorapp.data.model.DoctorBookingShift
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.DoctorRepository
@@ -23,8 +23,8 @@ class BookingAppointmentViewModel @Inject constructor(
     val doctorBookingShiftLiveData: MutableLiveData<MyResponse<List<DoctorBookingShift>>>
         get() = _doctorBookingShiftResponse
 
-    private var _bookingAppointmentResponse: MutableLiveData<MyResponse<BookingShiftDTO>> = MutableLiveData()
-    val bookingAppointmentResponse: MutableLiveData<MyResponse<BookingShiftDTO>>
+    private var _bookingAppointmentResponse: MutableLiveData<MyResponse<BookingShift>> = MutableLiveData()
+    val bookingAppointmentResponse: MutableLiveData<MyResponse<BookingShift>>
         get() = _bookingAppointmentResponse
 
 
@@ -66,12 +66,12 @@ class BookingAppointmentViewModel @Inject constructor(
         }
     }
 
-    fun bookAppointment(bookingShiftDTO: BookingShiftDTO){
+    fun bookAppointment(bookingShift: BookingShift){
         _bookingAppointmentResponse.value = MyResponse.Loading
         viewModelScope.launch {
-            patientRepository.bookingAppointment(bookingShiftDTO).let { response ->
+            patientRepository.bookingAppointment(bookingShift).let { response ->
                 if (response.success == true) {
-                    _bookingAppointmentResponse.value = MyResponse.Success(response.data ?: BookingShiftDTO())
+                    _bookingAppointmentResponse.value = MyResponse.Success(response.data ?: BookingShift())
                 } else {
                     when (response.statusCode) {
                         Define.HttpResponseCode.NOT_FOUND -> {

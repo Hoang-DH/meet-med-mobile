@@ -2,6 +2,7 @@ package com.example.doctorapp.constant
 
 object Define {
     object HttpResponseCode {
+        const val UNKNOWN = -1
         const val OK = 200
         const val CREATED = 201
         const val NO_CONTENT = 204
