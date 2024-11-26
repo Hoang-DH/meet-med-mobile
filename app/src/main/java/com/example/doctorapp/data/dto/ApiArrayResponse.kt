@@ -12,4 +12,8 @@ class ApiArrayResponse<T> {
 
     @SerializedName(Define.Fields.MESSAGE)
     var message: String? = null
+
+    @SerializedName(Define.Fields.SUCCESS)
+    var success: Boolean? = null
+
 }

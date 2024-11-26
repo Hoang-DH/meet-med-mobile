@@ -3,6 +3,7 @@ package com.example.doctorapp.modulePatient.presentation.homeContainer.home
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import com.example.doctorapp.R
+import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.model.Department
 import com.example.doctorapp.databinding.FragmentHomeBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
@@ -52,7 +53,11 @@ class HomeFragment :
             isFocusableInTouchMode = false
             isClickable = true
             setOnClickListener {
-                appNavigation.openHomeContainerToSearchDoctorScreen()
+                // pass data to know it from home fragment
+                val isFromHome = Define.IsFrom.IS_FROM_HOME_SCREEN
+                val bundle = Bundle()
+                bundle.putString(Define.BundleKey.IS_FROM, isFromHome)
+                appNavigation.openHomeContainerToSearchDoctorScreen(bundle)
             }
         }
     }

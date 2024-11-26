@@ -1,7 +1,7 @@
 package com.example.doctorapp.data.repository
 
 import com.example.doctorapp.data.dto.ApiResponse
-import com.example.doctorapp.data.dto.PatientDTO
+import com.example.doctorapp.data.dto.BookingShiftDTO
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.domain.repository.PatientRepository
 import com.example.doctorapp.modulePatient.network.PatientApiService
@@ -34,6 +34,10 @@ class PatientRepositoryImpl @Inject constructor(private val patientApi: PatientA
 
     override suspend fun updatePatientProfile(patient: Patient): ApiResponse<Patient> {
         return patientApi.updatePatientProfile(patient)
+    }
+
+    override suspend fun bookingAppointment(bookingShiftDTO: BookingShiftDTO): ApiResponse<BookingShiftDTO> {
+        return patientApi.bookingAppointment(bookingShiftDTO)
     }
 
 }

@@ -33,68 +33,113 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSelectDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_size_30dp"
-            android:layout_marginTop="@dimen/common_size_50dp"
-            android:text="@string/string_select_date"
-            android:textColor="@color/color_1C2A3A"
-            android:textSize="@dimen/common_size_20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDate"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_size_0dp"
-            android:layout_marginHorizontal="@dimen/common_size_10dp"
-            app:spanCount="3"
-            android:layout_marginTop="@dimen/common_size_15dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/tvSelectTime"
-            app:layout_constraintTop_toBottomOf="@id/tvSelectDate"
-            tools:listitem="@layout/booking_date_item" />
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSelectTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_size_30dp"
-            android:layout_marginTop="@dimen/common_size_50dp"
-            android:text="@string/string_select_time"
-            android:textColor="@color/color_1C2A3A"
-            android:textSize="@dimen/common_size_20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvDate" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSelectDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_size_30dp"
+                    android:layout_marginTop="@dimen/common_size_30dp"
+                    android:text="@string/string_select_date"
+                    android:textColor="@color/color_1C2A3A"
+                    android:textSize="@dimen/common_size_20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTime"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginHorizontal="@dimen/common_size_10dp"
-            android:layout_marginTop="@dimen/common_size_30dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/tvSelectTime"
-            app:spanCount="3"
-            tools:listitem="@layout/time_item" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_size_0dp"
+                    android:layout_marginStart="@dimen/common_size_30dp"
+                    android:layout_marginTop="@dimen/common_size_15dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tvSelectDate"
+                    app:spanCount="3"
+                    tools:listitem="@layout/booking_date_item" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/common_size_30dp"
-            android:layout_marginTop="@dimen/common_size_30dp"
-            android:background="@drawable/bg_category_checked"
-            android:text="@string/string_book_appointment"
-            android:textColor="@color/white"
-            android:textSize="@dimen/common_text_size_16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvTime" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSelectTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_size_30dp"
+                    android:text="@string/string_select_time"
+                    android:textColor="@color/color_1C2A3A"
+                    android:textSize="@dimen/common_size_20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rvDate" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/common_size_30dp"
+                    android:layout_marginTop="@dimen/common_size_15dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tvSelectTime"
+                    android:nestedScrollingEnabled="false"
+                    app:spanCount="3"
+                    tools:listitem="@layout/time_item" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSymptom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_1C2A3A"
+                    android:textSize="@dimen/common_size_20sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/common_size_30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rvTime"
+                    android:text="@string/string_your_symptoms"
+                    />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtSymptom"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginHorizontal="@dimen/common_size_30dp"
+                    android:gravity="top"
+                    android:paddingHorizontal="@dimen/common_size_5dp"
+                    android:textColorHint="@color/color_text_hint"
+                    android:textSize="@dimen/common_text_size_16sp"
+                    android:layout_marginTop="@dimen/common_size_15dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:hint="@string/string_describe_your_symptoms"
+                    app:layout_constraintTop_toBottomOf="@id/tvSymptom" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnBookAppointment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/common_size_30dp"
+                    android:layout_marginTop="@dimen/common_size_30dp"
+                    android:background="@drawable/bg_category_checked"
+                    android:maxLines="3"
+                    android:text="@string/string_book_appointment"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_16sp"
+                    android:layout_marginBottom="@dimen/common_size_15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edtSymptom" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

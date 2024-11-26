@@ -37,10 +37,14 @@ class SearchDoctorFragment :
 
     private val viewModel: SearchDoctorViewModel by viewModels()
     override fun getVM() = viewModel
+    private var isFrom: String? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        viewModel.searchDoctor(mapOf())
+        loadArgument()
+        if(isFrom == Define.IsFrom.IS_FROM_HOME_SCREEN){
+            viewModel.searchDoctor(mapOf())
+        }
         mDoctorAdapter = SearchDoctorAdapter(requireContext()) { doctor ->
             val bundle = Bundle()
             bundle.putParcelable(Define.BundleKey.DOCTOR, doctor)
@@ -69,6 +73,10 @@ class SearchDoctorFragment :
                 }
                 mDoctorAdapter?.submitList(filterDoctors)
             }
+            swipeRefresh.setOnRefreshListener {
+                viewModel.searchDoctor(mapOf())
+                swipeRefresh.isRefreshing = false
+            }
         }
     }
 
@@ -82,6 +90,8 @@ class SearchDoctorFragment :
 
                 is MyResponse.Success -> {
                     showHideLoading(false)
+                    binding.tvDoctorCount.text =
+                        String.format(getString(R.string.string_search_doctor_count), response.data.size)
                     mDoctors.clear()
                     mDoctors.addAll(response.data)
                     mDoctorAdapter?.submitList(mDoctors)
@@ -122,6 +132,14 @@ class SearchDoctorFragment :
                 appNavigation.openSearchDoctorToHomeContainerScreen()
             }
         }
+    }
+
+    private fun loadArgument(){
+        arguments?.let {
+            isFrom = it.getString(Define.BundleKey.IS_FROM)
+        }
+        // clear argument
+        arguments = null
     }
 
     private fun sortDoctors(sortType: SortType) {
@@ -208,51 +226,6 @@ class SearchDoctorFragment :
             ),
             Department(
                 "8",
-                "Gastroenterology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "9",
-                "All",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "10",
-                "Cardiology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "11",
-                "Neurology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "12",
-                "Orthopedics",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "13",
-                "Pediatrics",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "14",
-                "Dermatology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "15",
-                "Radiology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "16",
-                "Oncology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "17",
                 "Gastroenterology",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
             )

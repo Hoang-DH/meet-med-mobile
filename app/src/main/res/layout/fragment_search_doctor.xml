@@ -81,22 +81,29 @@
             android:layout_marginEnd="@dimen/common_size_20dp"
             android:drawableEnd="@drawable/ic_sort_default"
             android:drawablePadding="@dimen/common_size_5dp"
+            android:text="@string/string_default"
             android:textColor="@color/color_6b7280"
             android:textSize="@dimen/common_text_size_16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvCategory"
-            android:text="@string/string_default" />
+            app:layout_constraintTop_toBottomOf="@id/rvCategory" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDoctor"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
-            android:paddingBottom="@dimen/common_size_30dp"
-            android:layout_marginHorizontal="@dimen/common_size_20dp"
-            android:layout_marginTop="@dimen/common_size_15dp"
-            app:layout_constraintTop_toBottomOf="@id/tvSortType"
-            tools:listitem="@layout/doctor_item" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSortType">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDoctor"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:layout_marginHorizontal="@dimen/common_size_20dp"
+                android:layout_marginTop="@dimen/common_size_15dp"
+                android:paddingBottom="@dimen/common_size_30dp"
+                tools:listitem="@layout/doctor_item" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,16 +22,23 @@ object DateUtils {
 
     fun convertInstantToTime(time: String): String {
         val instant = Instant.parse(time)
-        val formatterTime = DateTimeFormatter.ofPattern("hh:mm a")
+        val formatterTime = DateTimeFormatter.ofPattern("HH:mm")
         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
         return formatterTime.format(dateTime)
     }
 
     fun convertInstantToDate(time: String): String {
         val instant = Instant.parse(time)
-        val formatterDate = DateTimeFormatter.ofPattern("EEEE, dd-MMMM-yyyy")
+        val formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
         return formatterDate.format(dateTime)
+    }
+
+    fun convertInstantToDayOfWeek(time: String): String {
+        val instant = Instant.parse(time)
+        val formatterDayOfWeek = DateTimeFormatter.ofPattern("EEEE")
+        val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+        return formatterDayOfWeek.format(dateTime)
     }
 
     fun checkDateIsSameDay(date1: Long, date2: Long): Boolean {

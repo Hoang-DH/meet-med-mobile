@@ -5,6 +5,7 @@ import com.example.doctorapp.data.dto.ApiArrayResponse
 import com.example.doctorapp.data.dto.ApiResponse
 import com.example.doctorapp.data.dto.PagingResponse
 import com.example.doctorapp.data.model.Doctor
+import com.example.doctorapp.data.model.DoctorBookingShift
 import com.example.doctorapp.data.model.DoctorShift
 import retrofit2.Response
 import retrofit2.http.Body
@@ -12,6 +13,7 @@ import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
@@ -36,4 +38,7 @@ interface DoctorApiService {
     suspend fun searchDoctor(
         @QueryMap params: Map<String, Any>
     ): ApiResponse<PagingResponse<Doctor>>
+
+    @GET("$PATH_DOCTOR/{doctorId}/booking-shifts")
+    suspend fun getDoctorBookingShifts(@Path("doctorId") doctorId: String): ApiArrayResponse<DoctorBookingShift>
 }
