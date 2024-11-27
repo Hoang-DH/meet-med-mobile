@@ -90,6 +90,7 @@
     <string name="string_your_symptoms">Your Symptoms</string>
     <string name="string_describe_your_symptoms">Describe your symptoms</string>
     <string name="string_my_appointment">My Appointment</string>
+    <string name="reschedule">Reschedule</string>
 
 
     <string-array name="gender_options">

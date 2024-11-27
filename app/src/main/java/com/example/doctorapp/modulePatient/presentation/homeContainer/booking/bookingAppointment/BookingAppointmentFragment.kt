@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.dto.BookingShiftDTO
+import com.example.doctorapp.data.model.BookingShift
 import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.data.model.DoctorBookingShift
 import com.example.doctorapp.data.model.TimeSlot
@@ -71,7 +71,7 @@ class BookingAppointmentFragment :
         super.setOnClick()
         binding.apply {
             btnBookAppointment.setOnClickListener {
-                viewModel.bookAppointment(BookingShiftDTO(edtSymptom.text.toString(), bookedTimeSlot))
+                viewModel.bookAppointment(BookingShift(edtSymptom.text.toString(), bookedTimeSlot))
             }
             ivBack.setOnClickListener {
                 appNavigation.navigateUp()

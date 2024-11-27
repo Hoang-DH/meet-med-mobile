@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="modulePatient.presentation.homeContainer.booking.bookingCategory.BookingCategoryFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        tools:context="modulePatient.presentation.homeContainer.booking.bookingCategory.BookingCategoryFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAppointment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/appointment_item"
+            android:layout_marginHorizontal="@dimen/common_size_30dp"
+            android:layout_marginTop="@dimen/common_size_10dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
