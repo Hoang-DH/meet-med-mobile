@@ -1,36 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/clShift"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/common_size_20dp"
-        android:background="@drawable/bg_shift"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvShift"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            app:layout_constraintEnd_toStartOf="@id/cbShift"
-            android:padding="@dimen/common_size_10dp"
-            android:text="08:00 AM - 17:00 PM, Wednesday, 12-12-2024"
-            android:textColor="@color/color_1C2A3A"
-            android:textSize="@dimen/common_text_size_16sp"
-            android:textStyle="bold"
-            />
-
-        <CheckBox
-            android:id="@+id/cbShift"
+            android:id="@+id/tvDayOfWeek"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-
-            app:layout_constraintStart_toEndOf="@id/tvShift"
+            android:layout_height="wrap_content"
+            tools:text="Monday"
+            android:textSize="@dimen/common_text_size_18sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_1C2A3A"
+            android:layout_marginBottom="@dimen/common_size_10dp"
             />
+
+        <LinearLayout
+            android:id="@+id/clShift"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/common_size_20dp"
+            android:background="@drawable/bg_shift"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvShift"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:padding="@dimen/common_size_10dp"
+                android:text="08:00 AM - 17:00 PM, Wednesday, 12-12-2024"
+                android:textColor="@color/color_1C2A3A"
+                android:textSize="@dimen/common_text_size_16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/cbShift" />
+
+            <CheckBox
+                android:id="@+id/cbShift"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                app:layout_constraintStart_toEndOf="@id/tvShift" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+
 
 </layout>

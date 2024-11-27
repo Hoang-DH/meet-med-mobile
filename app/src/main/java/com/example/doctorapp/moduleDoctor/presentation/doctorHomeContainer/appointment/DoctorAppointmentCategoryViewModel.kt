@@ -2,6 +2,6 @@ package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.appo
 
 import com.example.doctorapp.domain.core.base.BaseViewModel
 
-class DoctorAppointmentViewModel : BaseViewModel() {
-    // TODO: Implement the ViewModel
+
+class DoctorAppointmentCategoryViewModel : BaseViewModel() {
 }

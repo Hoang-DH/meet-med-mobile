@@ -2,6 +2,7 @@ package com.example.doctorapp.moduleDoctor.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,18 +14,23 @@ import com.example.doctorapp.utils.DateUtils
 
 class DoctorShiftAdapter(
     private val context: Context,
+    private val isMyShift: Boolean = false
 ) : ListAdapter<DoctorShift, DoctorShiftAdapter.RegisterShiftViewHolder>(DoctorShiftDiffUtil()) {
 
     private var onShiftClickListener: OnShiftClickListener? = null
     inner class RegisterShiftViewHolder(private val binding: ShiftItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(shift: DoctorShift) {
             binding.apply {
+                if (isMyShift) {
+                    cbShift.visibility = View.GONE
+                }
                 tvShift.text = String.format(
                     context.getString(R.string.string_date_time_of_shift),
                     DateUtils.convertInstantToTime(shift.startTime),
                     DateUtils.convertInstantToTime(shift.endTime),
-                    DateUtils.convertInstantToDate(shift.startTime)
+                    DateUtils.convertInstantToDateDoctor(shift.startTime)
                 )
+                tvDayOfWeek.text = DateUtils.convertInstantToDayOfWeek(shift.startTime)
                 cbShift.isChecked = shift.isRegistered
                 cbShift.setOnClickListener {
                     onShiftClickListener?.onShiftClick(shift)
