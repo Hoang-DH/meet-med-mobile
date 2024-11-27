@@ -89,6 +89,7 @@
     <string name="string_error">Error occured</string>
     <string name="string_your_symptoms">Your Symptoms</string>
     <string name="string_describe_your_symptoms">Describe your symptoms</string>
+    <string name="string_my_appointment">My Appointment</string>
     <string name="reschedule">Reschedule</string>
 
 
@@ -107,6 +108,11 @@
     <string-array name="working_tab">
         <item>Register new shift</item>
         <item>My shifts</item>
+    </string-array>
+
+    <string-array name="doctor_appointment_tab">
+        <item>Upcoming</item>
+        <item>Completed</item>
     </string-array>
 
 </resources>

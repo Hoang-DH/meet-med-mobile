@@ -35,7 +35,7 @@ class WorkingCategoryFragment :
     override fun getVM() = viewModel
     private var tab: String = Define.WorkingTab.REGISTER_NEW_SHIFT
     private val shiftAdapter by lazy {
-        DoctorShiftAdapter(requireContext())
+        DoctorShiftAdapter(requireContext(), tab == Define.WorkingTab.MY_SHIFTS)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -47,7 +47,10 @@ class WorkingCategoryFragment :
             rvShift.adapter = shiftAdapter
             rvShift.layoutManager = LinearLayoutManager(requireContext())
             rvShift.itemAnimator = null
-
+            if(tab == Define.WorkingTab.MY_SHIFTS){
+                btnAddShift.visibility = View.GONE
+                tvSelectAll.visibility = View.GONE
+            }
         }
     }
 
@@ -79,11 +82,11 @@ class WorkingCategoryFragment :
                         binding.apply {
                             progressBar.visibility = View.GONE
                             tvFromDate.text = String.format(getString(R.string.string_from_date),
-                                response.data[0].startTime.let { DateUtils.convertInstantToDate(it) })
+                                response.data[0].startTime.let { DateUtils.convertInstantToDatePatient(it) })
                             tvToDate.text = String.format(
                                 getString(R.string.string_to_date),
                                 response.data[response.data.size - 1]
-                                    .let { DateUtils.convertInstantToDate(it.startTime) })
+                                    .let { DateUtils.convertInstantToDatePatient(it.startTime) })
                             if (response.data.all { shift -> shift.isRegistered }) {
                                 viewModel.setSelectAll(true)
                             } else {

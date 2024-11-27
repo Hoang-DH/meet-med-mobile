@@ -27,9 +27,16 @@ object DateUtils {
         return formatterTime.format(dateTime)
     }
 
-    fun convertInstantToDate(time: String): String {
+    fun convertInstantToDatePatient(time: String): String {
         val instant = Instant.parse(time)
         val formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+        return formatterDate.format(dateTime)
+    }
+
+    fun convertInstantToDateDoctor(time: String): String {
+        val instant = Instant.parse(time)
+        val formatterDate = DateTimeFormatter.ofPattern("MMMM d, yyyy")
         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
         return formatterDate.format(dateTime)
     }

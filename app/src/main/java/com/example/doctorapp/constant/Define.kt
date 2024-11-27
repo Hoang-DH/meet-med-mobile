@@ -17,7 +17,7 @@ object Define {
         const val PATIENT_PROFILE_NOT_FOUND = "Patient profile not found"
     }
 
-    object Fields{
+    object Fields {
         const val CATEGORY = "category"
         const val DATA = "data"
         const val META = "meta"
@@ -33,7 +33,7 @@ object Define {
         const val DEPARTMENT = "department"
     }
 
-    object BookingStatus{
+    object BookingStatus {
         const val UPCOMING = "upcoming"
         const val COMPLETED = "completed"
         const val CANCELLED = "cancelled"
@@ -48,6 +48,11 @@ object Define {
     object WorkingTab {
         const val MY_SHIFTS = "my_shifts"
         const val REGISTER_NEW_SHIFT = "register_new_shift"
+    }
+
+    object AppointmentTab {
+        const val UPCOMING = "upcoming"
+        const val COMPLETED = "completed"
     }
 
     object Network {
