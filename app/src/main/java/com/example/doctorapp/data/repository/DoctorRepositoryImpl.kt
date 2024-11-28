@@ -37,4 +37,8 @@ class DoctorRepositoryImpl @Inject constructor(private val doctorApi: DoctorApiS
     override suspend fun getDoctorBookingShifts(doctorId: String): ApiArrayResponse<DoctorBookingShift> {
         return doctorApi.getDoctorBookingShifts(doctorId)
     }
+
+    override suspend fun getRegisteredShifts(): Response<ApiArrayResponse<DoctorShift>> {
+        return doctorApi.getRegisteredShifts()
+    }
 }

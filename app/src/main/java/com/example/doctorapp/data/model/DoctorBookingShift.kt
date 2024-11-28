@@ -8,5 +8,5 @@ data class DoctorBookingShift(
     @SerializedName("shift")
     var shift: Shift? = null,
     @SerializedName("timeSlots")
-    var timeSlot: List<TimeSlot>? = null,
+    var timeSlot: ArrayList<TimeSlot>? = null,
 )

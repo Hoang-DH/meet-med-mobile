@@ -37,4 +37,6 @@
     <dimen name="common_size_8dp">8dp</dimen>
     <dimen name="common_size_16dp">16dp</dimen>
     <dimen name="common_size_11dp">11dp</dimen>
+    <dimen name="common_size_24dp">24dp</dimen>
+    <dimen name="common_text_size_24sp">24sp</dimen>
 </resources>

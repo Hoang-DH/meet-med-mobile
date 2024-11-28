@@ -37,20 +37,6 @@ class DoctorDetailFragment : BaseFragment<FragmentDoctorDetailBinding, DoctorDet
                 tvDoctorName.text = doctor?.user?.fullName ?: "Doctor"
             }
             tvSpeciality.text = doctor?.speciality
-            tvRating.text = doctor?.rating.toString()
-            if (doctor != null) {
-                tvReview.text = when (doctor?.reviewCount) {
-                    1 -> String.format(
-                        getString(R.string.string_review_num),
-                        doctor?.reviewCount
-                    )
-
-                    else -> String.format(
-                        getString(R.string.string_review_nums),
-                        doctor?.reviewCount
-                    )
-                }
-            }
         }
     }
 

@@ -31,4 +31,7 @@ interface DoctorApiService {
 
     @GET("$PATH_DOCTOR/{doctorId}/booking-shifts")
     suspend fun getDoctorBookingShifts(@Path("doctorId") doctorId: String): ApiArrayResponse<DoctorBookingShift>
+
+    @GET("$PATH_DOCTOR/shifts/get-week")
+    suspend fun getRegisteredShifts(): Response<ApiArrayResponse<DoctorShift>>
 }

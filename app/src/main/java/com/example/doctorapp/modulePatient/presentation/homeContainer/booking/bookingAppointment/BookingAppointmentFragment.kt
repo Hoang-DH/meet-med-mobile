@@ -15,6 +15,7 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.BookingShiftAdapter
 import com.example.doctorapp.modulePatient.presentation.adapter.TimeSlotAdapter
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import com.example.doctorapp.utils.DateUtils
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,6 +41,7 @@ class BookingAppointmentFragment :
     private var mTimeSlotAdapter: TimeSlotAdapter? = null
     private var doctor: Doctor? = null
     private var bookedTimeSlot: TimeSlot? = null
+    private var doctorBookingShiftList: ArrayList<DoctorBookingShift>? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -89,9 +91,11 @@ class BookingAppointmentFragment :
 
                 is MyResponse.Success -> {
                     showHideLoading(false)
-                    mBookingShiftAdapter?.submitList(response.data)
-                    mTimeSlotAdapter?.submitList(response.data[0].timeSlot)
-                    bookedTimeSlot = response.data[0].timeSlot?.get(0)
+                    doctorBookingShiftList = ArrayList(response.data)
+                    processData()
+                    mBookingShiftAdapter?.submitList(doctorBookingShiftList)
+                    mTimeSlotAdapter?.submitList(doctorBookingShiftList!![0].timeSlot)
+                    bookedTimeSlot = doctorBookingShiftList!![0].timeSlot?.get(0)
                 }
 
                 is MyResponse.Error -> {
@@ -109,9 +113,13 @@ class BookingAppointmentFragment :
 
                 is MyResponse.Success -> {
                     showHideLoading(false)
-                    Dialog.showCongratulationDialog(requireContext(), "Your appointment has been booked successfully", false, {
-                        appNavigation.openBookingAppointmentToMyBookingScreen()
-                    })
+                    Dialog.showCongratulationDialog(
+                        requireContext(),
+                        "Your appointment has been booked successfully",
+                        false,
+                        {
+                            appNavigation.openBookingAppointmentToMyBookingScreen()
+                        })
                 }
 
                 is MyResponse.Error -> {
@@ -128,8 +136,32 @@ class BookingAppointmentFragment :
     }
 
     override fun onTimeSlotClick(timeSlot: TimeSlot) {
-       bookedTimeSlot = timeSlot
+        bookedTimeSlot = timeSlot
     }
 
+    private fun processData() {
+
+        for (i in 0 until doctorBookingShiftList!!.size) {
+            if (i < doctorBookingShiftList!!.size) {
+                if (doctorBookingShiftList!![i].shift?.startTime?.let {
+                        DateUtils.convertInstantToDayOfWeek(
+                            it
+                        )
+                    } == doctorBookingShiftList!![i + 1].shift?.startTime?.let {
+                        DateUtils.convertInstantToDayOfWeek(
+                            it
+                        )
+                    }) {
+                    doctorBookingShiftList!![i].timeSlot?.addAll(doctorBookingShiftList!![i + 1].timeSlot!!)
+                    doctorBookingShiftList!!.remove(doctorBookingShiftList!![i + 1])
+                    Log.e(
+                        "HoangDH",
+                        doctorBookingShiftList!![i].timeSlot?.get(0)?.startTime.toString()
+                    )
+                }
+            }
+
+        }
+    }
 
 }

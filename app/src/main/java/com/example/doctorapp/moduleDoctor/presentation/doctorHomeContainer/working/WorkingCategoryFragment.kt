@@ -41,7 +41,11 @@ class WorkingCategoryFragment :
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         tab = arguments?.getString(Define.Fields.CATEGORY).toString()
-        viewModel.getListShiftToRegister()
+        if(tab == Define.WorkingTab.MY_SHIFTS){
+            viewModel.getRegisteredShifts()
+        } else {
+            viewModel.getListShiftToRegister()
+        }
         shiftAdapter.setOnShiftClickListener(this)
         binding.apply {
             rvShift.adapter = shiftAdapter
@@ -79,8 +83,10 @@ class WorkingCategoryFragment :
             shiftListResponse.observe(viewLifecycleOwner) { response ->
                 when (response) {
                     is MyResponse.Success -> {
+                        showHideLoading(false)
                         binding.apply {
-                            progressBar.visibility = View.GONE
+                            tvFromDate.visibility = View.VISIBLE
+                            tvToDate.visibility = View.VISIBLE
                             tvFromDate.text = String.format(getString(R.string.string_from_date),
                                 response.data[0].startTime.let { DateUtils.convertInstantToDatePatient(it) })
                             tvToDate.text = String.format(
@@ -98,11 +104,12 @@ class WorkingCategoryFragment :
                     }
 
                     is MyResponse.Error -> {
+                        showHideLoading(false)
                         Utils.showSnackBar(response.exception.toString(), binding.root)
                     }
 
                     is MyResponse.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        showHideLoading(true)
                     }
                 }
 
@@ -116,6 +123,7 @@ class WorkingCategoryFragment :
             registeredShiftResponse.observe(viewLifecycleOwner) { response ->
                 when (response) {
                     is MyResponse.Success -> {
+                        showHideLoading(false)
                         Dialog.showCongratulationDialog(
                             requireContext(),
                             "Register shift successfully",
@@ -129,11 +137,12 @@ class WorkingCategoryFragment :
                     }
 
                     is MyResponse.Error -> {
+                        showHideLoading(false)
                         Utils.showSnackBar(response.exception.toString(), binding.root)
                     }
 
                     is MyResponse.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                       showHideLoading(true)
                     }
                 }
             }

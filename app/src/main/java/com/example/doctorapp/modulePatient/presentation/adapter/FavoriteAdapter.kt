@@ -24,17 +24,6 @@ class FavoriteAdapter(
                     .into(ivAvatar)
                 tvDoctorName.text = doctor.user?.fullName ?: "Doctor"
                 tvSpeciality.text = doctor.speciality
-                tvRating.text = doctor.rating.toString()
-                tvReview.text = when (doctor.reviewCount) {
-                    1 -> String.format(
-                        context.getString(R.string.string_review_num),
-                        doctor.reviewCount
-                    )
-                    else -> String.format(
-                        context.getString(R.string.string_review_nums),
-                        doctor.reviewCount
-                    )
-                }
                 itemView.setOnClickListener {
                     onDoctorClickListener?.invoke(doctor)
                 }

@@ -108,6 +108,7 @@
     <string name="string_functions">Functions</string>
     <string name="string_register_shift">Register shift</string>
     <string name="string_my_appointments">My Appointments</string>
+    <string name="string_upcoming_appointment">Upcoming Appointment</string>
 
 
     <string-array name="gender_options">

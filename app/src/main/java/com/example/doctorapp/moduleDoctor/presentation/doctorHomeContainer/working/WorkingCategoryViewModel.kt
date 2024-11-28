@@ -117,4 +117,36 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
         }
     }
 
+    fun getRegisteredShifts() {
+        viewModelScope.launch {
+            _shiftListResponse.value = MyResponse.Loading
+            doctorRepository.getRegisteredShifts().let { response ->
+                if (response.isSuccessful) {
+                    _shiftListResponse.value = MyResponse.Success(response.body()?.data ?: emptyList())
+                } else {
+                    when (response.body()?.statusCode) {
+                        Define.HttpResponseCode.UNAUTHORIZED -> {
+                            _shiftListResponse.value = MyResponse.Error(Exception("Unauthorized"), Define.HttpResponseCode.UNAUTHORIZED)
+                        }
+
+                        Define.HttpResponseCode.BAD_REQUEST -> {
+                            _shiftListResponse.value = MyResponse.Error(
+                                Exception(response.body()?.message ?: "Error occurred"),
+                                Define.HttpResponseCode.BAD_REQUEST
+                            )
+                        }
+
+                        else -> {
+                            _shiftListResponse.value = MyResponse.Error(
+                                Exception(response.errorBody().toString()),
+                                Define.HttpResponseCode.INTERNAL_SERVER_ERROR
+                            )
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
 }

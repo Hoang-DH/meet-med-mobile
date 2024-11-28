@@ -48,6 +48,14 @@ object DateUtils {
         return formatterDayOfWeek.format(dateTime)
     }
 
+    // check if 2 instant is same day
+    fun checkInstantIsSameDay(instant1: String, instant2: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val date1 = LocalDateTime.parse(instant1, formatter)
+        val date2 = LocalDateTime.parse(instant2, formatter)
+        return date1 == date2
+    }
+
     fun checkDateIsSameDay(date1: Long, date2: Long): Boolean {
         return format.format(Date(date1)) == format.format(Date(date2))
     }

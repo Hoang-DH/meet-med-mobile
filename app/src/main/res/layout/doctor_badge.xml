@@ -17,115 +17,57 @@
         android:id="@+id/tvNumberOfPatients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_5dp"
+        android:layout_marginStart="@dimen/common_size_20dp"
         android:textColor="@color/color_1C2A3A"
-        android:textSize="@dimen/common_text_size_14sp"
+        android:textSize="@dimen/common_text_size_24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/icNumberOfPatients"
-        app:layout_constraintStart_toStartOf="@id/icNumberOfPatients"
-        app:layout_constraintTop_toBottomOf="@id/icNumberOfPatients"
+        app:layout_constraintBottom_toBottomOf="@+id/icNumberOfPatients"
+        app:layout_constraintStart_toEndOf="@id/icNumberOfPatients"
+        app:layout_constraintTop_toTopOf="@+id/icNumberOfPatients"
         tools:text="1000+" />
 
     <androidx.appcompat.widget.AppCompatTextView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_5dp"
+        android:layout_marginStart="@dimen/common_size_10dp"
         android:text="@string/string_patients"
-        app:layout_constraintEnd_toEndOf="@id/tvNumberOfPatients"
-        app:layout_constraintStart_toStartOf="@id/tvNumberOfPatients"
-        app:layout_constraintTop_toBottomOf="@id/tvNumberOfPatients" />
+        android:textSize="@dimen/common_size_20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvNumberOfPatients"
+        app:layout_constraintStart_toEndOf="@+id/tvNumberOfPatients"
+        app:layout_constraintTop_toTopOf="@+id/tvNumberOfPatients" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icYoe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_yoe"
-        app:layout_constraintStart_toEndOf="@id/icNumberOfPatients"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/icRating"
-        />
+android:layout_marginTop="@dimen/common_size_20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icNumberOfPatients" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvYoe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_5dp"
         android:textColor="@color/color_1C2A3A"
-        android:textSize="@dimen/common_text_size_14sp"
+        android:textSize="@dimen/common_text_size_24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/icYoe"
-        app:layout_constraintStart_toStartOf="@id/icYoe"
-        app:layout_constraintTop_toBottomOf="@id/icYoe"
+        android:layout_marginStart="@dimen/common_size_20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/icYoe"
+        app:layout_constraintStart_toEndOf="@+id/icYoe"
+        app:layout_constraintTop_toTopOf="@+id/icYoe"
         tools:text="10+" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_5dp"
         android:text="@string/string_years_of_experience"
-        app:layout_constraintEnd_toEndOf="@id/tvYoe"
-        app:layout_constraintStart_toStartOf="@id/tvYoe"
-        app:layout_constraintTop_toBottomOf="@id/tvYoe" />
+        android:layout_marginStart="@dimen/common_size_10dp"
+        android:textSize="@dimen/common_text_size_20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvYoe"
+        app:layout_constraintStart_toEndOf="@+id/tvYoe"
+        app:layout_constraintTop_toTopOf="@+id/tvYoe" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/icRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_rating"
-        app:layout_constraintEnd_toStartOf="@+id/icReview"
-        app:layout_constraintStart_toEndOf="@id/icYoe"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_5dp"
-        android:textColor="@color/color_1C2A3A"
-        android:textSize="@dimen/common_text_size_14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/icRating"
-        app:layout_constraintStart_toStartOf="@id/icRating"
-        app:layout_constraintTop_toBottomOf="@id/icRating"
-        tools:text="1000+" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_5dp"
-        android:text="@string/string_rating"
-        app:layout_constraintEnd_toEndOf="@id/tvRating"
-        app:layout_constraintStart_toStartOf="@id/tvRating"
-        app:layout_constraintTop_toBottomOf="@id/tvRating" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/icReview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_review"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvReview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_5dp"
-        android:textColor="@color/color_1C2A3A"
-        android:textSize="@dimen/common_text_size_14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/icReview"
-        app:layout_constraintStart_toStartOf="@id/icReview"
-        app:layout_constraintTop_toBottomOf="@id/icReview"
-        tools:text="1000+" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_5dp"
-        android:text="@string/string_reviews"
-        app:layout_constraintEnd_toEndOf="@id/tvReview"
-        app:layout_constraintStart_toStartOf="@id/tvReview"
-        app:layout_constraintTop_toBottomOf="@id/tvReview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

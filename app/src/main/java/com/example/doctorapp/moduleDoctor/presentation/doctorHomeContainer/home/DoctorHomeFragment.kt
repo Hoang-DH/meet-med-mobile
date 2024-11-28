@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.doctorapp.R
-import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.data.model.User
 import com.example.doctorapp.databinding.FragmentDoctorHomeBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
-import com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.DoctorHomeContainerFragment
 import com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.DoctorHomeContainerViewModel
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.Prefs
@@ -46,7 +42,15 @@ class DoctorHomeFragment : BaseFragment<FragmentDoctorHomeBinding, DoctorHomeVie
         super.setOnClick()
         binding.apply {
             icRegisterShift.setOnClickListener{
-                doctorHomeContainerViewModel.onRegisterShiftClick()
+                doctorHomeContainerViewModel.onFunctionClick(R.id.tab_doctor_working)
+            }
+
+            icAppointment.setOnClickListener {
+                doctorHomeContainerViewModel.onFunctionClick(R.id.tab_doctor_appointment)
+            }
+
+            icEditProfile.setOnClickListener {
+                appNavigation.openDoctorHomeToEditProfileScreen()
             }
         }
     }

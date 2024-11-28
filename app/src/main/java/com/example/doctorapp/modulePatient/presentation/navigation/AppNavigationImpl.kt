@@ -89,4 +89,8 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
         openScreen(R.id.action_doctorHomeContainerFragment_to_doctorWorkingFragment, bundle)
     }
 
+    override fun openDoctorHomeToEditProfileScreen(bundle: Bundle?) {
+        openScreen(R.id.action_doctorHomeContainerFragment_to_doctorEditProfileFragment, bundle)
+    }
+
 }

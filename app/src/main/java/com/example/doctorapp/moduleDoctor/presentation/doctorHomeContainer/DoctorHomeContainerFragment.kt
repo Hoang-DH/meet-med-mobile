@@ -40,12 +40,12 @@ class DoctorHomeContainerFragment : BaseFragment<FragmentDoctorHomeContainerBind
     override fun bindingStateView() {
         super.bindingStateView()
         viewModel.navigateToDoctorWorking.observe(viewLifecycleOwner) {
-            navController?.navigate(R.id.tab_doctor_working)
+            changeTab(it.getContentIfNotHandled() ?: return@observe)
         }
     }
 
-    private fun changeTab(position: Int) {
-
+    private fun changeTab(tabId: Int) {
+        binding.bottomNav.selectedItemId = tabId
     }
 
 }

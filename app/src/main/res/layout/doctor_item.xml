@@ -47,7 +47,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Dr. John Doe" />
 
-
             <View
                 android:id="@+id/divider"
                 android:layout_width="wrap_content"
@@ -73,8 +72,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivStar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/common_size_24dp"
+                android:layout_height="@dimen/common_size_24dp"
                 android:layout_marginStart="@dimen/common_size_15dp"
                 android:layout_marginTop="@dimen/common_size_5dp"
                 android:src="@drawable/ic_star"
@@ -82,37 +81,17 @@
                 app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvRating"
+                android:id="@+id/tvYoe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/common_size_3dp"
                 android:layout_marginTop="@dimen/common_size_5dp"
-                android:text="5"
+                android:text="10 years of experience"
                 android:textColor="@color/color_6b7280"
                 app:layout_constraintStart_toEndOf="@id/ivStar"
                 app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDivider"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/common_size_5dp"
-                android:layout_marginTop="@dimen/common_size_5dp"
-                android:text="|"
-                android:textColor="@color/color_text_hint"
-                app:layout_constraintStart_toEndOf="@id/tvRating"
-                app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvReview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/common_size_5dp"
-                android:layout_marginTop="@dimen/common_size_5dp"
-                android:text="@string/string_review_num"
-                android:textColor="@color/color_6b7280"
-                app:layout_constraintStart_toEndOf="@id/tvDivider"
-                app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

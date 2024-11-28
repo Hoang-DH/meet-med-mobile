@@ -18,4 +18,5 @@ interface DoctorRepository {
        params: Map<String, Any>
     ): ApiResponse<PagingResponse<Doctor>>
     suspend fun getDoctorBookingShifts(doctorId: String): ApiArrayResponse<DoctorBookingShift>
+    suspend fun getRegisteredShifts(): Response<ApiArrayResponse<DoctorShift>>
 }
