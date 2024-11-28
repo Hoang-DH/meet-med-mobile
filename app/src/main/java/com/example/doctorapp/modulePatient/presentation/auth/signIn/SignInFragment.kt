@@ -1,31 +1,22 @@
 package com.example.doctorapp.modulePatient.presentation.auth.signIn
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.viewModels
 import com.auth0.android.Auth0
-import com.auth0.android.authentication.AuthenticationAPIClient
 import com.auth0.android.authentication.AuthenticationException
 import com.auth0.android.callback.Callback
 import com.auth0.android.provider.WebAuthProvider
 import com.auth0.android.result.Credentials
-import com.auth0.android.result.UserProfile
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.constant.UserRole
-import com.example.doctorapp.data.model.Doctor
-import com.example.doctorapp.data.model.Patient
-import com.example.doctorapp.data.model.User
 import com.example.doctorapp.databinding.FragmentSignInBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
-import com.example.doctorapp.moduleDoctor.presentation.container.MainDoctorActivity
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Prefs
 import com.example.doctorapp.utils.Utils.showSnackBar
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -36,7 +27,7 @@ class SignInFragment :
     @Inject
     lateinit var appNavigation: AppNavigation
     private lateinit var account: Auth0
-    private val userRole: UserRole = UserRole.PATIENT
+
 
     private val viewModel: SignInViewModel by viewModels()
     override fun getVM() = viewModel
@@ -51,9 +42,8 @@ class SignInFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         if (Prefs.getInstance(requireContext()).isUserLogin) {
-            if (userRole == UserRole.DOCTOR) {
-                startActivity(Intent(requireContext(), MainDoctorActivity::class.java))
-                requireActivity().finish()
+            if (Prefs.getInstance(requireContext()).userRole == UserRole.DOCTOR) {
+                appNavigation.openSignInToDoctorHomeContainerScreen()
             } else {
                 appNavigation.openSignInToHomeContainerScreen()
             }
@@ -89,6 +79,31 @@ class SignInFragment :
 
             }
         }
+
+        viewModel.userInfoResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is MyResponse.Loading -> {
+                    showHideLoading(true)
+                }
+
+                is MyResponse.Success -> {
+                    showHideLoading(false)
+                    Prefs.getInstance(requireContext()).user = response.data
+                    if (response.data.role == "HeadDoctor") {
+                        Prefs.getInstance(requireContext()).userRole = UserRole.DOCTOR
+                        appNavigation.openSignInToDoctorHomeContainerScreen()
+                    } else {
+                        Prefs.getInstance(requireContext()).userRole = UserRole.PATIENT
+                        viewModel.getPatientProfile()
+                    }
+                }
+                is MyResponse.Error -> {
+                    showHideLoading(false)
+                    Dialog.showDialogError(requireContext(), response.exception.message.toString())
+                }
+
+            }
+        }
     }
 
     override fun bindingAction() {
@@ -115,43 +130,41 @@ class SignInFragment :
                         accessToken = result.accessToken
                         isUserLogin = true
                     }
-                    val accessToken = result.accessToken
-                    showUserProfile(accessToken)
+                    viewModel.getUserInfo()
                 }
             })
     }
 
-    private fun showUserProfile(accessToken: String) {
-        val client = AuthenticationAPIClient(account)
-
-        // With the access token, call `userInfo` and get the profile from Auth0.
-        client.userInfo(accessToken)
-            .start(object : Callback<UserProfile, AuthenticationException> {
-                override fun onFailure(error: AuthenticationException) {
-                    // Something went wrong!
-                }
-
-                override fun onSuccess(result: UserProfile) {
-                    // We have the user's profile!
-                    Prefs.getInstance(requireContext()).user = Gson().fromJson(
-                        Gson().toJson(result.getExtraInfo()["user_info"]),
-                        User::class.java
-                    )
-                    if (result.getExtraInfo()["system_role"] == "Head Doctor") {
-                        Prefs.getInstance(requireContext()).userRole = UserRole.DOCTOR
-//                        viewModel.getDoctorProfile()
-                        val intent = Intent(requireContext(), MainDoctorActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Prefs.getInstance(requireContext()).userRole = UserRole.PATIENT
-                        viewModel.getPatientProfile()
-                    }
-
-                    Log.d("HoangDH", "accessToken: $accessToken")
-                    Log.d("HoangDH", "userRole: ${result.getExtraInfo()["system_role"]}")
-                }
-            })
-    }
+//    private fun showUserProfile(accessToken: String) {
+//        val client = AuthenticationAPIClient(account)
+//
+//        // With the access token, call `userInfo` and get the profile from Auth0.
+//        client.userInfo(accessToken)
+//            .start(object : Callback<UserProfile, AuthenticationException> {
+//                override fun onFailure(error: AuthenticationException) {
+//                    // Something went wrong!
+//                }
+//
+//                override fun onSuccess(result: UserProfile) {
+//                    // We have the user's profile!
+//                    Prefs.getInstance(requireContext()).user = Gson().fromJson(
+//                        Gson().toJson(result.getExtraInfo()["user_info"]),
+//                        User::class.java
+//                    )
+//                    if (result.getExtraInfo()["system_role"] == "Head Doctor") {
+//                        Prefs.getInstance(requireContext()).userRole = UserRole.DOCTOR
+////                        viewModel.getDoctorProfile()
+//                        appNavigation.openSignInToDoctorHomeContainerScreen()
+//                    } else {
+//                        Prefs.getInstance(requireContext()).userRole = UserRole.PATIENT
+//                        viewModel.getPatientProfile()
+//                    }
+//
+//                    Log.d("HoangDH", "accessToken: $accessToken")
+//                    Log.d("HoangDH", "userRole: ${result.getExtraInfo()["system_role"]}")
+//                }
+//            })
+//    }
 
 
 }

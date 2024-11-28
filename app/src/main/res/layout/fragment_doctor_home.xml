@@ -1,13 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".moduleDoctor.presentation.doctorHomeContainer.home.DoctorHomeFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        tools:context=".presentation.homeContainer.home.HomeFragment">
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_10dp"
+            android:text="Good Morning!"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_5dp"
+            android:text="@string/string_doctor_name"
+            android:textColor="@color/color_1C2A3A"
+            android:textSize="@dimen/common_text_size_18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvGreeting" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_20dp"
+            android:layout_marginEnd="@dimen/common_size_20dp"
+            android:src="@drawable/ic_noti"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_60dp"
+            android:text="Upcoming Appointment"
+            android:textColor="@color/color_1C2A3A"
+            android:textSize="@dimen/common_size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_60dp"
+            android:layout_marginEnd="@dimen/common_size_20dp"
+            android:text="@string/string_see_all"
+            android:textColor="@color/color_6b7280"
+            android:textSize="@dimen/common_size_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDepartment"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_marginTop="@dimen/common_size_20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tvCategory"
+            tools:listitem="@layout/doctor_appointment_item" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvFunction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_size_20dp"
+            android:layout_marginTop="@dimen/common_size_40dp"
+            android:text="@string/string_functions"
+            android:textColor="@color/color_1C2A3A"
+            android:textSize="@dimen/common_size_16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvDepartment" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icRegisterShift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common_size_30dp"
+            android:layout_marginTop="@dimen/common_size_20dp"
+            android:src="@drawable/ic_noti_schedule_changed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFunction" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/icRegisterShift"
+            app:layout_constraintStart_toStartOf="@id/icRegisterShift"
+            app:layout_constraintEnd_toEndOf="@id/icRegisterShift"
+            android:text="@string/string_register_shift"
+            android:layout_marginTop="@dimen/common_size_10dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_20dp"
+            android:src="@drawable/ic_appointment"
+            app:layout_constraintEnd_toStartOf="@+id/icEditProfile"
+            app:layout_constraintStart_toEndOf="@+id/icRegisterShift"
+            app:layout_constraintTop_toBottomOf="@id/tvFunction" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/icAppointment"
+            app:layout_constraintStart_toStartOf="@id/icAppointment"
+            app:layout_constraintEnd_toEndOf="@id/icAppointment"
+            android:text="@string/string_my_appointments"
+            android:layout_marginTop="@dimen/common_size_10dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icEditProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_20dp"
+            android:layout_marginEnd="@dimen/common_size_30dp"
+            android:src="@drawable/ic_function_edit_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFunction"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/icEditProfile"
+            app:layout_constraintStart_toStartOf="@id/icEditProfile"
+            app:layout_constraintEnd_toEndOf="@id/icEditProfile"
+            android:text="@string/string_edit_profile"
+            android:layout_marginTop="@dimen/common_size_10dp"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

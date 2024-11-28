@@ -20,15 +20,9 @@ import retrofit2.http.QueryMap
 private const val PATH_DOCTOR = "/api/doctor"
 
 interface DoctorApiService {
-    @GET("registered-shift/$PATH_DOCTOR")
-    suspend fun getDoctorRegisteredShifts(
-        @Query(Define.Fields.DOCTOR_ID) doctorId: String,
-    ): Response<List<DoctorShift>>
 
     @GET("$PATH_DOCTOR/shifts/can-register")
     suspend fun getShiftListToRegister(): Response<ApiArrayResponse<DoctorShift>>
-
-    suspend fun getShiftListOfDoctor()
 
     @POST("$PATH_DOCTOR/shifts/register")
     suspend fun registerNewShift(@Body doctorShifts: List<DoctorShift>): Response<ApiArrayResponse<DoctorShift>>

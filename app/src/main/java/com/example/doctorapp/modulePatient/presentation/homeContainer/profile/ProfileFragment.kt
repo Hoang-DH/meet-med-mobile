@@ -39,8 +39,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(R
 
     private lateinit var account: Auth0
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         account = Auth0(

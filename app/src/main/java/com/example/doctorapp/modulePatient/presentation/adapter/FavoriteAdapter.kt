@@ -38,7 +38,6 @@ class FavoriteAdapter(
                 itemView.setOnClickListener {
                     onDoctorClickListener?.invoke(doctor)
                 }
-                ivHeart.isActivated = doctor.isFavorite
             }
         }
     }

@@ -21,4 +21,6 @@ interface AppNavigation: BaseNavigator {
     fun openSignInToEditProfileScreen(bundle: Bundle? = null)
     fun openEditProfileToHomeContainerScreen(bundle: Bundle? = null)
     fun openBookingAppointmentToMyBookingScreen(bundle: Bundle? = null)
+    fun openSignInToDoctorHomeContainerScreen(bundle: Bundle? = null)
+    fun openDoctorHomeContainerToSignInScreen(bundle: Bundle? = null)
 }

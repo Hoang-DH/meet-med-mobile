@@ -77,4 +77,12 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
         openScreen(R.id.action_bookingAppointmentFragment_to_bookingFragment, bundle)
     }
 
+    override fun openSignInToDoctorHomeContainerScreen(bundle: Bundle?) {
+        openScreen(R.id.action_signInFragment_to_doctorHomeContainerFragment, bundle)
+    }
+
+    override fun openDoctorHomeContainerToSignInScreen(bundle: Bundle?) {
+        openScreen(R.id.action_doctorHomeContainerFragment_to_signInFragment, bundle)
+    }
+
 }

@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
+import android.view.WindowManager
 import com.example.doctorapp.R
 import java.lang.ref.WeakReference
 
@@ -60,8 +61,11 @@ class LoadingDialog private constructor(private var mActivity: Activity?) {
             dialogBuilder.setCancelable(false)
             dialog = dialogBuilder.create()
             if (dialog.window != null) {
-                dialog.window!!
-                    .setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialog.window!!.apply {
+                    setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+                }
+
             }
             dialog.setCancelable(false)
             dialog.setCanceledOnTouchOutside(false)

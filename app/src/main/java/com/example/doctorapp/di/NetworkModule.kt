@@ -6,6 +6,7 @@ import android.util.Log
 import com.example.doctorapp.moduleDoctor.network.DoctorApiService
 import com.example.doctorapp.modulePatient.network.PatientApiService
 import com.example.doctorapp.constant.Define
+import com.example.doctorapp.network.UserApiService
 import com.example.doctorapp.utils.Prefs
 import dagger.Module
 import dagger.Provides
@@ -68,5 +69,14 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
             .create(PatientApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserApiService(okHttpClient: OkHttpClient): UserApiService {
+        return Retrofit.Builder().baseUrl(Define.Network.BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
+            .create(UserApiService::class.java)
     }
 }

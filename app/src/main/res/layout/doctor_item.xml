@@ -47,13 +47,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Dr. John Doe" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_heart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_favorite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/divider"
@@ -63,7 +56,7 @@
                 android:layout_marginTop="@dimen/common_size_10dp"
                 android:background="@color/color_divider"
                 app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
-                app:layout_constraintTop_toBottomOf="@id/iv_heart" />
+                app:layout_constraintTop_toBottomOf="@id/tv_doctor_name" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSpeciality"

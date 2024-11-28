@@ -46,6 +46,15 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signInFragment_to_doctorHomeContainerFragment"
+            app:destination="@id/doctorHomeContainerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -182,5 +191,20 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/doctorHomeContainerFragment"
+        android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.DoctorHomeContainerFragment"
+        android:label="DoctorHomeContainerFragment"
+        tools:layout="@layout/fragment_doctor_home_container">
+        <action
+            android:id="@+id/action_doctorHomeContainerFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/doctorHomeContainerFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

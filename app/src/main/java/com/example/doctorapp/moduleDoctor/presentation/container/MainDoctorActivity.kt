@@ -29,7 +29,7 @@ class MainDoctorActivity : BaseActivity<ActivityMainDoctorBinding, MainDoctorAct
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_doctor) as NavHostFragment
-//        appNavigation.bind(navHostFragment.navController)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_doctor) as NavHostFragment
+        appNavigation.bind(navHostFragment.navController)
     }
 }
