@@ -206,5 +206,19 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/doctorHomeContainerFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_doctorHomeContainerFragment_to_doctorWorkingFragment"
+            app:destination="@id/doctorWorkingFragment"
+            />
     </fragment>
+    <fragment
+        android:id="@+id/doctorWorkingFragment"
+        android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.working.DoctorWorkingFragment"
+        android:label="DoctorWorkingFragment"
+        tools:layout="@layout/fragment_doctor_working"/>
+    <fragment
+        android:id="@+id/doctorHomeFragment"
+        android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.home.DoctorHomeFragment"
+        android:label="DoctorHomeFragment"
+        tools:layout="@layout/fragment_doctor_home"/>
 </navigation>

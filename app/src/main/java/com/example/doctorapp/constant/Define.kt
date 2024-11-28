@@ -13,6 +13,13 @@ object Define {
         const val INTERNAL_SERVER_ERROR = 500
     }
 
+    object DoctorBottomNav{
+        const val HOME = 0
+        const val APPOINTMENT = 1
+        const val WORKING = 2
+        const val PROFILE = 3
+    }
+
     object HttpResponseMessage {
         const val PATIENT_PROFILE_NOT_FOUND = "Patient profile not found"
     }

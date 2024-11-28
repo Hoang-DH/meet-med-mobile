@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.doctorapp.R
@@ -20,15 +22,30 @@ class DoctorHomeContainerFragment : BaseFragment<FragmentDoctorHomeContainerBind
         fun newInstance() = DoctorHomeContainerFragment()
     }
 
-    private val viewModel: DoctorHomeContainerViewModel by viewModels()
+    private val viewModel: DoctorHomeContainerViewModel by activityViewModels()
     override fun getVM() = viewModel
+    private var navController: NavController? = null
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        Log.d("HoangDH", "$viewModel")
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_doctor_container) as NavHostFragment
+        navController = navHostFragment.navController
         binding.bottomNav.apply {
             setupWithNavController(navHostFragment.navController)
         }
         Log.d("HoangDH", Prefs.getInstance(requireContext()).accessToken)
     }
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+        viewModel.navigateToDoctorWorking.observe(viewLifecycleOwner) {
+            navController?.navigate(R.id.tab_doctor_working)
+        }
+    }
+
+    private fun changeTab(position: Int) {
+
+    }
+
 }
