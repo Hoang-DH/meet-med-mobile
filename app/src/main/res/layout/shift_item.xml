@@ -3,22 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDayOfWeek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Monday"
-            android:textSize="@dimen/common_text_size_18sp"
-            android:textStyle="bold"
-            android:textColor="@color/color_1C2A3A"
-            android:layout_marginBottom="@dimen/common_size_10dp"
-            />
-
         <LinearLayout
             android:id="@+id/clShift"
             android:layout_width="match_parent"
@@ -48,9 +32,5 @@
                 app:layout_constraintStart_toEndOf="@id/tvShift" />
 
         </LinearLayout>
-
-    </LinearLayout>
-
-
 
 </layout>

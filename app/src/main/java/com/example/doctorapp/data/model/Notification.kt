@@ -1,6 +1,6 @@
 package com.example.doctorapp.data.model
 
-sealed class Notification
+sealed class Notification()
 data class NotificationData(
     val title: String,
     val content: String,

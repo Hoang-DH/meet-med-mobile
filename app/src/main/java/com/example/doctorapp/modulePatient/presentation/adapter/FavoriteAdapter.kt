@@ -23,7 +23,7 @@ class FavoriteAdapter(
                     .load(doctor.imageUrl)
                     .into(ivAvatar)
                 tvDoctorName.text = doctor.user?.fullName ?: "Doctor"
-                tvSpeciality.text = doctor.speciality
+//                tvSpeciality.text = doctor.speciality
                 itemView.setOnClickListener {
                     onDoctorClickListener?.invoke(doctor)
                 }

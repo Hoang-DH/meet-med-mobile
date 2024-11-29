@@ -6,12 +6,8 @@ import android.os.Parcelable
 data class Doctor(
     var id: String? = null,
     var user: User? = null,
-    val speciality: String? = null,
     val description: String? = null,
     val phone: String? = null,
-    val rating: Float? = null,
-    val numberOfPatients: Int = 0,
-    val reviewCount: Int = 0,
     val imageUrl: String? = null ,
     val yoe: Int? = null,
     val isFavorite: Boolean = false,
@@ -23,10 +19,6 @@ data class Doctor(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
-        parcel.readFloat(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readString().toString(),
         parcel.readInt(),
         parcel.readByte() != 0.toByte(),
         parcel.readParcelable(Department::class.java.classLoader)
@@ -35,14 +27,8 @@ data class Doctor(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(user, flags)
-        parcel.writeString(speciality)
         parcel.writeString(description)
         parcel.writeString(phone)
-        if (rating != null) {
-            parcel.writeFloat(rating)
-        }
-        parcel.writeInt(numberOfPatients)
-        parcel.writeInt(reviewCount)
         parcel.writeString(imageUrl)
         if (yoe != null) {
             parcel.writeInt(yoe)

@@ -299,8 +299,7 @@ class EditProfileFragment :
                     })
 
             } else {
-                //launch the videoPermission ActivityResultContract
-                mediaPermission.launch(notGrantedPermissions.toTypedArray())
+                Toast.makeText(requireContext(), "Read media storage permission denied!", Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(requireContext(), "Read media storage permission granted", Toast.LENGTH_SHORT).show()

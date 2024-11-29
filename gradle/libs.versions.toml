@@ -20,6 +20,8 @@ glide = "4.13.1"
 retrofit = "2.9.0"
 okhttp = "4.9.1"
 cloudinary = "3.0.2"
+googleGmsGoogleServices = "4.4.2"
+firebaseMessaging = "24.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,9 +46,11 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 converterGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 loggingInterceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 cloudinary = { group = "com.cloudinary", name = "cloudinary-android", version.ref = "cloudinary" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 daggerHiltAndroid ={ id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid"}
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 

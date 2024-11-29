@@ -9,9 +9,12 @@ import com.example.doctorapp.data.model.DoctorAppointment
 import com.example.doctorapp.databinding.DoctorAppointmentItemBinding
 import com.example.doctorapp.moduleDoctor.presentation.diffUtil.DoctorAppointmentDiffUtil
 
-class DoctorAppointmentAdapter(private val context: Context) : ListAdapter<DoctorAppointment, DoctorAppointmentAdapter.DoctorAppointmentViewHolder>(
+class DoctorAppointmentAdapter() : ListAdapter<DoctorAppointment, DoctorAppointmentAdapter.DoctorAppointmentViewHolder>(
     DoctorAppointmentDiffUtil()
 ) {
+
+    private var onAppointmentClickListener: OnAppointmentClickListener? = null
+
     inner class DoctorAppointmentViewHolder(private val binding: DoctorAppointmentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(doctorAppointment: DoctorAppointment) {
@@ -25,6 +28,9 @@ class DoctorAppointmentAdapter(private val context: Context) : ListAdapter<Docto
                     doctorAppointment.timeSlot?.endTime
                 )
                 tvSymptom.text = doctorAppointment.symtom
+                root.setOnClickListener {
+                    onAppointmentClickListener?.onAppointmentClick(doctorAppointment)
+                }
             }
         }
     }
@@ -41,4 +47,13 @@ class DoctorAppointmentAdapter(private val context: Context) : ListAdapter<Docto
     override fun onBindViewHolder(holder: DoctorAppointmentViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    fun setOnAppointmentClickListener(appointmentClickListener: OnAppointmentClickListener) {
+        onAppointmentClickListener = appointmentClickListener
+    }
+
+    interface OnAppointmentClickListener {
+        fun onAppointmentClick(doctorAppointment: DoctorAppointment)
+    }
+
 }

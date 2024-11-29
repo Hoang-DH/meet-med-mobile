@@ -10,8 +10,16 @@ import com.example.doctorapp.data.model.TimeSlot
 import com.example.doctorapp.databinding.FragmentDoctorAppointmentCategoryBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorAppointmentAdapter
+import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class DoctorAppointmentCategoryFragment : BaseFragment<FragmentDoctorAppointmentCategoryBinding, DoctorAppointmentCategoryViewModel>(R.layout.fragment_doctor_appointment_category) {
+@AndroidEntryPoint
+class DoctorAppointmentCategoryFragment : BaseFragment<FragmentDoctorAppointmentCategoryBinding, DoctorAppointmentCategoryViewModel>(R.layout.fragment_doctor_appointment_category), DoctorAppointmentAdapter.OnAppointmentClickListener {
+
+
+    @Inject
+    lateinit var appNavigation: AppNavigation
 
     companion object {
         fun newInstance(category: String): DoctorAppointmentCategoryFragment {
@@ -25,11 +33,11 @@ class DoctorAppointmentCategoryFragment : BaseFragment<FragmentDoctorAppointment
 
     private val viewModel: DoctorAppointmentCategoryViewModel by viewModels()
     override fun getVM() = viewModel
-    private var mAppointmentAdapter: DoctorAppointmentAdapter? = null
+    private var mAppointmentAdapter: DoctorAppointmentAdapter = DoctorAppointmentAdapter()
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mAppointmentAdapter = DoctorAppointmentAdapter(requireContext())
+        mAppointmentAdapter.setOnAppointmentClickListener(this)
         binding.apply {
             rvAppointment.adapter = mAppointmentAdapter
             rvAppointment.layoutManager = LinearLayoutManager(requireContext())
@@ -52,6 +60,12 @@ class DoctorAppointmentCategoryFragment : BaseFragment<FragmentDoctorAppointment
                 )
             )
         }
-        mAppointmentAdapter?.submitList(appointmentList)
+        mAppointmentAdapter.submitList(appointmentList)
+    }
+
+    override fun onAppointmentClick(doctorAppointment: DoctorAppointment) {
+        val bundle = Bundle()
+        bundle.putParcelable(Define.Fields.DOCTOR_APPOINTMENT, doctorAppointment)
+        appNavigation.openDoctorHomeToDoctorDetailAppointmentScreen(bundle)
     }
 }

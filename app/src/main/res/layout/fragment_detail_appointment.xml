@@ -89,7 +89,7 @@
                     android:layout_marginTop="@dimen/common_size_5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="Symtomps: I have a headache"
+                    android:text="I have a headache"
                     android:textColor="@color/color_6b7280"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -388,20 +388,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnFinishAppointment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/common_size_30dp"
-            android:layout_marginTop="@dimen/common_size_10dp"
-            android:background="@drawable/bg_category_checked"
-            android:text="@string/string_book_appointment"
-            android:textColor="@color/white"
-            android:textSize="@dimen/common_text_size_16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="@dimen/common_size_50dp"
-         />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

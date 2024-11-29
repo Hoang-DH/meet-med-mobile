@@ -3,14 +3,16 @@ package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.work
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.model.DoctorShift
+import com.example.doctorapp.data.model.DoctorShiftDayOfWeek
+import com.example.doctorapp.data.model.DoctorShifts
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.DoctorRepository
-import com.example.doctorapp.constant.Define
+import com.example.doctorapp.utils.DateUtils
 import com.example.doctorapp.utils.MyResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -98,17 +100,24 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
                 } else {
                     when (response.body()?.statusCode) {
                         Define.HttpResponseCode.UNAUTHORIZED -> {
-                            _registeredShiftResponse.value = MyResponse.Error(Exception("Error occurred"), Define.HttpResponseCode.UNAUTHORIZED)
+                            _registeredShiftResponse.value =
+                                MyResponse.Error(Exception("Error occurred"), Define.HttpResponseCode.UNAUTHORIZED)
                         }
 
                         Define.HttpResponseCode.BAD_REQUEST -> {
                             _registeredShiftResponse.value =
-                                MyResponse.Error(Exception(response.body()?.message ?: "Error occurred"), Define.HttpResponseCode.BAD_REQUEST)
+                                MyResponse.Error(
+                                    Exception(response.body()?.message ?: "Error occurred"),
+                                    Define.HttpResponseCode.BAD_REQUEST
+                                )
                         }
 
                         else -> {
                             _registeredShiftResponse.value =
-                                MyResponse.Error(Exception(response.errorBody().toString()), Define.HttpResponseCode.INTERNAL_SERVER_ERROR)
+                                MyResponse.Error(
+                                    Exception(response.errorBody().toString()),
+                                    Define.HttpResponseCode.INTERNAL_SERVER_ERROR
+                                )
                         }
                     }
 
@@ -126,7 +135,8 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
                 } else {
                     when (response.body()?.statusCode) {
                         Define.HttpResponseCode.UNAUTHORIZED -> {
-                            _shiftListResponse.value = MyResponse.Error(Exception("Unauthorized"), Define.HttpResponseCode.UNAUTHORIZED)
+                            _shiftListResponse.value =
+                                MyResponse.Error(Exception("Unauthorized"), Define.HttpResponseCode.UNAUTHORIZED)
                         }
 
                         Define.HttpResponseCode.BAD_REQUEST -> {
@@ -143,10 +153,24 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
                             )
                         }
                     }
-
                 }
             }
         }
     }
 
+    fun processShiftList(shiftList: List<DoctorShift>): List<DoctorShifts> {
+        val resShiftList = ArrayList<DoctorShifts>(shiftList)
+        var dayOfWeek: String
+        for (i in shiftList.size - 1 downTo 0) {
+            val current = shiftList[i]
+            val previous = if (i > 0) shiftList[i - 1] else null
+            dayOfWeek = DateUtils.convertInstantToDayOfWeek(current.startTime)
+            if (previous == null || DateUtils.convertInstantToDayOfWeek(previous.startTime) != dayOfWeek) {
+                resShiftList.add(i, DoctorShiftDayOfWeek(dayOfWeek))
+            }
+
+
+        }
+        return resShiftList
+    }
 }

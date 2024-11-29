@@ -74,7 +74,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/common_size_20dp"
                 android:nestedScrollingEnabled="false"
-                app:layout_constraintBottom_toTopOf="@id/btnAddShift"
                 app:layout_constraintTop_toBottomOf="@id/tvSelectAll"
                 tools:listitem="@layout/shift_item" />
 
@@ -89,23 +88,9 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/common_text_size_16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvShift" />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnRemoveShift"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/common_size_20dp"
-                android:layout_marginVertical="@dimen/common_size_10dp"
-                android:background="@drawable/bg_button"
-                android:text="@string/string_add_shift"
-                android:textColor="@color/white"
-                android:textSize="@dimen/common_text_size_16sp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvShift" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -216,6 +216,20 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_doctorHomeContainerFragment_to_detailAppointmentFragment"
+            app:destination="@id/detailAppointmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_doctorHomeContainerFragment_to_doctorNotificationFragment"
+            app:destination="@id/doctorNotificationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/doctorWorkingFragment"
@@ -227,4 +241,13 @@
         android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.profile.editProfile.DoctorEditProfileFragment"
         android:label="DoctorEditProfileFragment"
         tools:layout="@layout/fragment_doctor_edit_profile" />
+    <fragment
+        android:id="@+id/detailAppointmentFragment"
+        android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.appointment.detail.DetailAppointmentFragment"
+        android:label="DetailAppointmentFragment" />
+    <fragment
+        android:id="@+id/doctorNotificationFragment"
+        android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.profile.notification.DoctorNotificationFragment"
+        android:label="DoctorNotificationFragment"
+        tools:layout="@layout/fragment_doctor_notification"/>
 </navigation>

@@ -1,20 +1,19 @@
 package com.example.doctorapp.modulePatient.presentation.homeContainer.search
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
-import com.example.doctorapp.modulePatient.presentation.constants.SortType
+import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.model.Department
 import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.databinding.FragmentSearchDoctorBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.DepartmentCategoryAdapter
 import com.example.doctorapp.modulePatient.presentation.adapter.SearchDoctorAdapter
+import com.example.doctorapp.modulePatient.presentation.constants.SortType
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
-
-import com.example.doctorapp.constant.Define
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +41,7 @@ class SearchDoctorFragment :
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         loadArgument()
-        if(isFrom == Define.IsFrom.IS_FROM_HOME_SCREEN){
+        if (isFrom == Define.IsFrom.IS_FROM_HOME_SCREEN) {
             viewModel.searchDoctor(mapOf())
         }
         mDoctorAdapter = SearchDoctorAdapter(requireContext()) { doctor ->
@@ -69,7 +68,7 @@ class SearchDoctorFragment :
                     doctor.user?.fullName?.contains(
                         text.toString(),
                         true
-                    ) == true || doctor.speciality?.contains(text.toString(), true) ?: false
+                    ) == true || doctor.department?.name?.contains(text.toString(), true) ?: false
                 }
                 mDoctorAdapter?.submitList(filterDoctors)
             }
@@ -134,7 +133,7 @@ class SearchDoctorFragment :
         }
     }
 
-    private fun loadArgument(){
+    private fun loadArgument() {
         arguments?.let {
             isFrom = it.getString(Define.BundleKey.IS_FROM)
         }
@@ -144,34 +143,35 @@ class SearchDoctorFragment :
 
     private fun sortDoctors(sortType: SortType) {
         binding.tvSortType.text = sortType.value
-        when (sortType) {
-            SortType.STAR_ASC -> {
-                mDoctorAdapter?.submitList(mDoctors.sortedBy { it.rating })
-                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0)
-            }
-
-            SortType.STAR_DESC -> {
-                mDoctorAdapter?.submitList(mDoctors.sortedByDescending { it.rating })
-                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down, 0)
-            }
-
-            SortType.REVIEW_ASC -> {
-                mDoctorAdapter?.submitList(mDoctors.sortedBy { it.reviewCount })
-                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0)
-            }
-
-            SortType.REVIEW_DESC -> {
-                mDoctorAdapter?.submitList(mDoctors.sortedByDescending { it.reviewCount })
-                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down, 0)
-            }
-
-            else -> {
-                mDoctorAdapter?.submitList(mDoctors)
-                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_sort_default, 0)
-            }
+//        when (sortType) {
+//            SortType.STAR_ASC -> {
+//                mDoctorAdapter?.submitList(mDoctors.sortedBy { it.rating })
+//                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0)
+//            }
+//
+//            SortType.STAR_DESC -> {
+//                mDoctorAdapter?.submitList(mDoctors.sortedByDescending { it.rating })
+//                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down, 0)
+//            }
+//
+//            SortType.REVIEW_ASC -> {
+//                mDoctorAdapter?.submitList(mDoctors.sortedBy { it.reviewCount })
+//                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0)
+//            }
+//
+//            SortType.REVIEW_DESC -> {
+//                mDoctorAdapter?.submitList(mDoctors.sortedByDescending { it.reviewCount })
+//                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down, 0)
+//            }
+//
+//            else -> {
+//                mDoctorAdapter?.submitList(mDoctors)
+//                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_sort_default, 0)
+//            }
+//        }
+//        scrollToTop()
         }
-        scrollToTop()
-    }
+
 
 
     private fun scrollToTop() {
@@ -240,7 +240,7 @@ class SearchDoctorFragment :
                 String.format(getString(R.string.string_search_doctor_count), mDoctors.size)
             return
         }
-        val filterDoctors = mDoctors.filter { it.speciality == selectedCategory.name }
+        val filterDoctors = mDoctors.filter { it.department?.name == selectedCategory.name }
         mDoctorAdapter?.submitList(filterDoctors)
         binding.tvDoctorCount.text =
             String.format(getString(R.string.string_search_doctor_count), filterDoctors.size)

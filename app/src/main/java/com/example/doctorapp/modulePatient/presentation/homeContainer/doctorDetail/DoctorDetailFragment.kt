@@ -36,7 +36,7 @@ class DoctorDetailFragment : BaseFragment<FragmentDoctorDetailBinding, DoctorDet
             if (doctor != null) {
                 tvDoctorName.text = doctor?.user?.fullName ?: "Doctor"
             }
-            tvSpeciality.text = doctor?.speciality
+            tvSpeciality.text = doctor?.department?.name
         }
     }
 

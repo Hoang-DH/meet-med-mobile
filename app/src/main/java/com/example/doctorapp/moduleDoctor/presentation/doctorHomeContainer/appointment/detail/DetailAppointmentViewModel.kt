@@ -1,7 +1,7 @@
 package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.appointment.detail
 
-import androidx.lifecycle.ViewModel
+import com.example.doctorapp.domain.core.base.BaseViewModel
 
-class DetailAppointmentViewModel : ViewModel() {
+class DetailAppointmentViewModel : BaseViewModel() {
     // TODO: Implement the ViewModel
 }

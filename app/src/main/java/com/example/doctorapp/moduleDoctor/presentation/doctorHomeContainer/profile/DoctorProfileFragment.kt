@@ -40,22 +40,16 @@ class DoctorProfileFragment : BaseFragment<FragmentDoctorProfileBinding, DoctorP
     override fun setOnClick() {
         super.setOnClick()
         binding.apply {
-
             tvLogout.setOnClickListener {
                 logout()
             }
-//            tvEditProfile.setOnClickListener {
-//                appNavigation.openProfileToEditProfile()
-//            }
-//            tvNotification.setOnClickListener {
-//                appNavigation.openProfileToNotificationScreen()
-//            }
-//            tvFavorite.setOnClickListener {
-//                appNavigation.openProfileToFavoriteScreen()
-//            }
+            tvEditProfile.setOnClickListener {
+                appNavigation.openDoctorProfileToDoctorEditProfileScreen()
+            }
+            tvNotification.setOnClickListener {
+                appNavigation.openDoctorProfileToDoctorNotificationScreen()
+            }
         }
-
-
     }
 
     private fun logout() {

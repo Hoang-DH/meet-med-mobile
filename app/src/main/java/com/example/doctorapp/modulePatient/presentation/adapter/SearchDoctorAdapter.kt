@@ -24,7 +24,7 @@ class SearchDoctorAdapter(
                     .load(doctor.imageUrl)
                     .into(ivAvatar)
                 tvDoctorName.text = doctor.user?.fullName ?: "Doctor"
-                tvSpeciality.text = doctor.speciality
+                tvSpeciality.text = doctor.department?.name
                 itemView.setOnClickListener {
                     onDoctorClickListener?.invoke(doctor)
                 }

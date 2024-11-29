@@ -25,6 +25,7 @@ object Define {
     }
 
     object Fields {
+        const val DOCTOR_APPOINTMENT = "doctorAppointment"
         const val CATEGORY = "category"
         const val DATA = "data"
         const val META = "meta"

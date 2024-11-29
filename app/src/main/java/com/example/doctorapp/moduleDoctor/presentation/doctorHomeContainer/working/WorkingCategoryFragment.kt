@@ -98,7 +98,8 @@ class WorkingCategoryFragment :
                             } else {
                                 viewModel.setSelectAll(false)
                             }
-                            shiftAdapter.submitList(response.data)
+                            val processedData = viewModel.processShiftList(response.data)
+                            shiftAdapter.submitList(processedData)
                             shiftAdapter.notifyDataSetChanged()
                         }
                     }
