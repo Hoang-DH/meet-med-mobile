@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/common_size_10dp"
+
         app:elevation="@dimen/common_size_0dp"
         app:cardCornerRadius="@dimen/common_size_12dp"
         >
@@ -81,7 +82,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_doctor_name" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvSpeciality"
+                android:id="@+id/tvDepartment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/common_size_15dp"
@@ -101,40 +102,20 @@
                 android:layout_marginTop="@dimen/common_size_5dp"
                 android:src="@drawable/ic_star"
                 app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
-                app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
+                app:layout_constraintTop_toBottomOf="@id/tvDepartment" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvRating"
+                android:id="@+id/tvYoe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/common_size_3dp"
                 android:layout_marginTop="@dimen/common_size_5dp"
-                android:text="5"
+                android:text="10 years of experience"
                 android:textColor="@color/color_6b7280"
                 app:layout_constraintStart_toEndOf="@id/ivStar"
-                app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
+                app:layout_constraintTop_toBottomOf="@id/tvDepartment" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDivider"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/common_size_5dp"
-                android:layout_marginTop="@dimen/common_size_5dp"
-                android:text="|"
-                android:textColor="@color/color_text_hint"
-                app:layout_constraintStart_toEndOf="@id/tvRating"
-                app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvReview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/common_size_5dp"
-                android:layout_marginTop="@dimen/common_size_5dp"
-                android:text="@string/string_review_num"
-                android:textColor="@color/color_6b7280"
-                app:layout_constraintStart_toEndOf="@id/tvDivider"
-                app:layout_constraintTop_toBottomOf="@id/tvSpeciality" />
 
             <View
                 android:id="@+id/divider2"
@@ -155,12 +136,12 @@
                 android:text="@string/cancel"
                 android:textColor="@color/color_1C2A3A"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btnReschedule"
+                app:layout_constraintEnd_toStartOf="@id/btnViewDetail"
                 android:layout_marginEnd="@dimen/common_size_20dp"
                 />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnReschedule"
+                android:id="@+id/btnViewDetail"
                 android:layout_width="@dimen/common_size_0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/btnCancel"
@@ -168,7 +149,7 @@
                 app:layout_constraintTop_toBottomOf="@id/divider2"
                 android:background="@drawable/bg_category_checked"
                 android:textColor="@color/white"
-                android:text="@string/reschedule"
+                android:text="@string/string_view_detail"
                 android:layout_marginTop="@dimen/common_size_10dp"
                 />
 

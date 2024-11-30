@@ -44,7 +44,7 @@ class DoctorShiftAdapter(
                     context.getString(R.string.string_date_time_of_shift),
                     DateUtils.convertInstantToTime(shift.startTime),
                     DateUtils.convertInstantToTime(shift.endTime),
-                    DateUtils.convertInstantToDateDoctor(shift.startTime)
+                    DateUtils.convertInstantToDate(shift.startTime, "MMMM d, yyyy")
                 )
                 cbShift.isChecked = shift.isRegistered
                 cbShift.setOnClickListener {

@@ -20,14 +20,15 @@ class SearchDoctorAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(doctor: Doctor) {
             binding.apply {
-                Glide.with(context)
-                    .load(doctor.imageUrl)
-                    .into(ivAvatar)
+//                Glide.with(context)
+//                    .load(doctor.imageUrl)
+//                    .into(ivAvatar)
                 tvDoctorName.text = doctor.user?.fullName ?: "Doctor"
                 tvSpeciality.text = doctor.department?.name
                 itemView.setOnClickListener {
                     onDoctorClickListener?.invoke(doctor)
                 }
+                tvYoe.text = String.format(context.getString(R.string.string_number_of_yoe), doctor.yearsOfExperience)
             }
         }
     }

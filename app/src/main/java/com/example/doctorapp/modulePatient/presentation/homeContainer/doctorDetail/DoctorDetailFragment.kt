@@ -30,9 +30,9 @@ class DoctorDetailFragment : BaseFragment<FragmentDoctorDetailBinding, DoctorDet
         val bundle = arguments
         doctor = bundle?.getParcelable(Define.BundleKey.DOCTOR)
         binding.doctorDetail.apply {
-            Glide.with(requireContext())
-                .load(doctor?.imageUrl)
-                .into(binding.doctorDetail.ivAvatar)
+//            Glide.with(requireContext())
+//                .load(doctor?.imageUrl)
+//                .into(binding.doctorDetail.ivAvatar)
             if (doctor != null) {
                 tvDoctorName.text = doctor?.user?.fullName ?: "Doctor"
             }

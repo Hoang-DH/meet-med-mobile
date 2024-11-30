@@ -32,6 +32,10 @@ class SearchDoctorFragment :
 
     companion object {
         fun newInstance() = SearchDoctorFragment()
+        const val ORDER_ASC = "asc"
+        const val ORDER_DESC = "desc"
+        const val ORDER_BY_FULL_NAME = "user.fullName"
+        const val   ORDER_BY_YOE = "yearsOfExperience"
     }
 
     private val viewModel: SearchDoctorViewModel by viewModels()
@@ -62,7 +66,8 @@ class SearchDoctorFragment :
                 adapter = mDepartmentCategoryAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             }
-            tvDoctorCount.text = String.format(getString(R.string.string_search_doctor_count), mDoctors.size)
+            tvDoctorCount.text =
+                String.format(getString(R.string.string_search_doctor_count), mDoctors.size)
             etSearch.addTextChangedListener { text ->
                 val filterDoctors = mDoctors.filter { doctor ->
                     doctor.user?.fullName?.contains(
@@ -90,10 +95,14 @@ class SearchDoctorFragment :
                 is MyResponse.Success -> {
                     showHideLoading(false)
                     binding.tvDoctorCount.text =
-                        String.format(getString(R.string.string_search_doctor_count), response.data.size)
+                        String.format(
+                            getString(R.string.string_search_doctor_count),
+                            response.data.size
+                        )
                     mDoctors.clear()
                     mDoctors.addAll(response.data)
                     mDoctorAdapter?.submitList(mDoctors)
+                    mDoctorAdapter?.notifyDataSetChanged()
                 }
 
                 is MyResponse.Error -> {
@@ -115,14 +124,14 @@ class SearchDoctorFragment :
                     onClickSortDefault = {
                         sortDoctors(SortType.DEFAULT)
                     },
-                    onClickSortStarAsc = {
-                        sortDoctors(SortType.STAR_ASC)
-                    }, onClickSortStarDes = {
-                        sortDoctors(SortType.STAR_DESC)
-                    }, onClickSortReviewAsc = {
-                        sortDoctors(SortType.REVIEW_ASC)
-                    }, onClickSortReviewDes = {
-                        sortDoctors(SortType.REVIEW_DESC)
+                    onClickSortNameAZ = {
+                        sortDoctors(SortType.NAME_AZ)
+                    }, onClickSortNameZA = {
+                        sortDoctors(SortType.NAME_ZA)
+                    }, onClickSortYoeDes = {
+                        sortDoctors(SortType.YOE_DESC)
+                    }, onClickSortYoeAsc = {
+                        sortDoctors(SortType.YOE_ASC)
                     },
                     view = tvSortType
                 )
@@ -143,35 +152,68 @@ class SearchDoctorFragment :
 
     private fun sortDoctors(sortType: SortType) {
         binding.tvSortType.text = sortType.value
-//        when (sortType) {
-//            SortType.STAR_ASC -> {
-//                mDoctorAdapter?.submitList(mDoctors.sortedBy { it.rating })
-//                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0)
-//            }
-//
-//            SortType.STAR_DESC -> {
-//                mDoctorAdapter?.submitList(mDoctors.sortedByDescending { it.rating })
-//                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down, 0)
-//            }
-//
-//            SortType.REVIEW_ASC -> {
-//                mDoctorAdapter?.submitList(mDoctors.sortedBy { it.reviewCount })
-//                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0)
-//            }
-//
-//            SortType.REVIEW_DESC -> {
-//                mDoctorAdapter?.submitList(mDoctors.sortedByDescending { it.reviewCount })
-//                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down, 0)
-//            }
-//
-//            else -> {
-//                mDoctorAdapter?.submitList(mDoctors)
-//                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_sort_default, 0)
-//            }
-//        }
-//        scrollToTop()
-        }
+        val params: MutableMap<String, Any> = HashMap()
+        when (sortType) {
+            SortType.NAME_AZ -> {
+                params[Define.Fields.ORDER] = ORDER_ASC
+                params[Define.Fields.ORDER_BY] = ORDER_BY_FULL_NAME
+                viewModel.searchDoctor(params)
+                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_arrow_up,
+                    0
+                )
+            }
 
+            SortType.NAME_ZA -> {
+                params[Define.Fields.ORDER] = ORDER_DESC
+                params[Define.Fields.ORDER_BY] = ORDER_BY_FULL_NAME
+                viewModel.searchDoctor(params)
+                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_arrow_down,
+                    0
+                )
+            }
+
+            SortType.YOE_ASC -> {
+                params[Define.Fields.ORDER] = ORDER_ASC
+                params[Define.Fields.ORDER_BY] = ORDER_BY_YOE
+                viewModel.searchDoctor(params)
+                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_arrow_up,
+                    0
+                )
+            }
+
+            SortType.YOE_DESC -> {
+                params[Define.Fields.ORDER] = ORDER_DESC
+                params[Define.Fields.ORDER_BY] = ORDER_BY_YOE
+                viewModel.searchDoctor(params)
+                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_arrow_down,
+                    0
+                )
+            }
+
+            else -> {
+                viewModel.searchDoctor(params)
+                binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_sort_default,
+                    0
+                )
+            }
+        }
+        scrollToTop()
+    }
 
 
     private fun scrollToTop() {

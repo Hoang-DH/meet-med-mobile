@@ -53,6 +53,10 @@ object Define {
         const val IS_FROM = "isFrom"
     }
 
+    object IntentKey {
+        const val NOTIFICATION_TYPE = "notificationType"
+    }
+
     object WorkingTab {
         const val MY_SHIFTS = "my_shifts"
         const val REGISTER_NEW_SHIFT = "register_new_shift"
@@ -71,4 +75,10 @@ object Define {
         const val IS_FROM_HOME_SCREEN = "isFromHomeScreen"
     }
 
+    object NotificationType {
+        const val BOOK_APPOINTMENT_SUCCESS = "BOOK_APPOINTMENT_SUCCESS"
+        const val CANCEL_APPOINTMENT_SUCCESS = "CANCEL_APPOINTMENT_SUCCESS"
+        const val APPOINTMENT_REMINDER = "APPOINTMENT_REMINDER"
+        const val WORKING_SHIFT_REMINDER = "WORKING_SHIFT_REMINDER"
+    }
 }

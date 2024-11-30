@@ -54,7 +54,7 @@
                     android:background="@color/black" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/layoutStarAscending"
+                    android:id="@+id/layoutNameAZ"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/common_size_40dp"
                     android:background="@color/white"
@@ -66,7 +66,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/string_star_ascending"
+                        android:text="@string/string_a_z"
                         android:textColor="@color/color_6b7280"
                         android:textSize="@dimen/common_text_size_14sp" />
 
@@ -84,7 +84,7 @@
                     android:background="@color/black" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/layoutStartDescending"
+                    android:id="@+id/layoutNameZA"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/common_size_40dp"
                     android:background="@color/white"
@@ -96,7 +96,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/string_star_descending"
+                        android:text="@string/string_z_a"
                         android:textColor="@color/color_6b7280"
                         android:textSize="@dimen/common_text_size_14sp" />
 
@@ -114,7 +114,7 @@
                     android:background="@color/black" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/layoutReviewtAscending"
+                    android:id="@+id/layoutYoeAscending"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/common_size_40dp"
                     android:background="@color/white"
@@ -126,7 +126,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/string_review_ascending"
+                        android:text="@string/string_years_of_experiences"
                         android:textColor="@color/color_6b7280"
                         android:textSize="@dimen/common_text_size_14sp" />
 
@@ -144,7 +144,7 @@
                     android:background="@color/black" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/layoutReviewDescending"
+                    android:id="@+id/layoutYoeDescending"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/common_size_40dp"
                     android:background="@color/white"
@@ -156,7 +156,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/string_reviews_descending"
+                        android:text="@string/string_years_of_experiences"
                         android:textColor="@color/color_6b7280"
                         android:textSize="@dimen/common_text_size_14sp" />
 

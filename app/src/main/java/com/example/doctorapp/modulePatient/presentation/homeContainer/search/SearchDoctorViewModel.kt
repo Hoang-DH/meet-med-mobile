@@ -1,7 +1,6 @@
 package com.example.doctorapp.modulePatient.presentation.homeContainer.search
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.model.Doctor
@@ -13,7 +12,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchDoctorViewModel @Inject constructor(private val doctorRepository: DoctorRepository) : BaseViewModel() {
+class SearchDoctorViewModel @Inject constructor(private val doctorRepository: DoctorRepository) :
+    BaseViewModel() {
     private var _searchDoctorResponse: MutableLiveData<MyResponse<List<Doctor>>> = MutableLiveData()
     val searchDoctorResponse: MutableLiveData<MyResponse<List<Doctor>>>
         get() = _searchDoctorResponse
@@ -23,7 +23,8 @@ class SearchDoctorViewModel @Inject constructor(private val doctorRepository: Do
         viewModelScope.launch {
             doctorRepository.searchDoctor(params).let { response ->
                 if (response.success == true) {
-                    _searchDoctorResponse.value = MyResponse.Success(response.data?.content ?: emptyList())
+                    _searchDoctorResponse.value =
+                        MyResponse.Success(response.data?.content ?: emptyList())
                 } else {
                     when (response.statusCode) {
                         Define.HttpResponseCode.UNAUTHORIZED -> {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DoctorApp</string>
+    <string name="app_name">HealthPal</string>
     <string name="string_welcome_sign_in">Hi, Welcome back!</string>
     <string name="string_hint_email">Your email</string>
     <string name="string_hint_password">Password</string>
@@ -94,7 +94,7 @@
     <string name="string_doctor_name">Dr. %1$s</string>
     <string name="string_appointment_detail">Appointment Detail</string>
     <string name="string_detail_symptom">Detail Symptom</string>
-    <string name="string_detail_information">Detail Information</string>
+    <string name="string_detail_patient_information">Detail Patient Information</string>
     <string name="string_full_name">Full name</string>
     <string name="string_date_of_birth">Date of Birth</string>
     <string name="age">Age</string>
@@ -109,6 +109,14 @@
     <string name="string_register_shift">Register shift</string>
     <string name="string_my_appointments">My Appointments</string>
     <string name="string_upcoming_appointment">Upcoming Appointment</string>
+    <string name="string_a_z"><![CDATA[A -> Z]]></string>
+    <string name="string_z_a"><![CDATA[Z -> A]]></string>
+    <string name="string_years_of_experiences">Years of Experience</string>
+    <string name="string_number_of_yoe">%1$d years of experience</string>
+    <string name="string_there_is_no_shift_available_to_register">There is no shift available to register</string>
+    <string name="string_view_detail">View Details</string>
+    <string name="string_cancel_appointment">Cancel Appointment</string>
+    <string name="string_empty_appointment">You do not have any appointment yet.</string>
 
 
     <string-array name="gender_options">

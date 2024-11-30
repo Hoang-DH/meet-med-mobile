@@ -1,6 +1,7 @@
 package com.example.doctorapp.modulePatient.presentation.auth.signIn
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.viewModels
 import com.auth0.android.Auth0
 import com.auth0.android.authentication.AuthenticationException
@@ -17,6 +18,7 @@ import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Prefs
 import com.example.doctorapp.utils.Utils.showSnackBar
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -62,6 +64,15 @@ class SignInFragment :
                     showHideLoading(false)
                     Prefs.getInstance(requireContext()).patient = response.data
                     Prefs.getInstance(requireContext()).isProfileExist = true
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(requireActivity()) { task ->
+                        if (!task.isSuccessful) {
+                            Log.w("HoangDH", "Fetching FCM registration token failed", task.exception)
+                            return@addOnCompleteListener
+                        }
+                        val token = task.result
+                        Prefs.getInstance(requireContext()).deviceToken = token
+                        Log.d("HoangDH", "deviceToken: $token")
+                    }
                     appNavigation.openSignInToHomeContainerScreen()
                 }
 
@@ -130,6 +141,8 @@ class SignInFragment :
                         accessToken = result.accessToken
                         isUserLogin = true
                     }
+                    Log.d("HoangDH", "accessToken: ${result.accessToken}")
+//                    Log.d("HoangDH", "userRole: ${result.getExtraInfo()["system_role"]}")
                     viewModel.getUserInfo()
                 }
             })

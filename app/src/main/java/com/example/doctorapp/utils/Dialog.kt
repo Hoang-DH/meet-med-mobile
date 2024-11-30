@@ -163,10 +163,10 @@ object Dialog {
 
     fun showSortTypeDialog(
         onClickSortDefault: () -> Unit,
-        onClickSortStarDes: () -> Unit,
-        onClickSortStarAsc: () -> Unit,
-        onClickSortReviewDes: () -> Unit,
-        onClickSortReviewAsc: () -> Unit,
+        onClickSortNameAZ: () -> Unit,
+        onClickSortNameZA: () -> Unit,
+        onClickSortYoeDes: () -> Unit,
+        onClickSortYoeAsc: () -> Unit,
         view: View
     ) {
         var popupMenu: PopupWindow? = null
@@ -187,20 +187,20 @@ object Dialog {
                 onClickSortDefault.invoke()
                 dismissPopup()
             }
-            layoutStartDescending.setOnClickListener {
-                onClickSortStarDes.invoke()
+            layoutNameAZ.setOnClickListener {
+                onClickSortNameAZ.invoke()
                 dismissPopup()
             }
-            layoutStarAscending.setOnClickListener {
-                onClickSortStarAsc.invoke()
+            layoutNameZA.setOnClickListener {
+                onClickSortNameZA.invoke()
                 dismissPopup()
             }
-            layoutReviewDescending.setOnClickListener {
-                onClickSortReviewDes.invoke()
+            layoutYoeDescending.setOnClickListener {
+                onClickSortYoeDes.invoke()
                 dismissPopup()
             }
-            layoutReviewtAscending.setOnClickListener {
-                onClickSortReviewAsc.invoke()
+            layoutYoeAscending.setOnClickListener {
+                onClickSortYoeAsc.invoke()
                 dismissPopup()
             }
         }

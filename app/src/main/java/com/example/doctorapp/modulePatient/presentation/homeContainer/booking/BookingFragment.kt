@@ -33,7 +33,7 @@ class BookingFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        viewModel.getAllPatientAppointments()
+//        viewModel.getAllPatientAppointments()
         binding.apply {
             vpBooking.adapter = BookingPagerAdapter(
                 this@BookingFragment,
@@ -49,22 +49,6 @@ class BookingFragment :
 
     override fun bindingStateView() {
         super.bindingStateView()
-        viewModel.patientAppointmentResponse.observe(viewLifecycleOwner){ response ->
-            when(response) {
-                is MyResponse.Loading -> {
-                    showHideLoading(true)
-                }
-                is MyResponse.Success -> {
-                    showHideLoading(isShow = false)
-                    allAppointmentList = response.data
-
-                }
-                is MyResponse.Error -> {
-                    showHideLoading(false)
-                    Dialog.showDialogError(requireContext(), response.exception.message.toString())
-                }
-            }
-        }
 
     }
 

@@ -74,6 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/common_size_30dp"
+                    android:layout_marginTop="@dimen/common_size_30dp"
                     android:text="@string/string_select_time"
                     android:textColor="@color/color_1C2A3A"
                     android:textSize="@dimen/common_size_20sp"
@@ -86,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginStart="@dimen/common_size_30dp"
-                    android:layout_marginTop="@dimen/common_size_15dp"
+                    android:layout_marginTop="@dimen/common_size_20dp"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/tvSelectTime"
@@ -98,6 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/common_size_30dp"
+                    android:layout_marginTop="@dimen/common_size_30dp"
                     android:text="@string/string_your_symptoms"
                     android:textColor="@color/color_1C2A3A"
                     android:textSize="@dimen/common_size_20sp"
@@ -134,7 +136,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edtSymptom" />
+              />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -22,7 +22,7 @@ class BookingShiftAdapter(
         fun bind(bookingShift: DoctorBookingShift) {
             binding.apply {
                 tvDate.text =
-                    bookingShift.shift?.startTime?.let { DateUtils.convertInstantToDatePatient(it) }
+                    bookingShift.shift?.startTime?.let { DateUtils.convertInstantToDate(it,"dd/MM/yyyy") }
                 tvDayOfWeek.text =
                     bookingShift.shift?.startTime?.let { DateUtils.convertInstantToDayOfWeek(it) }
                 tvDate.isSelected = selectedPos == adapterPosition

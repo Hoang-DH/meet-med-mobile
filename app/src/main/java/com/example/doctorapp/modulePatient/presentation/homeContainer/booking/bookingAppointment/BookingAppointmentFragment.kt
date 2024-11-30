@@ -73,7 +73,7 @@ class BookingAppointmentFragment :
         super.setOnClick()
         binding.apply {
             btnBookAppointment.setOnClickListener {
-                viewModel.bookAppointment(BookingShift(edtSymptom.text.toString(), bookedTimeSlot))
+                viewModel.bookAppointment(BookingShift(null, edtSymptom.text.toString(), bookedTimeSlot))
             }
             ivBack.setOnClickListener {
                 appNavigation.navigateUp()
@@ -94,7 +94,9 @@ class BookingAppointmentFragment :
                     doctorBookingShiftList = ArrayList(response.data)
                     processData()
                     mBookingShiftAdapter?.submitList(doctorBookingShiftList)
-                    mTimeSlotAdapter?.submitList(doctorBookingShiftList!![0].timeSlot)
+                    if(doctorBookingShiftList?.size!! > 0) {
+                        mTimeSlotAdapter?.submitList(doctorBookingShiftList!![0].timeSlot)
+                    }
                     bookedTimeSlot = doctorBookingShiftList!![0].timeSlot?.get(0)
                 }
 
@@ -137,12 +139,17 @@ class BookingAppointmentFragment :
 
     override fun onTimeSlotClick(timeSlot: TimeSlot) {
         bookedTimeSlot = timeSlot
+        Log.e("HoangDH", timeSlot.toString())
     }
 
     private fun processData() {
 
+        if(doctorBookingShiftList?.size == 1){
+            return
+        }
+
         for (i in 0 until doctorBookingShiftList!!.size) {
-            if (i < doctorBookingShiftList!!.size) {
+            if (i < doctorBookingShiftList!!.size-1) {
                 if (doctorBookingShiftList!![i].shift?.startTime?.let {
                         DateUtils.convertInstantToDayOfWeek(
                             it

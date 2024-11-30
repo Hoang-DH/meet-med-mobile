@@ -7,13 +7,17 @@ import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.data.model.User
 import com.google.gson.Gson
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 @ActivityScoped
 class Prefs @Inject constructor(context: Context, preFileName: String) {
-    private val mPrefs: SharedPreferences by lazy { context.getSharedPreferences(preFileName, Context.MODE_PRIVATE) }
+    private val mPrefs: SharedPreferences by lazy {
+        context.getSharedPreferences(
+            preFileName,
+            Context.MODE_PRIVATE
+        )
+    }
 
     var isUserLogin: Boolean
         get() = mPrefs.getBoolean(PREFS_KEY_IS_USER_LOGIN, false)
@@ -75,8 +79,11 @@ class Prefs @Inject constructor(context: Context, preFileName: String) {
         get() = mPrefs.getBoolean(PREFS_KEY_IS_PROFILE_EXIST, false)
         set(value) = mPrefs.edit().putBoolean(PREFS_KEY_IS_PROFILE_EXIST, value).apply()
 
+    var deviceToken: String
+        get() = mPrefs.getString(PREFS_KEY_DEVICE_TOKEN, "") ?: ""
+        set(value) = mPrefs.edit().putString(PREFS_KEY_DEVICE_TOKEN, value).apply()
 
-    companion object{
+    companion object {
         private const val SHARE_PREFS_FILE_NAME = "prefs"
         private const val PREFS_KEY_IS_USER_LOGIN = "isUserLogin"
         private const val PREFS_KEY_ACCESS_TOKEN = "accessToken"
@@ -85,6 +92,7 @@ class Prefs @Inject constructor(context: Context, preFileName: String) {
         private const val PREFS_KEY_PATIENT = "patient"
         private const val PREFS_KEY_USER = "user"
         private const val PREFS_KEY_IS_PROFILE_EXIST = "isProfileExist"
+        private const val PREFS_KEY_DEVICE_TOKEN = "deviceToken"
         private var mInstance: Prefs? = null
 
         fun getInstance(context: Context): Prefs {

@@ -7,95 +7,108 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        >
+        android:fillViewport="true">
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clEmptyData"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".moduleDoctor.presentation.doctorHomeContainer.working.registerNewShift.RegisterNewShiftFragment">
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvListShift"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/common_size_20dp"
-                android:layout_marginTop="@dimen/common_size_20dp"
-                android:layout_marginBottom="@dimen/common_size_10dp"
-                android:text="@string/string_list_working_shift"
-                android:textColor="@color/color_1C2A3A"
-                android:textSize="@dimen/common_text_size_16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvFromDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/common_size_20dp"
-                android:layout_marginBottom="@dimen/common_size_10dp"
-                android:text="@string/string_from_date"
-                android:textColor="@color/color_1C2A3A"
-                android:textSize="@dimen/common_text_size_16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/tvListShift" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvToDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/common_size_20dp"
-                android:layout_marginBottom="@dimen/common_size_30dp"
-                android:text="@string/string_to_date"
-                android:textColor="@color/color_1C2A3A"
-                android:textSize="@dimen/common_text_size_16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/tvFromDate" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvSelectAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_size_10dp"
-                android:layout_marginEnd="@dimen/common_size_20dp"
-                android:padding="@dimen/common_size_10dp"
-                android:text="@string/string_select_all"
-                android:textColor="@color/color_1C2A3A"
-                android:textSize="@dimen/common_text_size_16sp"
-                app:layout_constraintBottom_toTopOf="@id/rvShift"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvToDate" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvShift"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/common_size_20dp"
-                android:nestedScrollingEnabled="false"
-                app:layout_constraintTop_toBottomOf="@id/tvSelectAll"
-                tools:listitem="@layout/shift_item" />
+                android:layout_height="match_parent"
+                android:textSize="@dimen/common_text_size_20sp"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/string_there_is_no_shift_available_to_register" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnAddShift"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clData"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/common_size_20dp"
-                android:layout_marginVertical="@dimen/common_size_10dp"
-                android:background="@drawable/bg_button"
-                android:text="@string/string_add_shift"
-                android:textColor="@color/white"
-                android:textSize="@dimen/common_text_size_16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                android:layout_height="match_parent"
+                tools:context=".moduleDoctor.presentation.doctorHomeContainer.working.registerNewShift.RegisterNewShiftFragment">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvListShift"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_size_20dp"
+                    android:layout_marginTop="@dimen/common_size_20dp"
+                    android:layout_marginBottom="@dimen/common_size_10dp"
+                    android:text="@string/string_list_working_shift"
+                    android:textColor="@color/color_1C2A3A"
+                    android:textSize="@dimen/common_text_size_16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvFromDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_size_20dp"
+                    android:layout_marginBottom="@dimen/common_size_10dp"
+                    android:text="@string/string_from_date"
+                    android:textColor="@color/color_1C2A3A"
+                    android:textSize="@dimen/common_text_size_16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvListShift" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvToDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/common_size_20dp"
+                    android:layout_marginBottom="@dimen/common_size_30dp"
+                    android:text="@string/string_to_date"
+                    android:textColor="@color/color_1C2A3A"
+                    android:textSize="@dimen/common_text_size_16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvFromDate" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSelectAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_size_10dp"
+                    android:layout_marginEnd="@dimen/common_size_20dp"
+                    android:padding="@dimen/common_size_10dp"
+                    android:text="@string/string_select_all"
+                    android:textColor="@color/color_1C2A3A"
+                    android:textSize="@dimen/common_text_size_16sp"
+                    app:layout_constraintBottom_toTopOf="@id/rvShift"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvToDate" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvShift"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/common_size_20dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintTop_toBottomOf="@id/tvSelectAll"
+                    tools:listitem="@layout/shift_item" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnAddShift"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/common_size_20dp"
+                    android:layout_marginVertical="@dimen/common_size_10dp"
+                    android:background="@drawable/bg_button"
+                    android:text="@string/string_add_shift"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_text_size_16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
 
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 
 
 </layout>

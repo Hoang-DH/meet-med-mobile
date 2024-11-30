@@ -19,9 +19,9 @@ class FavoriteAdapter(
     inner class FavoriteViewHolder(private val binding: DoctorItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(doctor: Doctor) {
             binding.apply {
-                Glide.with(context)
-                    .load(doctor.imageUrl)
-                    .into(ivAvatar)
+//                Glide.with(context)
+//                    .load(doctor.imageUrl)
+//                    .into(ivAvatar)
                 tvDoctorName.text = doctor.user?.fullName ?: "Doctor"
 //                tvSpeciality.text = doctor.speciality
                 itemView.setOnClickListener {

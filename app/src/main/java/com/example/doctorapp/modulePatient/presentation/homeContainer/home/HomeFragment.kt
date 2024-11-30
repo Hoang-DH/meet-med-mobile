@@ -1,14 +1,22 @@
 package com.example.doctorapp.modulePatient.presentation.homeContainer.home
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
+import com.example.doctorapp.data.dto.Fcm
 import com.example.doctorapp.data.model.Department
 import com.example.doctorapp.databinding.FragmentHomeBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.DepartmentAdapter
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -27,10 +35,40 @@ class HomeFragment :
 
     private val viewModel: HomeViewModel by viewModels()
     override fun getVM() = viewModel
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                val fcm =
+                    Fcm(Prefs.getInstance(requireContext()).deviceToken, Prefs.getInstance(requireContext()).user?.id)
+                viewModel.postFCMDeviceToken(fcm)
+            } else {
+                requestPermission()
+            }
+        }
+
+    private fun requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val showRationale = shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)
+            if (showRationale) {
+                Dialog.showAlertDialog(
+                    requireContext(),
+                    "Notification permission",
+                    "If you do not enable notification permission, you will not receive notifications from appointments, messages and others. Do you want to enable it?",
+                    {
+                        requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                    })
+            }
+        }
+    }
+
+
 
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
         mAdapter = DepartmentAdapter(requireContext())
         mAdapter?.submitList(getDepartments())
         binding.apply {

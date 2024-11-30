@@ -88,11 +88,11 @@ class WorkingCategoryFragment :
                             tvFromDate.visibility = View.VISIBLE
                             tvToDate.visibility = View.VISIBLE
                             tvFromDate.text = String.format(getString(R.string.string_from_date),
-                                response.data[0].startTime.let { DateUtils.convertInstantToDatePatient(it) })
+                                response.data[0].startTime.let { DateUtils.convertInstantToDate(it, "dd/MM/yyyy") })
                             tvToDate.text = String.format(
                                 getString(R.string.string_to_date),
                                 response.data[response.data.size - 1]
-                                    .let { DateUtils.convertInstantToDatePatient(it.startTime) })
+                                    .let { DateUtils.convertInstantToDate(it.startTime, "dd/MM/yyyy") })
                             if (response.data.all { shift -> shift.isRegistered }) {
                                 viewModel.setSelectAll(true)
                             } else {

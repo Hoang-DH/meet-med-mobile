@@ -11,4 +11,8 @@ data class TimeSlot(
     var endTime: String? = null,
     @SerializedName("isAvailable")
     var isAvailable: Boolean = false
-)
+) {
+    override fun toString(): String {
+        return "TimeSlot(id=$id, startTime=$startTime, endTime=$endTime, isAvailable=$isAvailable)"
+    }
+}

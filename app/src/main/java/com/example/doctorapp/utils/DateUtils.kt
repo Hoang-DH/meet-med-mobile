@@ -27,16 +27,9 @@ object DateUtils {
         return formatterTime.format(dateTime)
     }
 
-    fun convertInstantToDatePatient(time: String): String {
+    fun convertInstantToDate(time: String, pattern: String): String {
         val instant = Instant.parse(time)
-        val formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-        return formatterDate.format(dateTime)
-    }
-
-    fun convertInstantToDateDoctor(time: String): String {
-        val instant = Instant.parse(time)
-        val formatterDate = DateTimeFormatter.ofPattern("MMMM d, yyyy")
+        val formatterDate = DateTimeFormatter.ofPattern(pattern)
         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
         return formatterDate.format(dateTime)
     }
@@ -47,6 +40,7 @@ object DateUtils {
         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
         return formatterDayOfWeek.format(dateTime)
     }
+
 
     // check if 2 instant is same day
     fun checkInstantIsSameDay(instant1: String, instant2: String): Boolean {

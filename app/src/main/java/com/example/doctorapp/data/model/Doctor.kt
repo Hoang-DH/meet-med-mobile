@@ -2,21 +2,27 @@ package com.example.doctorapp.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 
 data class Doctor(
+    @SerializedName("id")
     var id: String? = null,
+    @SerializedName("user")
     var user: User? = null,
+    @SerializedName("description")
     val description: String? = null,
-    val phone: String? = null,
-    val imageUrl: String? = null ,
-    val yoe: Int? = null,
+    @SerializedName("degree")
+    val degree: String? = null,
+//    val imageUrl: String? = null ,
+    @SerializedName("yearsOfExperience")
+    val yearsOfExperience: Int? = null,
     val isFavorite: Boolean = false,
+    @SerializedName("department")
     var department: Department? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readParcelable(User::class.java.classLoader),
-        parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readInt(),
@@ -28,10 +34,9 @@ data class Doctor(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(user, flags)
         parcel.writeString(description)
-        parcel.writeString(phone)
-        parcel.writeString(imageUrl)
-        if (yoe != null) {
-            parcel.writeInt(yoe)
+//        parcel.writeString(imageUrl)
+        if (yearsOfExperience != null) {
+            parcel.writeInt(yearsOfExperience)
         }
         parcel.writeByte(if (isFavorite) 1 else 0)
     }

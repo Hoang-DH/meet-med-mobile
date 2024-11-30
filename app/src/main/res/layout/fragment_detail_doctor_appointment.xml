@@ -28,6 +28,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/common_size_20sp"
             android:textStyle="bold"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +36,7 @@
 
         <include
             android:id="@+id/appointmentDetail"
-            layout="@layout/appointment_item"
+            layout="@layout/doctor_appointment_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/common_size_20dp"
@@ -62,7 +63,7 @@
                 android:padding="@dimen/common_size_15dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvYourSymptom"
+                    android:id="@+id/tvDetailSymptom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_bg_item"
@@ -70,7 +71,7 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="@string/string_your_symptoms" />
+                    android:text="@string/string_detail_symptom" />
 
                 <View
                     android:id="@+id/divider1"
@@ -79,7 +80,7 @@
                     android:layout_marginTop="@dimen/common_size_5dp"
                     android:background="@color/color_divider"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvYourSymptom" />
+                    app:layout_constraintTop_toBottomOf="@id/tvDetailSymptom" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvSymptom"
@@ -387,18 +388,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/bg_category_checked"
-            android:layout_marginHorizontal="@dimen/common_size_30dp"
-            android:text="@string/string_cancel_appointment"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginBottom="@dimen/common_size_20dp"
-            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
