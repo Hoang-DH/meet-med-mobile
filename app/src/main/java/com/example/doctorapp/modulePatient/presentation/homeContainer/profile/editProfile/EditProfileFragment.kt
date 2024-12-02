@@ -4,11 +4,12 @@ import android.Manifest
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,17 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.TextViewBindingAdapter
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.RequestOptions.circleCropTransform
+import com.bumptech.glide.request.target.Target
+import com.cloudinary.android.MediaManager
+import com.cloudinary.android.callback.ErrorInfo
+import com.cloudinary.android.callback.UploadCallback
 import com.example.doctorapp.R
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.data.model.User
@@ -29,6 +38,8 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.constants.Gender
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.ApplicationMediaManager
+import com.example.doctorapp.utils.DateTimePickerDialog
+import com.example.doctorapp.utils.DateUtils
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Prefs
@@ -37,7 +48,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditProfileFragment :
-    BaseFragment<FragmentEditProfileBinding, EditProfileViewModel>(R.layout.fragment_edit_profile) {
+    BaseFragment<FragmentEditProfileBinding, EditProfileViewModel>(R.layout.fragment_edit_profile), DateTimePickerDialog.OnDateTimePickerListener {
 
     @Inject
     lateinit var appNavigation: AppNavigation
@@ -47,6 +58,7 @@ class EditProfileFragment :
 
     private var avatarImageUri: Uri? = null
     private var popupMenu: PopupWindow? = null
+    private var cloudinaryUrl: String? = null
 
     private var takePhotoCameraPermissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -84,8 +96,34 @@ class EditProfileFragment :
             try {
                 Glide.with(requireContext())
                     .load(avatarImageUri)
-                    .apply(RequestOptions.circleCropTransform())
+                    .apply(circleCropTransform())
                     .into(binding.ivAvatar)
+                MediaManager.get().upload(avatarImageUri).callback(object : UploadCallback {
+                    override fun onStart(requestId: String?) {
+                        Log.d("HoangDH", "onStart")
+                    }
+
+                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
+                        Log.d("HoangDH", "onProgress")
+                        showHideLoading(true)
+                    }
+
+                    override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                        Log.d("HoangDH", resultData.toString())
+                        cloudinaryUrl = resultData?.get(CLOUDINARY_IMAGE_URL).toString()
+
+                        showHideLoading(false)
+                    }
+
+                    override fun onError(requestId: String?, error: ErrorInfo?) {
+                        Log.d("HoangDH", error.toString())
+                    }
+
+                    override fun onReschedule(requestId: String?, error: ErrorInfo?) {
+                        Log.d("HoangDH", error.toString())
+                    }
+
+                }).dispatch()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -98,8 +136,38 @@ class EditProfileFragment :
         try {
             Glide.with(requireContext())
                 .load(uri)
-                .apply(RequestOptions.circleCropTransform())
+                .apply(circleCropTransform())
                 .into(binding.ivAvatar)
+            MediaManager.get().upload(avatarImageUri).callback(object : UploadCallback {
+                override fun onStart(requestId: String?) {
+                    Log.d("HoangDH", "onStart")
+                    showHideLoading(true)
+                }
+
+                override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
+                    Log.d("HoangDH", "onProgress")
+                    showHideLoading(true)
+                }
+
+                override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                    Log.d("HoangDH", resultData.toString())
+                    cloudinaryUrl = resultData?.get(CLOUDINARY_IMAGE_URL).toString()
+                    showHideLoading(false)
+                }
+
+                override fun onError(requestId: String?, error: ErrorInfo?) {
+                    Log.d("HoangDH", error.toString())
+                    showHideLoading(false)
+                    Dialog.showDialogError( requireContext(), "Error occurred, please try again!" )
+                }
+
+                override fun onReschedule(requestId: String?, error: ErrorInfo?) {
+                    Log.d("HoangDH", error.toString())
+                    showHideLoading(false)
+                    Dialog.showDialogError( requireContext(), "Error occurred, please try again!" )
+                }
+
+            }).dispatch()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -114,14 +182,21 @@ class EditProfileFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        cloudinaryUrl = Prefs.getInstance(requireContext()).patient?.user?.imageUrl
         if (Prefs.getInstance(requireContext()).patient != null) {
             val patient = Prefs.getInstance(requireContext()).patient
             binding.apply {
+                etDob.apply {
+                    isFocusable = false
+                    isFocusableInTouchMode = false
+                    isClickable = true
+                    setText(patient?.dob)
+                }
                 etFullName.setText(patient?.user?.fullName)
                 etAge.setText(patient?.user?.age.toString())
                 etEmail.setText(patient?.user?.email)
                 etPhoneNumber.setText(patient?.user?.phone)
-                etDob.setText(patient?.user?.dob)
+                etDob.setText(patient?.dob)
                 etPhoneNumber.setText(patient?.user?.phone)
                 etAddressLine.setText(patient?.addressLine)
                 etDistrict.setText(patient?.district)
@@ -129,7 +204,38 @@ class EditProfileFragment :
                 etInsuranceCode.setText(patient?.insuranceCode)
                 etGender.text = patient?.user?.gender?.value ?: "Gender"
                 etGender.setTypeface(null, Typeface.NORMAL)
+                context?.let {
+                    progressBar.visibility = View.VISIBLE
+                    Glide.with(it)
+                        .load(if (cloudinaryUrl.isNullOrEmpty()) R.drawable.ic_profile_pic else cloudinaryUrl)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: com.bumptech.glide.load.DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                progressBar.visibility = View.GONE
+                                return false
+                            }
+
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                progressBar.visibility = View.GONE
+                                return false
+                            }
+                        })
+                        .placeholder(R.drawable.ic_profile_pic)
+                        .apply(circleCropTransform())
+                        .into(ivAvatar)
+                }
             }
+            DateTimePickerDialog.getInstance(DateUtils.convertDateToLong(binding.etDob.text.toString())).setOnDateTimePickerListener(this)
         }
     }
 
@@ -143,23 +249,28 @@ class EditProfileFragment :
 
                 is MyResponse.Success -> {
                     showHideLoading(false)
+                    Prefs.getInstance(requireContext()).patient = response.data
                     context?.let {
-                        val dialog = Dialog.showCongratulationDialog(
-                            it,
-                            getString(R.string.string_edit_profile_successfully),
-                            true
-                        )
-                        // after 3 seconds, navigate to home screen
-                        Handler().postDelayed({
-                            if (Prefs.getInstance(requireContext()).isProfileExist) {
-                                appNavigation.navigateUp()
-                            } else {
-                                appNavigation.openEditProfileToHomeContainerScreen()
-                            }
-                            dialog.dismiss()
-
-                        }, 2000)
-
+                        if (Prefs.getInstance(requireContext()).isProfileExist) {
+                            Dialog.showCongratulationDialog(
+                                it,
+                                getString(R.string.string_edit_profile_successfully),
+                                onClickDone = {
+                                    appNavigation.navigateUp()
+                                }
+                            )
+                        } else {
+                            Dialog.showCongratulationDialog(
+                                it,
+                                getString(
+                                    R.string.string_create_profile_successfully
+                                ),
+                                //navigate to homescreen
+                                onClickDone = {
+                                    appNavigation.openEditProfileToHomeContainerScreen()
+                                }
+                            )
+                        }
 
                     }
                 }
@@ -182,6 +293,13 @@ class EditProfileFragment :
 
     override fun setOnClick() {
         super.setOnClick()
+        binding.etDob.setOnClickListener {
+            if(binding.etDob.text.isNullOrEmpty()) {
+                DateTimePickerDialog.getInstance().showDatePickerDialog(childFragmentManager)
+            } else {
+                DateTimePickerDialog.getInstance(DateUtils.convertDateToLong(binding.etDob.text.toString())).showDatePickerDialog(childFragmentManager)
+            }
+        }
         binding.apply {
             ivAvatar.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -203,53 +321,21 @@ class EditProfileFragment :
                     age = binding.etAge.text.toString().toInt(),
                     phone = binding.etPhoneNumber.text.toString(),
                     gender = Gender.fromString(binding.etGender.text.toString()),
-                )
+                    imageUrl = cloudinaryUrl,
+                    )
                 val patient = Patient(
                     addressLine = binding.etAddressLine.text.toString(),
                     district = binding.etDistrict.text.toString(),
                     city = binding.etCity.text.toString(),
                     insuranceCode = binding.etInsuranceCode.text.toString(),
-                    user = user
+                    user = user,
+                    dob = binding.etDob.text.toString()
                 )
-
                 if (Prefs.getInstance(requireContext()).isProfileExist) {
                     viewModel.updateProfile(patient)
                 } else {
                     viewModel.createProfile(patient)
                 }
-//                MediaManager.get().upload(avatarImageUri).callback(object : UploadCallback {
-//                    override fun onStart(requestId: String?) {
-//                        Log.d("HoangDH", "onStart")
-//                    }
-//
-//                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
-//                        Log.d("HoangDH", "onProgress")
-//                    }
-//
-//                    override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
-//                        Log.d("HoangDH", resultData.toString())
-//                        context?.let {
-//                            Dialog.showCongratulationDialog(
-//                                it,
-//                                getString(R.string.string_edit_profile_successfully),
-//                                true
-//                            )
-//                            // after 3 seconds, navigate to home screen
-//                            binding.btnSave.postDelayed({
-//                                appNavigation.openEditProfileToHomeContainerScreen()
-//                            }, 3000)
-//                        }
-//                    }
-//
-//                    override fun onError(requestId: String?, error: ErrorInfo?) {
-//                        Log.d("HoangDH", error.toString())
-//                    }
-//
-//                    override fun onReschedule(requestId: String?, error: ErrorInfo?) {
-//                        Log.d("HoangDH", error.toString())
-//                    }
-//
-//                }).dispatch()
             }
         }
     }
@@ -358,10 +444,22 @@ class EditProfileFragment :
         popupMenu?.showAsDropDown(view, 0, -12)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        //remove listener
+        MediaManager.get().cancelAllRequests()
+        DateTimePickerDialog.getInstance().removeOnDateTimePickerListener()
+    }
+
     companion object {
         private const val GALLERY_TYPE = "image/*"
         private const val CAMERA_IMAGE_FILE_NAME = "temp.jpg"
+        private const val CLOUDINARY_IMAGE_URL = "secure_url"
         fun newInstance() = EditProfileFragment()
+    }
+
+    override fun onDateTimeSelected(date: Long) {
+        binding.etDob.setText(DateUtils.convertLongToDate(date))
     }
 
 }

@@ -389,6 +389,19 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCompleteAppointment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/bg_category_checked"
+            android:layout_marginHorizontal="@dimen/common_size_30dp"
+            android:layout_marginBottom="@dimen/common_size_20dp"
+            android:text="@string/string_complete_appointment"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

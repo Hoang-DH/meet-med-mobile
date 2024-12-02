@@ -6,12 +6,13 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/common_size_20dp">
+        android:layout_marginStart="@dimen/common_size_55dp"
+        android:layout_marginBottom="@dimen/common_size_20dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvDepartment"
-            android:layout_width="@dimen/common_size_60dp"
-            android:layout_height="@dimen/common_size_60dp"
+            android:layout_width="@dimen/common_size_80dp"
+            android:layout_height="@dimen/common_size_80dp"
             android:elevation="@dimen/common_size_10dp"
             app:cardCornerRadius="@dimen/common_size_10dp"
             app:layout_constraintStart_toStartOf="parent"

@@ -5,11 +5,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.doctorapp.R
 import com.example.doctorapp.data.model.DoctorAppointment
+import com.example.doctorapp.data.model.Notification
 import com.example.doctorapp.databinding.DoctorAppointmentItemBinding
+import com.example.doctorapp.domain.core.base.BaseAdapterLoadMore
 import com.example.doctorapp.moduleDoctor.presentation.diffUtil.DoctorAppointmentDiffUtil
+import com.example.doctorapp.utils.DateUtils
 
-class DoctorAppointmentAdapter() : ListAdapter<DoctorAppointment, DoctorAppointmentAdapter.DoctorAppointmentViewHolder>(
+class DoctorAppointmentAdapter(private val context: Context) : BaseAdapterLoadMore<DoctorAppointment>(
     DoctorAppointmentDiffUtil()
 ) {
 
@@ -19,15 +25,23 @@ class DoctorAppointmentAdapter() : ListAdapter<DoctorAppointment, DoctorAppointm
         RecyclerView.ViewHolder(binding.root) {
         fun bind(doctorAppointment: DoctorAppointment) {
             binding.apply {
-                tvPatientName.text = doctorAppointment.patientName
-                tvPhoneNumber.text = doctorAppointment.phone
-                tvEmail.text = doctorAppointment.email
-                tvTime.text = String.format(
-                    "%s - %s",
-                    doctorAppointment.timeSlot?.startTime,
-                    doctorAppointment.timeSlot?.endTime
+                Glide.with(context)
+                    .load(doctorAppointment.patient?.user?.imageUrl)
+                    .apply(
+                        RequestOptions()
+                            .placeholder(R.drawable.ic_profile_pic)
+                            .error(R.drawable.ic_profile_pic)
+                            .circleCrop()
+                    )
+                    .into(ivAvatar)
+                tvPatientName.text = doctorAppointment.patient?.user?.fullName
+                tvPhoneNumber.text = doctorAppointment.patient?.user?.phone
+                tvEmail.text = doctorAppointment.patient?.user?.email
+                tvDate.text = doctorAppointment.timeSlot?.startTime?.let { DateUtils.convertInstantToDate(it, "MMMM d, yyyy - HH:mm") }
+                tvSymptom.text = String.format(
+                    context.getString(R.string.string_symptoms_placeholder),
+                    doctorAppointment.symptoms
                 )
-                tvSymptom.text = doctorAppointment.symtom
                 root.setOnClickListener {
                     onAppointmentClickListener?.onAppointmentClick(doctorAppointment)
                 }
@@ -35,7 +49,11 @@ class DoctorAppointmentAdapter() : ListAdapter<DoctorAppointment, DoctorAppointm
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorAppointmentViewHolder {
+    override fun onBindViewHolderNormal(holder: RecyclerView.ViewHolder, position: Int) {
+        if(holder is DoctorAppointmentViewHolder) holder.bind(getItem(position))
+    }
+
+    override fun onCreateViewHolderNormal(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = DoctorAppointmentItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -44,9 +62,6 @@ class DoctorAppointmentAdapter() : ListAdapter<DoctorAppointment, DoctorAppointm
         return DoctorAppointmentViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: DoctorAppointmentViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
 
     fun setOnAppointmentClickListener(appointmentClickListener: OnAppointmentClickListener) {
         onAppointmentClickListener = appointmentClickListener

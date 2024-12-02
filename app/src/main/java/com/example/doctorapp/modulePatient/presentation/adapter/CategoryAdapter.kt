@@ -14,7 +14,7 @@ class DepartmentCategoryAdapter(
     private val context: Context,
 
 ) : ListAdapter<Department, DepartmentCategoryAdapter.DepartmentCategoryViewHolder>(DepartmentCategoryDiffUtil()) {
-    private var selectedPos = 0
+    var selectedPos = 0
     private var onDepartmentClick: OnDepartmentClickListener? = null
     inner class DepartmentCategoryViewHolder(private val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -31,10 +31,15 @@ class DepartmentCategoryAdapter(
                     notifyItemChanged(selectedPos)
                     selectedPos = adapterPosition
                     notifyItemChanged(selectedPos)
-                    onDepartmentClick?.onDepartmentClick(adapterPosition)
+                    onDepartmentClick?.onDepartmentClick(department)
                 }
             }
         }
+    }
+
+    fun setSelection(position: Int) {
+        selectedPos = position
+        notifyDataSetChanged()
     }
 
     fun setOnDepartmentClickListener(onDepartmentClickListener: OnDepartmentClickListener) {
@@ -55,6 +60,6 @@ class DepartmentCategoryAdapter(
     }
 
     interface OnDepartmentClickListener {
-        fun onDepartmentClick(position: Int)
+        fun onDepartmentClick(department: Department)
     }
 }

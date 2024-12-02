@@ -12,10 +12,15 @@ import com.example.doctorapp.modulePatient.presentation.diffUtil.DepartmentDiffU
 
 class DepartmentAdapter(
     private val context: Context,
-    private var onDepartmentClickListener: ((Department) -> Unit)? = null
 ) : ListAdapter<Department, DepartmentAdapter.DepartmentViewHolder>(
     DepartmentDiffUtil()
 ) {
+
+    private var onDepartmentClickListener: OnDepartmentClickListener? = null
+
+    fun setOnDepartmentClickListener(listener: OnDepartmentClickListener) {
+        onDepartmentClickListener = listener
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -42,9 +47,13 @@ class DepartmentAdapter(
                     .into(ivDepartment)
                 tvDepartment.text = department.name
                 itemView.setOnClickListener {
-                    onDepartmentClickListener?.invoke(department)
+                    onDepartmentClickListener?.onDepartmentClick(department)
                 }
             }
         }
+    }
+
+    interface OnDepartmentClickListener {
+        fun onDepartmentClick(department: Department)
     }
 }

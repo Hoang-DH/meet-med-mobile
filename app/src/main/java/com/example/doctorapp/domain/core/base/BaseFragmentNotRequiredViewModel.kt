@@ -14,6 +14,8 @@ abstract class BaseFragmentNotRequiredViewModel<BD: ViewDataBinding>(@LayoutRes 
         get() = _binding
             ?: throw IllegalStateException("Cannot access view after view destroyed or before view created")
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = DataBindingUtil.bind(view)

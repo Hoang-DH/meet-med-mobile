@@ -31,23 +31,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvGreeting" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/icNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_size_20dp"
-            android:layout_marginEnd="@dimen/common_size_20dp"
-            android:src="@drawable/ic_noti"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvCategory"
+            android:id="@+id/tvUpcomingAppointment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/common_size_20dp"
-            android:layout_marginTop="@dimen/common_size_60dp"
+            android:layout_marginTop="@dimen/common_size_40dp"
             android:text="Upcoming Appointment"
             android:textColor="@color/color_1C2A3A"
             android:textSize="@dimen/common_size_16sp"
@@ -56,9 +47,10 @@
             app:layout_constraintTop_toBottomOf="@id/tvName" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSeeAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_size_60dp"
+            android:layout_marginTop="@dimen/common_size_40dp"
             android:layout_marginEnd="@dimen/common_size_20dp"
             android:text="@string/string_see_all"
             android:textColor="@color/color_6b7280"
@@ -66,14 +58,53 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvName" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDepartment"
+        <FrameLayout
+            android:id="@+id/layoutAppointment"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
-            android:layout_marginTop="@dimen/common_size_20dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/tvCategory"
-            tools:listitem="@layout/doctor_appointment_item" />
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUpcomingAppointment">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAppointment"
+                android:layout_width="match_parent"
+                android:layout_height="370dp"
+                android:layout_marginTop="@dimen/common_size_20dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                tools:listitem="@layout/doctor_appointment_item" />
+
+            <LinearLayout
+                android:id="@+id/layoutEmptyAppointment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivEmptyAppointment"
+                    android:layout_width="@dimen/common_size_100dp"
+                    android:layout_height="@dimen/common_size_100dp"
+                    android:src="@drawable/ic_no_appointment"
+                    android:layout_gravity="center"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_empty_appointment_today"
+                    android:textSize="@dimen/common_text_size_16sp"
+                    android:textStyle="bold"
+                    />
+
+
+            </LinearLayout>
+        </FrameLayout>
+
+
+
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvFunction"
@@ -86,7 +117,7 @@
             android:textSize="@dimen/common_size_16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvDepartment" />
+            app:layout_constraintTop_toBottomOf="@id/layoutAppointment" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/icRegisterShift"

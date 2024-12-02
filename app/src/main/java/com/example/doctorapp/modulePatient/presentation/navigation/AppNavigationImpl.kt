@@ -105,4 +105,27 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
         openScreen(R.id.action_doctorHomeContainerFragment_to_doctorNotificationFragment, bundle)
     }
 
+    override fun openBookingCategoryToDetailAppointmentScreen(bundle: Bundle?) {
+        openScreen(R.id.action_homeContainerFragment_to_detailAppointmentFragment, bundle)
+    }
+
+    override fun openNotificationScreen(bundle: Bundle?) {
+        openScreen(R.id.action_to_notificationFragment, bundle)
+    }
+
+    override fun openNotificationToDetailAppointmentScreen(bundle: Bundle?) {
+        openScreen(R.id.action_notificationFragment_to_detailAppointmentFragment, bundle)
+    }
+
+    override fun openDoctorNotificationToDoctorWorkingScreen(bundle: Bundle?) {
+        openScreen(R.id.action_doctorNotificationFragment_to_doctorWorkingFragment, bundle)
+    }
+
+    override fun openDoctorNotificationScreen(bundle: Bundle?) {
+        openScreen(R.id.action_to_doctorNotificationFragment, bundle)
+    }
+
+    override fun openDoctorHomeContainer(bundle: Bundle?) {
+        openScreen(R.id.action_to_doctorHomeContainer, bundle)
+    }
 }

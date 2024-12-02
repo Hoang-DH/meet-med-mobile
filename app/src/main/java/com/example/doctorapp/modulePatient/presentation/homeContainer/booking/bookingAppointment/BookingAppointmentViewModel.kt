@@ -33,7 +33,9 @@ class BookingAppointmentViewModel @Inject constructor(
         viewModelScope.launch {
             doctorRepository.getDoctorBookingShifts(doctorId).let { response ->
                 if (response.success == true) {
-                    _doctorBookingShiftResponse.value = MyResponse.Success(response.data ?: emptyList())
+                    //sort response data by startTime of each shift asc
+                    val sortedData = response.data?.sortedBy { it.shift?.startTime }
+                    _doctorBookingShiftResponse.value = MyResponse.Success(sortedData ?: emptyList())
                 } else {
                     when (response.statusCode) {
                         Define.HttpResponseCode.NOT_FOUND -> {

@@ -85,22 +85,33 @@ class WorkingCategoryFragment :
                     is MyResponse.Success -> {
                         showHideLoading(false)
                         binding.apply {
-                            tvFromDate.visibility = View.VISIBLE
-                            tvToDate.visibility = View.VISIBLE
-                            tvFromDate.text = String.format(getString(R.string.string_from_date),
-                                response.data[0].startTime.let { DateUtils.convertInstantToDate(it, "dd/MM/yyyy") })
-                            tvToDate.text = String.format(
-                                getString(R.string.string_to_date),
-                                response.data[response.data.size - 1]
-                                    .let { DateUtils.convertInstantToDate(it.startTime, "dd/MM/yyyy") })
-                            if (response.data.all { shift -> shift.isRegistered }) {
-                                viewModel.setSelectAll(true)
-                            } else {
-                                viewModel.setSelectAll(false)
+                           if(response.data.isNotEmpty()){
+                               rvShift.visibility = View.VISIBLE
+                               layoutEmptyRegisteredShift.visibility = View.GONE
+                               tvFromDate.visibility = View.VISIBLE
+                               tvToDate.visibility = View.VISIBLE
+                               tvFromDate.text = String.format(getString(R.string.string_from_date),
+                                   response.data[0].startTime.let { DateUtils.convertInstantToDate(it, "dd/MM/yyyy") })
+                               tvToDate.text = String.format(
+                                   getString(R.string.string_to_date),
+                                   response.data[response.data.size - 1]
+                                       .let { DateUtils.convertInstantToDate(it.startTime, "dd/MM/yyyy") })
+                               if (response.data.all { shift -> shift.isRegistered }) {
+                                   viewModel.setSelectAll(true)
+                               } else {
+                                   viewModel.setSelectAll(false)
+                               }
+                               val processedData = viewModel.processShiftList(response.data)
+                               shiftAdapter.submitList(processedData)
+                               shiftAdapter.notifyDataSetChanged()
+                           }
+                            else {
+                               rvShift.visibility = View.GONE
+                               layoutEmptyRegisteredShift.visibility = View.VISIBLE
+                               tvFromDate.visibility = View.GONE
+                               tvToDate.visibility = View.GONE
+                               tvSelectAll.visibility = View.GONE
                             }
-                            val processedData = viewModel.processShiftList(response.data)
-                            shiftAdapter.submitList(processedData)
-                            shiftAdapter.notifyDataSetChanged()
                         }
                     }
 
@@ -128,7 +139,6 @@ class WorkingCategoryFragment :
                         Dialog.showCongratulationDialog(
                             requireContext(),
                             "Register shift successfully",
-                            false,
                             onClickDone = {
                                 // navigate to MY_SHIFTS tab
                                 (requireParentFragment() as DoctorWorkingFragment).changeTab(Define.WorkingTab.MY_SHIFTS)
@@ -139,7 +149,7 @@ class WorkingCategoryFragment :
 
                     is MyResponse.Error -> {
                         showHideLoading(false)
-                        Utils.showSnackBar(response.exception.toString(), binding.root)
+                        Dialog.showDialogError(requireContext(),"Error occurred, please try again later")
                     }
 
                     is MyResponse.Loading -> {

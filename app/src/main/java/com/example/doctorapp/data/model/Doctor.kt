@@ -13,12 +13,15 @@ data class Doctor(
     val description: String? = null,
     @SerializedName("degree")
     val degree: String? = null,
-//    val imageUrl: String? = null ,
     @SerializedName("yearsOfExperience")
     val yearsOfExperience: Int? = null,
     val isFavorite: Boolean = false,
+    @SerializedName("numberOfPatients")
+    val numberOfPatients: Int = 0,
     @SerializedName("department")
-    var department: Department? = null
+    var department: Department? = null,
+    @SerializedName("dateOfBirth")
+    var dob: String? = null,
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
@@ -27,6 +30,7 @@ data class Doctor(
         parcel.readString().toString(),
         parcel.readInt(),
         parcel.readByte() != 0.toByte(),
+        parcel.readInt(),
         parcel.readParcelable(Department::class.java.classLoader)
     ) {
     }

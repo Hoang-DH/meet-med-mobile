@@ -37,4 +37,6 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding, HomeCon
             setupWithNavController(navController)
         }
     }
+
+
 }

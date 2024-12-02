@@ -1,10 +1,12 @@
 package com.example.doctorapp.modulePatient.presentation.container
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.example.doctorapp.domain.core.base.BaseActivity
 import com.example.doctorapp.R
+import com.example.doctorapp.constant.NotificationConstant
 import com.example.doctorapp.databinding.ActivityMainBinding
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,4 +30,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>() 
     override val layoutId: Int = R.layout.activity_main
 
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if(intent.action != NotificationConstant.Type.WORKING_SHIFT_REMINDER){
+            appNavigation.openNotificationScreen()
+        }
+        else appNavigation.openDoctorNotificationScreen()
+    }
 }

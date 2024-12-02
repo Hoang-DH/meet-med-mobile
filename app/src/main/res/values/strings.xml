@@ -33,7 +33,7 @@
     <string name="string_search_doctor_title">All Doctors</string>
     <string name="string_search_doctor_count">%1$d founds</string>
     <string name="string_doctor_details">Doctor Details</string>
-    <string name="string_patients">patients</string>
+    <string name="string_patients">Patients</string>
     <string name="string_years_of_experience">experience</string>
     <string name="string_rating">ratings</string>
     <string name="string_about_me">About me</string>
@@ -117,6 +117,14 @@
     <string name="string_view_detail">View Details</string>
     <string name="string_cancel_appointment">Cancel Appointment</string>
     <string name="string_empty_appointment">You do not have any appointment yet.</string>
+    <string name="loadmore_message">Loading more...</string>
+    <string name="string_create_profile_successfully">Create profile successfully</string>
+    <string name="string_cert">Certificates</string>
+    <string name="string_symptoms_placeholder">Symptoms: %1$s</string>
+    <string name="string_complete_appointment">Complete Appointment</string>
+    <string name="string_empty_appointment_today">You don\'t have any appointment today.</string>
+    <string name="string_empty_noti">You don\'t have any notification yet</string>
+    <string name="string_department">Department</string>
 
 
     <string-array name="gender_options">
@@ -128,7 +136,7 @@
     <string-array name="booking_status">
         <item>Upcoming</item>
         <item>Completed</item>
-        <item>Cancelled</item>
+<!--        <item>Cancelled</item>-->
     </string-array>
 
     <string-array name="working_tab">

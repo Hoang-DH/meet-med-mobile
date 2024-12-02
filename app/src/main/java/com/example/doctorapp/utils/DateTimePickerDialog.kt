@@ -8,33 +8,23 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 
 class DateTimePickerDialog private constructor(
-    fullSlotDay: List<Long>,
-    onDateSelectedListener: OnDateTimePickerListener? = null
+    selectedDate: Long,
 ) {
 
     private var datePicker: MaterialDatePicker<Long>? = null
-    private var timePicker: MaterialTimePicker? = null
-
+    private var mOnDateSelectedListener: OnDateTimePickerListener? = null
     init {
-        val constraintsBuilder = CalendarConstraints.Builder()
-            .setValidator(DateValidator(fullSlotDay))
+
         datePicker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select date")
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .setSelection(selectedDate)
                 .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
-                .setCalendarConstraints(constraintsBuilder.build())
                 .setTheme(R.style.ThemeOverlay_App_DatePicker)
                 .build()
-        timePicker = MaterialTimePicker.Builder()
-            .setTimeFormat(TimeFormat.CLOCK_12H)
-            .setHour(12)
-            .setMinute(10)
-            .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
-            .setTitleText("Select Appointment time")
-            .build()
+
         datePicker?.addOnPositiveButtonClickListener { selection ->
-            onDateSelectedListener?.onDateTimeSelected(selection)
+            mOnDateSelectedListener?.onDateTimeSelected(selection)
         }
     }
 
@@ -44,14 +34,20 @@ class DateTimePickerDialog private constructor(
         datePicker?.show(fragmentManager, "date_picker")
     }
 
+    fun setOnDateTimePickerListener(onDateSelectedListener: OnDateTimePickerListener) {
+        mOnDateSelectedListener = onDateSelectedListener
+    }
 
+    fun removeOnDateTimePickerListener() {
+        mOnDateSelectedListener = null
+    }
 
     companion object {
         private var instance: DateTimePickerDialog? = null
 
-        fun getInstance(fullSlotDay: List<Long>, onDateSelectedListener: OnDateTimePickerListener?): DateTimePickerDialog {
+        fun getInstance(selectedDate: Long = MaterialDatePicker.todayInUtcMilliseconds()): DateTimePickerDialog {
             if (instance == null) {
-                instance = DateTimePickerDialog(fullSlotDay, onDateSelectedListener)
+                instance = DateTimePickerDialog(selectedDate)
             }
             return instance!!
         }

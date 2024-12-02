@@ -2,38 +2,45 @@ package com.example.doctorapp.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 
 data class DoctorAppointment(
+    @SerializedName("id")
     var id: String? = null,
-    var patientName: String? = null,
-    var phone: String? = null,
-    var email: String? = null,
+    @SerializedName("symptoms")
+    var symptoms: String? = null,
+    @SerializedName("registeredShiftTimeSlot")
     var timeSlot: TimeSlot? = null,
-    var symtom: String? = null
-) : Parcelable {
+    @SerializedName("doctor")
+    var doctor: Doctor? = null,
+    @SerializedName("patient")
+    var patient: Patient? = null
+): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        TODO("timeSlot"),
-        parcel.readString()
-    )
+        parcel.readParcelable(TimeSlot::class.java.classLoader),
+        parcel.readParcelable(Doctor::class.java.classLoader),
+        parcel.readParcelable(Patient::class.java.classLoader)
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
+        parcel.writeString(symptoms)
+        parcel.writeParcelable(doctor, flags)
+    }
 
     override fun describeContents(): Int {
-        TODO("Not yet implemented")
+        return 0
     }
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        TODO("Not yet implemented")
-    }
-
-    companion object CREATOR : Parcelable.Creator<DoctorAppointment> {
-        override fun createFromParcel(parcel: Parcel): DoctorAppointment {
-            return DoctorAppointment(parcel)
+    companion object CREATOR : Parcelable.Creator<BookingShift> {
+        override fun createFromParcel(parcel: Parcel): BookingShift {
+            return BookingShift(parcel)
         }
 
-        override fun newArray(size: Int): Array<DoctorAppointment?> {
+        override fun newArray(size: Int): Array<BookingShift?> {
             return arrayOfNulls(size)
         }
     }

@@ -202,8 +202,8 @@
             android:textColor="@color/white"
             android:textSize="@dimen/common_text_size_16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAboutContent"
-            tools:layout_editor_absoluteX="30dp" />
+            android:layout_marginBottom="@dimen/common_size_20dp"
+   />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

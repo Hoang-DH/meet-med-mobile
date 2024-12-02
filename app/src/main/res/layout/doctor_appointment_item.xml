@@ -17,14 +17,38 @@
             android:layout_height="match_parent"
             android:padding="@dimen/common_size_15dp">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_1C2A3A"
+                android:textSize="@dimen/common_text_size_14sp"
+                android:layout_marginStart="@dimen/common_size_5dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="May 22, 2023 - 10.00 AM" />
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_1dp"
+                android:background="@color/color_divider"
+                app:layout_constraintTop_toBottomOf="@id/tvDate"
+                android:layout_marginVertical="@dimen/common_size_10dp"
+                app:layout_constraintBottom_toTopOf="@id/tvPatientName"
+                />
+
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_layout_avatar"
                 android:layout_width="@dimen/img_doctor_avatar_size"
                 android:layout_height="@dimen/img_doctor_avatar_size"
                 app:cardElevation="@dimen/common_size_0dp"
                 app:cardCornerRadius="@dimen/common_size_12dp"
+                android:layout_marginTop="@dimen/common_size_10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="@id/divider1">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivAvatar"
@@ -44,29 +68,21 @@
                 android:textColor="@color/color_bg_item"
                 android:textSize="@dimen/common_text_size_16sp"
                 android:textStyle="bold"
+                android:layout_marginTop="@dimen/common_size_10dp"
                 app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/divider1"
                 tools:text="Mr. John Doe" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/appCompatImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tvTime"
-                android:src="@drawable/ic_clock"
-                android:layout_marginEnd="@dimen/common_size_5dp"
                 android:layout_marginTop="1dp"
-                />
+                android:src="@drawable/ic_clock"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textSize="@dimen/common_text_size_14sp"
-                android:text="08:00 - 08:30"
-                />
+
 
 
             <View
@@ -112,7 +128,7 @@
                 android:layout_marginTop="@dimen/common_size_5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Symtomps: I have a headache"
+                android:text="@string/string_symptoms_placeholder"
                 android:textColor="@color/color_6b7280"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cv_layout_avatar"

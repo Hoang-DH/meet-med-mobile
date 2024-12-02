@@ -91,6 +91,34 @@ class SignInFragment :
             }
         }
 
+        viewModel.doctorProfileResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is MyResponse.Loading -> {
+                    showHideLoading(true)
+                }
+
+                is MyResponse.Success -> {
+                    showHideLoading(false)
+                    Prefs.getInstance(requireContext()).doctor = response.data
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(requireActivity()) { task ->
+                        if (!task.isSuccessful) {
+                            Log.w("HoangDH", "Fetching FCM registration token failed", task.exception)
+                            return@addOnCompleteListener
+                        }
+                        val token = task.result
+                        Prefs.getInstance(requireContext()).deviceToken = token
+                        Log.d("HoangDH", "deviceToken: $token")
+                    }
+                    appNavigation.openSignInToDoctorHomeContainerScreen()
+                }
+
+                is MyResponse.Error -> {
+                    showHideLoading(false)
+                    appNavigation.openSignInToDoctorHomeContainerScreen()
+                }
+            }
+        }
+
         viewModel.userInfoResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is MyResponse.Loading -> {
@@ -100,9 +128,9 @@ class SignInFragment :
                 is MyResponse.Success -> {
                     showHideLoading(false)
                     Prefs.getInstance(requireContext()).user = response.data
-                    if (response.data.role == "HeadDoctor") {
+                    if (response.data.role == "HeadDoctor" || response.data.role == "Doctor") {
                         Prefs.getInstance(requireContext()).userRole = UserRole.DOCTOR
-                        appNavigation.openSignInToDoctorHomeContainerScreen()
+                        viewModel.getDoctorProfile()
                     } else {
                         Prefs.getInstance(requireContext()).userRole = UserRole.PATIENT
                         viewModel.getPatientProfile()
@@ -132,11 +160,9 @@ class SignInFragment :
             // Launch the authentication passing the callback where the results will be received
             .start(requireContext(), object : Callback<Credentials, AuthenticationException> {
                 override fun onFailure(error: AuthenticationException) {
-                    showSnackBar("Error: ${error.message}", binding.root)
                 }
 
                 override fun onSuccess(result: Credentials) {
-                    showSnackBar("Success: ${result.accessToken}", binding.root)
                     Prefs.getInstance(requireContext()).apply {
                         accessToken = result.accessToken
                         isUserLogin = true

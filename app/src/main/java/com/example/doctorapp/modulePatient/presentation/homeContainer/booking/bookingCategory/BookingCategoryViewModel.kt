@@ -18,12 +18,18 @@ class BookingCategoryViewModel @Inject constructor(private val patientRepository
     val patientAppointmentResponse: MutableLiveData<MyResponse<List<BookingShift>>>
         get() = _patientAppointmentResponse
 
-    fun getAllPatientAppointments() {
+    private val patientAppointmentList: ArrayList<BookingShift> = arrayListOf()
+
+    fun getAllPatientAppointments(params: Map<String, Any> = emptyMap()) {
+        if (params[Define.Fields.PAGE] == "0") {
+            patientAppointmentList.clear()
+        }
         _patientAppointmentResponse.value = MyResponse.Loading
         viewModelScope.launch {
-            patientRepository.getPatientBookedShifts().let { response ->
+            patientRepository.getPatientBookedShifts(params).let { response ->
                 if (response.success == true) {
-                    _patientAppointmentResponse.value = MyResponse.Success(response.data ?: emptyList())
+                    patientAppointmentList.addAll(response.data?.content ?: emptyList())
+                    _patientAppointmentResponse.value = MyResponse.Success(patientAppointmentList)
                 } else {
                     when (response.statusCode) {
                         Define.HttpResponseCode.UNAUTHORIZED -> {

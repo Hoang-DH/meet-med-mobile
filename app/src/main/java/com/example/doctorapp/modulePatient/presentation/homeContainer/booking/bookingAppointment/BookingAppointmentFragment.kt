@@ -94,10 +94,19 @@ class BookingAppointmentFragment :
                     doctorBookingShiftList = ArrayList(response.data)
                     processData()
                     mBookingShiftAdapter?.submitList(doctorBookingShiftList)
-                    if(doctorBookingShiftList?.size!! > 0) {
+                    if(doctorBookingShiftList?.size!! > 0 ) {
                         mTimeSlotAdapter?.submitList(doctorBookingShiftList!![0].timeSlot)
+                        bookedTimeSlot = doctorBookingShiftList!![0].timeSlot?.get(0)
+                        binding.apply {
+                            svBookingAppointment.visibility = android.view.View.VISIBLE
+                            layoutEmptyNotification.visibility = android.view.View.GONE
+                        }
+                    } else {
+                        binding.apply {
+                            svBookingAppointment.visibility = android.view.View.GONE
+                            layoutEmptyNotification.visibility = android.view.View.VISIBLE
+                        }
                     }
-                    bookedTimeSlot = doctorBookingShiftList!![0].timeSlot?.get(0)
                 }
 
                 is MyResponse.Error -> {
@@ -118,7 +127,6 @@ class BookingAppointmentFragment :
                     Dialog.showCongratulationDialog(
                         requireContext(),
                         "Your appointment has been booked successfully",
-                        false,
                         {
                             appNavigation.openBookingAppointmentToMyBookingScreen()
                         })

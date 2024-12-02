@@ -30,14 +30,34 @@ class DoctorDetailFragment : BaseFragment<FragmentDoctorDetailBinding, DoctorDet
         val bundle = arguments
         doctor = bundle?.getParcelable(Define.BundleKey.DOCTOR)
         binding.doctorDetail.apply {
-//            Glide.with(requireContext())
-//                .load(doctor?.imageUrl)
-//                .into(binding.doctorDetail.ivAvatar)
+            Glide.with(requireContext())
+                .load(doctor?.user?.imageUrl)
+                .into(binding.doctorDetail.ivAvatar)
             if (doctor != null) {
                 tvDoctorName.text = doctor?.user?.fullName ?: "Doctor"
             }
             tvSpeciality.text = doctor?.department?.name
+            if(doctor?.yearsOfExperience != null){
+                tvYoe.text = context?.getString(R.string.string_number_of_yoe)
+                    ?.let { String.format(it, doctor?.yearsOfExperience) }
+                binding.doctorBadge.apply {
+                    tvYoe.text = doctor?.yearsOfExperience.toString()
+                    tvYoe.visibility = android.view.View.VISIBLE
+                    icYoe.visibility = android.view.View.VISIBLE
+                    tvCert.visibility = android.view.View.VISIBLE
+                }
+                tvYoe.visibility = android.view.View.VISIBLE
+                ivStar.visibility = android.view.View.VISIBLE
+            } else {
+                tvYoe.visibility = android.view.View.GONE
+                ivStar.visibility = android.view.View.GONE
+                binding.doctorBadge.tvYoe.visibility = android.view.View.GONE
+                binding.doctorBadge.icYoe.visibility = android.view.View.GONE
+                binding.doctorBadge.tvCert.visibility = android.view.View.GONE
+            }
         }
+        binding.doctorBadge.tvNumberOfPatients.text = doctor?.numberOfPatients.toString()
+        binding.tvAboutContent.text = doctor?.description
     }
 
     override fun setOnClick() {

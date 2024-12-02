@@ -21,7 +21,7 @@
                 android:layout_width="@dimen/img_doctor_avatar_size"
                 android:layout_height="@dimen/img_doctor_avatar_size"
                 app:cardElevation="@dimen/common_size_0dp"
-                app:cardCornerRadius="@dimen/common_size_12dp"
+                app:cardCornerRadius="@dimen/common_size_15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 

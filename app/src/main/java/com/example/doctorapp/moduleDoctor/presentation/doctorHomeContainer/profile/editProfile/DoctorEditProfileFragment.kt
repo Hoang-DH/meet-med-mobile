@@ -6,11 +6,9 @@ import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.os.Handler
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,19 +17,24 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.TextViewBindingAdapter.setText
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.cloudinary.android.MediaManager
+import com.cloudinary.android.callback.ErrorInfo
+import com.cloudinary.android.callback.UploadCallback
 import com.example.doctorapp.R
 import com.example.doctorapp.data.model.Doctor
-import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.data.model.User
 import com.example.doctorapp.databinding.FragmentDoctorEditProfileBinding
 import com.example.doctorapp.databinding.PopupGenderBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.constants.Gender
-import com.example.doctorapp.modulePatient.presentation.homeContainer.profile.editProfile.EditProfileFragment
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.ApplicationMediaManager
+import com.example.doctorapp.utils.DateTimePickerDialog
+import com.example.doctorapp.utils.DateUtils
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Prefs
@@ -39,7 +42,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DoctorEditProfileFragment : BaseFragment<FragmentDoctorEditProfileBinding, DoctorEditProfileViewModel>(R.layout.fragment_doctor_edit_profile) {
+class DoctorEditProfileFragment :
+    BaseFragment<FragmentDoctorEditProfileBinding, DoctorEditProfileViewModel>(R.layout.fragment_doctor_edit_profile) {
 
     @Inject
     lateinit var appNavigation: AppNavigation
@@ -49,6 +53,8 @@ class DoctorEditProfileFragment : BaseFragment<FragmentDoctorEditProfileBinding,
     override fun getVM() = viewModel
     private var avatarImageUri: Uri? = null
     private var popupMenu: PopupWindow? = null
+    private var cloudinaryUrl: String? = null
+
 
     private var takePhotoCameraPermissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -88,11 +94,36 @@ class DoctorEditProfileFragment : BaseFragment<FragmentDoctorEditProfileBinding,
                     .load(avatarImageUri)
                     .apply(RequestOptions.circleCropTransform())
                     .into(binding.ivAvatar)
+                MediaManager.get().upload(avatarImageUri).callback(object : UploadCallback {
+                    override fun onStart(requestId: String?) {
+                        Log.d("HoangDH", "onStart")
+                    }
+
+                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
+                        Log.d("HoangDH", "onProgress")
+                        showHideLoading(true)
+                    }
+
+                    override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                        Log.d("HoangDH", resultData.toString())
+                        cloudinaryUrl = resultData?.get(CLOUDINARY_IMAGE_URL).toString()
+
+                        showHideLoading(false)
+                    }
+
+                    override fun onError(requestId: String?, error: ErrorInfo?) {
+                        Log.d("HoangDH", error.toString())
+                    }
+
+                    override fun onReschedule(requestId: String?, error: ErrorInfo?) {
+                        Log.d("HoangDH", error.toString())
+                    }
+
+                }).dispatch()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
-
     }
 
     private val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
@@ -102,6 +133,36 @@ class DoctorEditProfileFragment : BaseFragment<FragmentDoctorEditProfileBinding,
                 .load(uri)
                 .apply(RequestOptions.circleCropTransform())
                 .into(binding.ivAvatar)
+            MediaManager.get().upload(avatarImageUri).callback(object : UploadCallback {
+                override fun onStart(requestId: String?) {
+                    Log.d("HoangDH", "onStart")
+                    showHideLoading(true)
+                }
+
+                override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
+                    Log.d("HoangDH", "onProgress")
+                    showHideLoading(true)
+                }
+
+                override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                    Log.d("HoangDH", resultData.toString())
+                    cloudinaryUrl = resultData?.get(CLOUDINARY_IMAGE_URL).toString()
+                    showHideLoading(false)
+                }
+
+                override fun onError(requestId: String?, error: ErrorInfo?) {
+                    Log.d("HoangDH", error.toString())
+                    showHideLoading(false)
+                    Dialog.showDialogError(requireContext(), "Error occurred, please try again!")
+                }
+
+                override fun onReschedule(requestId: String?, error: ErrorInfo?) {
+                    Log.d("HoangDH", error.toString())
+                    showHideLoading(false)
+                    Dialog.showDialogError(requireContext(), "Error occurred, please try again!")
+                }
+
+            }).dispatch()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -116,69 +177,68 @@ class DoctorEditProfileFragment : BaseFragment<FragmentDoctorEditProfileBinding,
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        if (Prefs.getInstance(requireContext()).patient != null) {
-            val patient = Prefs.getInstance(requireContext()).patient
+        cloudinaryUrl = Prefs.getInstance(requireContext()).doctor?.user?.imageUrl
+        if (Prefs.getInstance(requireContext()).doctor != null) {
+            val doctor = Prefs.getInstance(requireContext()).doctor
             binding.apply {
-                etFullName.setText(patient?.user?.fullName)
-                etAge.setText(patient?.user?.age.toString())
-                etEmail.setText(patient?.user?.email)
-                etPhoneNumber.setText(patient?.user?.phone)
-                etDob.setText(patient?.user?.dob)
-                etPhoneNumber.setText(patient?.user?.phone)
-                etAddressLine.setText(patient?.addressLine)
-                etDistrict.setText(patient?.district)
-                etCity.setText(patient?.city)
-                etGender.text = patient?.user?.gender?.value ?: "Gender"
+
+                etFullName.setText(doctor?.user?.fullName)
+                etAge.setText(doctor?.user?.age.toString())
+                etEmail.setText(doctor?.user?.email)
+                etPhoneNumber.setText(doctor?.user?.phone)
+                etPhoneNumber.setText(doctor?.user?.phone)
+                etGender.text = doctor?.user?.gender?.value ?: "Gender"
                 etGender.setTypeface(null, Typeface.NORMAL)
+                etDescription.setText(doctor?.description)
+                context?.let {
+                    Glide.with(it)
+                        .load(doctor?.user?.imageUrl)
+                        .apply(
+                            RequestOptions().placeholder(R.drawable.ic_profile_pic).error(R.drawable.ic_profile_pic)
+                                .circleCrop()
+                        )
+                        .into(ivAvatar)
+                }
             }
         }
     }
 
     override fun bindingStateView() {
         super.bindingStateView()
-//        viewModel.patientProfileResponse.observe(viewLifecycleOwner) { response ->
-//            when (response) {
-//                is MyResponse.Loading -> {
-//                    showHideLoading(true)
-//                }
-//
-//                is MyResponse.Success -> {
-//                    showHideLoading(false)
-//                    context?.let {
-//                        val dialog = Dialog.showCongratulationDialog(
-//                            it,
-//                            getString(R.string.string_edit_profile_successfully),
-//                            true
-//                        )
-//                        // after 3 seconds, navigate to home screen
-//                        Handler().postDelayed({
-//                            if (Prefs.getInstance(requireContext()).isProfileExist) {
-//                                appNavigation.navigateUp()
-//                            } else {
-//                                appNavigation.openEditProfileToHomeContainerScreen()
-//                            }
-//                            dialog.dismiss()
-//
-//                        }, 2000)
-//
-//
-//                    }
-//                }
-//
-//                is MyResponse.Error -> {
-//                    showHideLoading(false)
-//                    context?.let {
-//                        Dialog.showDialogError(
-//                            it,
-//                            response.exception.message ?: "Error occurred, please try again!",
-//                            onClickOk = {
-//                                appNavigation.navigateUp()
-//                            }
-//                        )
-//                    }
-//                }
-//            }
-//        }
+        viewModel.doctorProfileResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is MyResponse.Loading -> {
+                    showHideLoading(true)
+                }
+
+                is MyResponse.Success -> {
+                    showHideLoading(false)
+                    Prefs.getInstance(requireContext()).doctor = response.data
+                    context?.let {
+                        Dialog.showCongratulationDialog(
+                            it,
+                            getString(R.string.string_edit_profile_successfully),
+                            onClickDone = {
+                                appNavigation.navigateUp()
+                            }
+                        )
+                    }
+                }
+
+                is MyResponse.Error -> {
+                    showHideLoading(false)
+                    context?.let {
+                        Dialog.showDialogError(
+                            it,
+                            response.exception.message ?: "Error occurred, please try again!",
+                            onClickOk = {
+                                appNavigation.navigateUp()
+                            }
+                        )
+                    }
+                }
+            }
+        }
     }
 
     override fun setOnClick() {
@@ -197,6 +257,7 @@ class DoctorEditProfileFragment : BaseFragment<FragmentDoctorEditProfileBinding,
             etGender.setOnClickListener {
                 onGenderClick(it)
             }
+
             btnSave.setOnClickListener {
                 val user = User(
                     fullName = binding.etFullName.text.toString(),
@@ -204,49 +265,13 @@ class DoctorEditProfileFragment : BaseFragment<FragmentDoctorEditProfileBinding,
                     age = binding.etAge.text.toString().toInt(),
                     phone = binding.etPhoneNumber.text.toString(),
                     gender = Gender.fromString(binding.etGender.text.toString()),
+                    imageUrl = cloudinaryUrl
                 )
                 val doctor = Doctor(
-                    user = user
+                    user = user,
+                    description = binding.etDescription.text.toString(),
                 )
-
-//                if (Prefs.getInstance(requireContext()).isProfileExist) {
-//                    viewModel.updateProfile(patient)
-//                } else {
-//                    viewModel.createProfile(patient)
-//                }
-//                MediaManager.get().upload(avatarImageUri).callback(object : UploadCallback {
-//                    override fun onStart(requestId: String?) {
-//                        Log.d("HoangDH", "onStart")
-//                    }
-//
-//                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
-//                        Log.d("HoangDH", "onProgress")
-//                    }
-//
-//                    override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
-//                        Log.d("HoangDH", resultData.toString())
-//                        context?.let {
-//                            Dialog.showCongratulationDialog(
-//                                it,
-//                                getString(R.string.string_edit_profile_successfully),
-//                                true
-//                            )
-//                            // after 3 seconds, navigate to home screen
-//                            binding.btnSave.postDelayed({
-//                                appNavigation.openEditProfileToHomeContainerScreen()
-//                            }, 3000)
-//                        }
-//                    }
-//
-//                    override fun onError(requestId: String?, error: ErrorInfo?) {
-//                        Log.d("HoangDH", error.toString())
-//                    }
-//
-//                    override fun onReschedule(requestId: String?, error: ErrorInfo?) {
-//                        Log.d("HoangDH", error.toString())
-//                    }
-//
-//                }).dispatch()
+                viewModel.updateDoctorProfile(doctor)
             }
         }
     }
@@ -297,7 +322,7 @@ class DoctorEditProfileFragment : BaseFragment<FragmentDoctorEditProfileBinding,
 
             } else {
                 //launch the videoPermission ActivityResultContract
-                mediaPermission.launch(notGrantedPermissions.toTypedArray())
+                Toast.makeText(requireContext(), "Read media storage permission denied!", Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(requireContext(), "Read media storage permission granted", Toast.LENGTH_SHORT).show()
@@ -358,7 +383,9 @@ class DoctorEditProfileFragment : BaseFragment<FragmentDoctorEditProfileBinding,
     companion object {
         private const val GALLERY_TYPE = "image/*"
         private const val CAMERA_IMAGE_FILE_NAME = "temp.jpg"
+        private const val CLOUDINARY_IMAGE_URL = "secure_url"
         fun newInstance() = DoctorEditProfileFragment()
     }
+
 
 }

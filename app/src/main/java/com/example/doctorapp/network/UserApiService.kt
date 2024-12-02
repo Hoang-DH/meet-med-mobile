@@ -2,13 +2,20 @@ package com.example.doctorapp.network
 
 import com.example.doctorapp.data.dto.ApiResponse
 import com.example.doctorapp.data.dto.Fcm
+import com.example.doctorapp.data.dto.PagingResponse
+import com.example.doctorapp.data.model.NotificationData
 import com.example.doctorapp.data.model.User
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
+import retrofit2.http.QueryMap
 
 private const val PATH_USER = "/api/user"
 private const val PATH_FCM = "/api/fcm-device-token"
+private const val PATH_NOTIFICATION = "/api/notification"
+
 interface UserApiService {
 
     @GET("$PATH_USER/user-info")
@@ -16,5 +23,12 @@ interface UserApiService {
 
     @POST(PATH_FCM)
     suspend fun postFCMDeviceToken(@Body fcm: Fcm): ApiResponse<Unit>
+
+    @GET(PATH_NOTIFICATION)
+    @JvmSuppressWildcards
+    suspend fun getUserNotifications(@QueryMap params: Map<String, Any>): ApiResponse<PagingResponse<NotificationData>>
+
+    @PUT("$PATH_NOTIFICATION/{notificationId}/read")
+    suspend fun markNotificationAsRead(@Path("notificationId")notificationId: String): ApiResponse<Unit>
 
 }

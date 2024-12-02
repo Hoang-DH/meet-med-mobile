@@ -28,4 +28,10 @@ interface AppNavigation: BaseNavigator {
     fun openDoctorHomeToDoctorDetailAppointmentScreen(bundle: Bundle? = null)
     fun openDoctorProfileToDoctorEditProfileScreen(bundle: Bundle? = null)
     fun openDoctorProfileToDoctorNotificationScreen(bundle: Bundle? = null)
+    fun openBookingCategoryToDetailAppointmentScreen(bundle: Bundle? = null)
+    fun openNotificationScreen(bundle: Bundle? = null)
+    fun openNotificationToDetailAppointmentScreen(bundle: Bundle? = null)
+    fun openDoctorNotificationToDoctorWorkingScreen(bundle: Bundle? = null)
+    fun openDoctorNotificationScreen(bundle: Bundle? = null)
+    fun openDoctorHomeContainer(bundle: Bundle? = null)
 }

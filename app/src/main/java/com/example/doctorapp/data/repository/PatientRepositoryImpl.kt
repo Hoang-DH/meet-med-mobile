@@ -2,7 +2,9 @@ package com.example.doctorapp.data.repository
 
 import com.example.doctorapp.data.dto.ApiArrayResponse
 import com.example.doctorapp.data.dto.ApiResponse
+import com.example.doctorapp.data.dto.PagingResponse
 import com.example.doctorapp.data.model.BookingShift
+import com.example.doctorapp.data.model.Department
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.domain.repository.PatientRepository
 import com.example.doctorapp.modulePatient.network.PatientApiService
@@ -38,8 +40,15 @@ class PatientRepositoryImpl @Inject constructor(private val patientApi: PatientA
         return patientApi.bookingAppointment(bookingShift)
     }
 
-    override suspend fun getPatientBookedShifts(): ApiArrayResponse<BookingShift> {
-        return patientApi.getPatientBookedShifts()
+    override suspend fun getPatientBookedShifts(params: Map<String, Any>): ApiResponse<PagingResponse<BookingShift>> {
+        return patientApi.getPatientBookedShifts(params)
     }
 
+    override suspend fun getALlDepartment(): ApiArrayResponse<Department> {
+        return patientApi.getALlDepartment()
+    }
+
+    override suspend fun getAppointmentById(id: String): ApiResponse<BookingShift> {
+        return patientApi.getAppointmentById(id)
+    }
 }

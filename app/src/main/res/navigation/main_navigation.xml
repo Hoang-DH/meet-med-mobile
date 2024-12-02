@@ -109,6 +109,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeContainerFragment_to_detailAppointmentFragment"
+            app:destination="@id/detailAppointmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/doctorDetailFragment"
@@ -178,7 +185,15 @@
         android:id="@+id/notificationFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.profile.notification.NotificationFragment"
         android:label="NotificationFragment"
-        tools:layout="@layout/fragment_notification" />
+        tools:layout="@layout/fragment_notification" >
+        <action
+            android:id="@+id/action_notificationFragment_to_detailAppointmentFragment"
+            app:destination="@id/detailAppointmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.profile.favorite.FavoriteFragment"
@@ -218,7 +233,7 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_doctorHomeContainerFragment_to_detailAppointmentFragment"
-            app:destination="@id/detailAppointmentFragment"
+            app:destination="@id/detailDoctorAppointmentFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -242,12 +257,73 @@
         android:label="DoctorEditProfileFragment"
         tools:layout="@layout/fragment_doctor_edit_profile" />
     <fragment
-        android:id="@+id/detailAppointmentFragment"
+        android:id="@+id/detailDoctorAppointmentFragment"
         android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.appointment.detail.DetailDoctorAppointmentFragment"
         android:label="DetailAppointmentFragment" />
     <fragment
         android:id="@+id/doctorNotificationFragment"
         android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.profile.notification.DoctorNotificationFragment"
         android:label="DoctorNotificationFragment"
-        tools:layout="@layout/fragment_doctor_notification"/>
+        tools:layout="@layout/fragment_doctor_notification">
+        <action
+            android:id="@+id/action_doctorNotificationFragment_to_doctorWorkingFragment"
+            app:destination="@id/doctorWorkingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/notificationFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_doctorNotificationFragment_to_doctorHomeContainerFragment"
+            app:destination="@id/doctorHomeContainerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailAppointmentFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.booking.bookingCategory.details.DetailAppointmentFragment"
+        android:label="DetailAppointmentFragment" />
+
+    <action
+        android:id="@+id/action_to_notificationFragment"
+        app:destination="@id/notificationFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/notificationFragment"
+        app:popUpToInclusive="true"
+        />
+    <action
+        android:id="@+id/action_to_doctorNotificationFragment"
+        app:destination="@id/doctorNotificationFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/doctorNotificationFragment"
+        app:popUpToInclusive="true"
+        />
+
+    <action
+        android:id="@+id/action_to_doctorHomeContainer"
+        app:destination="@id/doctorHomeContainerFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/doctorNotificationFragment"
+        app:popUpToInclusive="true"
+        />
+
+
+<!--    <activity-->
+<!--        android:id="@+id/mainActivity"-->
+<!--        android:name="com.example.doctorapp.modulePatient.presentation.container.MainActivity"-->
+<!--        android:label="MainActivity"-->
+<!--        >-->
+<!--        <action-->
+<!--            android:id="@+id/action_mainActivity_to_notificationFragment"-->
+<!--            app:destination="@id/notificationFragment"/>-->
+
+<!--    </activity>-->
 </navigation>

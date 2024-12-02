@@ -1,6 +1,10 @@
 package com.example.doctorapp.modulePatient.presentation.homeContainer.search
 
+import android.content.Context
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +20,7 @@ import com.example.doctorapp.modulePatient.presentation.constants.SortType
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
+import com.example.doctorapp.utils.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,13 +34,16 @@ class SearchDoctorFragment :
     private var mDoctorAdapter: SearchDoctorAdapter? = null
     private var mDepartmentCategoryAdapter: DepartmentCategoryAdapter? = null
     private var mDoctors: ArrayList<Doctor> = arrayListOf()
+    private val mDepartments: ArrayList<Department> = arrayListOf()
+    private var selectedDepartment: Department? = null
+    private var currentPage = 0
 
     companion object {
         fun newInstance() = SearchDoctorFragment()
         const val ORDER_ASC = "asc"
         const val ORDER_DESC = "desc"
         const val ORDER_BY_FULL_NAME = "user.fullName"
-        const val   ORDER_BY_YOE = "yearsOfExperience"
+        const val ORDER_BY_YOE = "yearsOfExperience"
     }
 
     private val viewModel: SearchDoctorViewModel by viewModels()
@@ -44,10 +52,7 @@ class SearchDoctorFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        loadArgument()
-        if (isFrom == Define.IsFrom.IS_FROM_HOME_SCREEN) {
-            viewModel.searchDoctor(mapOf())
-        }
+
         mDoctorAdapter = SearchDoctorAdapter(requireContext()) { doctor ->
             val bundle = Bundle()
             bundle.putParcelable(Define.BundleKey.DOCTOR, doctor)
@@ -55,7 +60,18 @@ class SearchDoctorFragment :
         }
         mDepartmentCategoryAdapter = DepartmentCategoryAdapter(requireContext())
         mDepartmentCategoryAdapter?.setOnDepartmentClickListener(this)
-        mDepartmentCategoryAdapter?.submitList(getDepartments())
+        mDepartmentCategoryAdapter?.submitList(mDepartments)
+        loadArgument()
+        mDepartments.addAll(Prefs.getInstance(requireContext()).department)
+        if (isFrom == Define.IsFrom.IS_FROM_HOME_SCREEN) {
+            selectedDepartment = mDepartments.firstOrNull()
+            searchDoctors(currentPage, "", "", "", selectedDepartment?.id ?: "")
+        } else {
+            mDepartmentCategoryAdapter?.setSelection(mDepartments.indexOfFirst { it.id == selectedDepartment?.id })
+            searchDoctors(department = selectedDepartment?.id ?: "")
+            mDepartmentCategoryAdapter?.notifyDataSetChanged()
+        }
+
         binding.apply {
             rvDoctor.apply {
                 adapter = mDoctorAdapter
@@ -68,20 +84,42 @@ class SearchDoctorFragment :
             }
             tvDoctorCount.text =
                 String.format(getString(R.string.string_search_doctor_count), mDoctors.size)
-            etSearch.addTextChangedListener { text ->
-                val filterDoctors = mDoctors.filter { doctor ->
-                    doctor.user?.fullName?.contains(
-                        text.toString(),
-                        true
-                    ) == true || doctor.department?.name?.contains(text.toString(), true) ?: false
+            etSearch.setOnEditorActionListener { _, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if(etSearch.text.toString().isNotEmpty()){
+                        searchDoctors(
+                            search = etSearch.text.toString(),
+                        )
+                    } else {
+                        searchDoctors(
+                            department = selectedDepartment?.id ?: ""
+                        )
+                    }
+                    hideKeyboard()
+                    //set sortype to default
+                    binding.tvSortType.text = SortType.DEFAULT.value
+                    binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.ic_sort_default,
+                        0
+                    )
+                    true
+                } else {
+                    false
                 }
-                mDoctorAdapter?.submitList(filterDoctors)
             }
             swipeRefresh.setOnRefreshListener {
-                viewModel.searchDoctor(mapOf())
+                currentPage = 0
+                searchDoctors(currentPage, "", "", "", selectedDepartment?.id ?: "")
                 swipeRefresh.isRefreshing = false
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isFrom = ""
     }
 
     override fun bindingStateView() {
@@ -101,6 +139,15 @@ class SearchDoctorFragment :
                         )
                     mDoctors.clear()
                     mDoctors.addAll(response.data)
+                    val departmentIdFromResponse = response.data.firstOrNull()?.department?.id
+                    if (departmentIdFromResponse != null) {
+                        val departmentPos = mDepartments.indexOfFirst { it.id == departmentIdFromResponse }
+                        selectedDepartment = mDepartments.getOrNull(departmentPos)
+                        if (departmentPos != -1) {
+                            mDepartmentCategoryAdapter?.setSelection(departmentPos)
+                            departmentScrollToPosition(departmentPos)
+                        }
+                    }
                     mDoctorAdapter?.submitList(mDoctors)
                     mDoctorAdapter?.notifyDataSetChanged()
                 }
@@ -145,6 +192,7 @@ class SearchDoctorFragment :
     private fun loadArgument() {
         arguments?.let {
             isFrom = it.getString(Define.BundleKey.IS_FROM)
+            selectedDepartment = it.getParcelable(Define.BundleKey.DEPARTMENT)
         }
         // clear argument
         arguments = null
@@ -155,9 +203,7 @@ class SearchDoctorFragment :
         val params: MutableMap<String, Any> = HashMap()
         when (sortType) {
             SortType.NAME_AZ -> {
-                params[Define.Fields.ORDER] = ORDER_ASC
-                params[Define.Fields.ORDER_BY] = ORDER_BY_FULL_NAME
-                viewModel.searchDoctor(params)
+                searchDoctors(order = ORDER_ASC, orderBy = ORDER_BY_FULL_NAME, department = selectedDepartment?.id ?: "")
                 binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     0,
@@ -167,9 +213,7 @@ class SearchDoctorFragment :
             }
 
             SortType.NAME_ZA -> {
-                params[Define.Fields.ORDER] = ORDER_DESC
-                params[Define.Fields.ORDER_BY] = ORDER_BY_FULL_NAME
-                viewModel.searchDoctor(params)
+                searchDoctors(order = ORDER_DESC, orderBy = ORDER_BY_FULL_NAME, department = selectedDepartment?.id ?: "")
                 binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     0,
@@ -179,9 +223,7 @@ class SearchDoctorFragment :
             }
 
             SortType.YOE_ASC -> {
-                params[Define.Fields.ORDER] = ORDER_ASC
-                params[Define.Fields.ORDER_BY] = ORDER_BY_YOE
-                viewModel.searchDoctor(params)
+                searchDoctors(order = ORDER_ASC, orderBy = ORDER_BY_YOE, department = selectedDepartment?.id ?: "")
                 binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     0,
@@ -191,9 +233,7 @@ class SearchDoctorFragment :
             }
 
             SortType.YOE_DESC -> {
-                params[Define.Fields.ORDER] = ORDER_DESC
-                params[Define.Fields.ORDER_BY] = ORDER_BY_YOE
-                viewModel.searchDoctor(params)
+                searchDoctors(order = ORDER_DESC, orderBy = ORDER_BY_YOE, department = selectedDepartment?.id ?: "")
                 binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     0,
@@ -203,7 +243,7 @@ class SearchDoctorFragment :
             }
 
             else -> {
-                viewModel.searchDoctor(params)
+                searchDoctors(department = selectedDepartment?.id ?: "")
                 binding.tvSortType.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     0,
@@ -215,6 +255,22 @@ class SearchDoctorFragment :
         scrollToTop()
     }
 
+    private fun searchDoctors(
+        page: Int = 0,
+        order: String = "",
+        orderBy: String = "",
+        search: String = "",
+        department: String = ""
+    ) {
+        val params: MutableMap<String, Any> = HashMap()
+        params[Define.Fields.PAGE] = page
+        params[Define.Fields.ORDER] = order
+        params[Define.Fields.ORDER_BY] = orderBy
+        params[Define.Fields.SEARCH] = search
+        params[Define.Fields.DEPARTMENT] = department
+        viewModel.searchDoctor(params)
+
+    }
 
     private fun scrollToTop() {
         //delay to scroll to top after list is updated
@@ -224,70 +280,21 @@ class SearchDoctorFragment :
 
     }
 
-    private fun getDepartments(): ArrayList<Department> {
-        return arrayListOf(
-            Department(
-                "0",
-                "All",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "1",
-                "Cardiology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "2",
-                "Neurology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "3",
-                "Orthopedics",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "4",
-                "Pediatrics",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "5",
-                "Dermatology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "6",
-                "Radiology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "7",
-                "Oncology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "8",
-                "Gastroenterology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            )
-        )
+    private fun departmentScrollToPosition(position: Int){
+        binding.rvCategory.postDelayed({
+            binding.rvCategory.smoothScrollToPosition(position)
+        }, 100)
     }
 
-    override fun onDepartmentClick(position: Int) {
-        val selectedCategory = getDepartments()[position]
-        if (selectedCategory.name == "All") {
-            mDoctorAdapter?.submitList(mDoctors)
-            binding.tvDoctorCount.text =
-                String.format(getString(R.string.string_search_doctor_count), mDoctors.size)
-            return
-        }
-        val filterDoctors = mDoctors.filter { it.department?.name == selectedCategory.name }
-        mDoctorAdapter?.submitList(filterDoctors)
-        binding.tvDoctorCount.text =
-            String.format(getString(R.string.string_search_doctor_count), filterDoctors.size)
-
+    override fun onDepartmentClick(department: Department) {
+        selectedDepartment = department
+        val params: MutableMap<String, Any> = HashMap()
+        params[Define.Fields.DEPARTMENT] = department.id ?: ""
+        viewModel.searchDoctor(params)
     }
 
-
+    private fun hideKeyboard() {
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+    }
 }

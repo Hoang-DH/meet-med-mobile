@@ -13,7 +13,9 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
+import com.example.doctorapp.constant.NotificationConstant
 import com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.DoctorHomeContainerFragment
+import com.example.doctorapp.modulePatient.presentation.container.MainActivity
 import com.example.doctorapp.modulePatient.presentation.homeContainer.HomeContainerFragment
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -23,7 +25,7 @@ class NotificationUtils(private val mContext: Context) {
     fun showNotification(message: Map<String, String>) {
         // show notification
         val channelName = mContext.getString(R.string.app_name)
-        val importance = NotificationManager.IMPORTANCE_LOW
+        val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(mContext.getString(R.string.app_name), channelName, importance)
         channel.setSound(null, null)
         val notificationManager: NotificationManager =
@@ -39,9 +41,10 @@ class NotificationUtils(private val mContext: Context) {
             .setSmallIcon(R.drawable.ic_logo_noti)
             .setColor(mContext.resources.getColor(R.color.color_primary))
             .setContentTitle(message["title"])
-            .setContentText(message["body"])
+            .setContentText(message["content"])
             .setContentIntent(resultPendingIntent)
             .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         Glide.with(mContext).asBitmap().load(R.drawable.logo).into(object : CustomTarget<Bitmap>() {
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
@@ -58,26 +61,22 @@ class NotificationUtils(private val mContext: Context) {
     }
 
     private fun getNotificationIntent(type: String): Intent {
-        var intent = Intent()
+        val intent = Intent(mContext, MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         when (type) {
-            Define.NotificationType.BOOK_APPOINTMENT_SUCCESS -> {
-                intent = Intent(mContext, HomeContainerFragment::class.java)
-                intent.putExtra(Define.IntentKey.NOTIFICATION_TYPE, Define.NotificationType.BOOK_APPOINTMENT_SUCCESS)
+            NotificationConstant.Type.BOOK_APPOINTMENT_SUCCESS -> {
+                intent.action =  NotificationConstant.Type.BOOK_APPOINTMENT_SUCCESS
             }
 
-            Define.NotificationType.CANCEL_APPOINTMENT_SUCCESS -> {
-                intent = Intent(mContext, HomeContainerFragment::class.java)
-                intent.putExtra(Define.IntentKey.NOTIFICATION_TYPE, Define.NotificationType.CANCEL_APPOINTMENT_SUCCESS)
+            NotificationConstant.Type.CANCEL_APPOINTMENT_SUCCESS -> {
+                intent.action = NotificationConstant.Type.CANCEL_APPOINTMENT_SUCCESS
             }
 
-            Define.NotificationType.APPOINTMENT_REMINDER -> {
-                intent = Intent(mContext, HomeContainerFragment::class.java)
-                intent.putExtra(Define.IntentKey.NOTIFICATION_TYPE, Define.NotificationType.APPOINTMENT_REMINDER)
+            NotificationConstant.Type.APPOINTMENT_REMINDER -> {
+                intent.action = NotificationConstant.Type.APPOINTMENT_REMINDER
             }
 
-            Define.NotificationType.WORKING_SHIFT_REMINDER -> {
-                intent = Intent(mContext, DoctorHomeContainerFragment::class.java)
-                intent.putExtra(Define.IntentKey.NOTIFICATION_TYPE, Define.NotificationType.WORKING_SHIFT_REMINDER)
+            NotificationConstant.Type.WORKING_SHIFT_REMINDER -> {
+                intent.action = NotificationConstant.Type.WORKING_SHIFT_REMINDER
             }
         }
             return intent

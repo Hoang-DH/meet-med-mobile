@@ -1,6 +1,8 @@
 package com.example.doctorapp.constant
 
 object Define {
+    const val PAGE_SIZE = 20
+
     object HttpResponseCode {
         const val UNKNOWN = -1
         const val OK = 200
@@ -13,16 +15,11 @@ object Define {
         const val INTERNAL_SERVER_ERROR = 500
     }
 
-    object DoctorBottomNav{
-        const val HOME = 0
-        const val APPOINTMENT = 1
-        const val WORKING = 2
-        const val PROFILE = 3
-    }
-
     object HttpResponseMessage {
         const val PATIENT_PROFILE_NOT_FOUND = "Patient profile not found"
     }
+
+
 
     object Fields {
         const val DOCTOR_APPOINTMENT = "doctorAppointment"
@@ -35,19 +32,25 @@ object Define {
         const val DOCTOR_ID = "doctorId"
         const val PAGE = "page"
         const val SIZE = "size"
-        const val NAME = "name"
+        const val SEARCH = "search"
         const val ORDER = "order"
         const val ORDER_BY = "orderBy"
         const val DEPARTMENT = "department"
+        const val STATUS = "status"
     }
 
     object BookingStatus {
-        const val UPCOMING = "upcoming"
-        const val COMPLETED = "completed"
+        const val UPCOMING = "UPCOMING"
+        const val COMPLETED = "COMPLETED"
         const val CANCELLED = "cancelled"
     }
 
     object BundleKey {
+        const val DOCTOR_APPOINTMENT_ID = "doctorAppointmentId"
+        const val DOCTOR_APPOINTMENT = "doctorAppointment"
+        const val APPOINTMENT_ID = "appointmentId"
+        const val NOTIFICATION = "notification"
+        const val BOOKING_SHIFT = "bookingShift"
         const val DEPARTMENT = "department"
         const val DOCTOR = "doctor"
         const val IS_FROM = "isFrom"
@@ -63,8 +66,8 @@ object Define {
     }
 
     object AppointmentTab {
-        const val UPCOMING = "upcoming"
-        const val COMPLETED = "completed"
+        const val UPCOMING = "UPCOMING"
+        const val COMPLETED = "COMPLETED"
     }
 
     object Network {
@@ -75,10 +78,5 @@ object Define {
         const val IS_FROM_HOME_SCREEN = "isFromHomeScreen"
     }
 
-    object NotificationType {
-        const val BOOK_APPOINTMENT_SUCCESS = "BOOK_APPOINTMENT_SUCCESS"
-        const val CANCEL_APPOINTMENT_SUCCESS = "CANCEL_APPOINTMENT_SUCCESS"
-        const val APPOINTMENT_REMINDER = "APPOINTMENT_REMINDER"
-        const val WORKING_SHIFT_REMINDER = "WORKING_SHIFT_REMINDER"
-    }
+
 }

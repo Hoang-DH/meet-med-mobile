@@ -22,4 +22,7 @@ data class Patient(
 
     @SerializedName("user")
     var user: User? = null,
+
+    @SerializedName("dateOfBirth")
+    val dob: String? = null,
 )

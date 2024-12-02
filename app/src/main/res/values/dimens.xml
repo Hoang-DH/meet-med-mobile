@@ -39,4 +39,7 @@
     <dimen name="common_size_11dp">11dp</dimen>
     <dimen name="common_size_24dp">24dp</dimen>
     <dimen name="common_text_size_24sp">24sp</dimen>
+    <dimen name="string_padding_loadmore">7dp</dimen>
+    <dimen name="common_size__26dp">-26dp</dimen>
+    <dimen name="common_size__20dp">-20dp</dimen>
 </resources>

@@ -1,100 +1,96 @@
 package com.example.doctorapp.modulePatient.presentation.homeContainer.profile.notification
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.R
+import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.model.Notification
 import com.example.doctorapp.data.model.NotificationData
 import com.example.doctorapp.data.model.NotificationTimeStamp
 import com.example.doctorapp.domain.core.base.BaseViewModel
+import com.example.doctorapp.domain.repository.UserRepository
 import com.example.doctorapp.utils.DateUtils
+import com.example.doctorapp.utils.MyResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NotificationViewModel : BaseViewModel() {
-    // TODO: Implement the ViewModel
+@HiltViewModel
+class NotificationViewModel @Inject constructor(private val userRepository: UserRepository): BaseViewModel() {
 
-    fun getListNotification(): List<Notification> {
-        val receivedNotificationList = listOf(
-            NotificationData(
-                title = "Appointment Success",
-                content = "Your appointment with Dr. Garcia was successful.",
-                image = R.drawable.ic_noti_success,
-                isRead = true,
-                timeStamp = 1730210933000 // Oct 29, 2024, 10:00 AM
-            ),
-            NotificationData(
-                title = "Appointment Success",
-                content = "Your appointment with Dr. Garcia was successful.",
-                image = R.drawable.ic_noti_success,
-                isRead = true,
-                timeStamp = 1730210933000 // Oct 29, 2024, 10:00 AM
-            ),
-            NotificationData(
-                title = "Appointment Success",
-                content = "Your appointment with Dr. Garcia was successful.",
-                image = R.drawable.ic_noti_success,
-                isRead = true,
-                timeStamp = 1730210933000 // Oct 29, 2024, 10:00 AM
-            ),
-            //create item for yesterday
-            NotificationData(
-                title = "Appointment Cancelled",
-                content = "Your appointment with Dr. Clark has been cancelled.",
-                image = R.drawable.ic_noti_cancelled,
-                isRead = false,
-                timeStamp = 1730300933000 // Oct 30, 2024, 3:00 PM
-            ),
-            NotificationData(
-                title = "Scheduled Changed",
-                content = "Your appointment with Dr. Martinez is now at 3 PM.",
-                image = R.drawable.ic_noti_schedule_changed,
-                isRead = false,
-                timeStamp = 1730357933000 // Oct 31, 2024, 3:00 PM
-            ),
-            NotificationData(
-                title = "Scheduled Changed",
-                content = "Your appointment with Dr. Martinez is now at 3 PM.",
-                image = R.drawable.ic_noti_schedule_changed,
-                isRead = false,
-                timeStamp = 1730357933000 // Oct 31, 2024, 3:00 PM
-            ),
-        )
-        val updatedNotificationList = receivedNotificationList.map { notification ->
-            if (DateUtils.convertLongToDate(notification.timeStamp).contains("2023")) {
-                notification.copy(timeStamp = 1730210933000) // Update to a timestamp in 2024
-            } else {
-                notification
+    private var _notificationResponse: MutableLiveData<MyResponse<List<Notification>>> = MutableLiveData()
+    val notificationResponse: LiveData<MyResponse<List<Notification>>>
+        get() = _notificationResponse
+
+    private var _isMarkAsReadSuccess: MutableLiveData<Boolean> = MutableLiveData()
+    val isMarkAsReadSuccess: LiveData<Boolean>
+        get() = _isMarkAsReadSuccess
+
+    private var totalPage: Int = 0
+    private val notificationList: ArrayList<NotificationData> = ArrayList()
+
+    fun getListNotification(params: Map<String, Any>){
+        if(params[Define.Fields.PAGE] == "0") {
+            notificationList.clear()
+        }
+        _notificationResponse.value = MyResponse.Loading
+        viewModelScope.launch {
+            userRepository.getUserNotifications(params).let { response ->
+                if(response.success == true){
+                    notificationList.addAll(response.data?.content ?: emptyList())
+                    totalPage = response.data?.totalElements?.div(Define.PAGE_SIZE) ?: 0
+                    val processedNotificationList = filterNotiTimestamp(notificationList)
+                    _notificationResponse.value = MyResponse.Success(processedNotificationList)
+                } else {
+                    when(response.statusCode){
+                        Define.HttpResponseCode.UNAUTHORIZED -> {
+                            _notificationResponse.value = MyResponse.Error(Exception("Unauthorized"), Define.HttpResponseCode.UNAUTHORIZED)
+                        }
+                        else -> {
+                            _notificationResponse.value = MyResponse.Error(Exception("Error"), Define.HttpResponseCode.UNKNOWN)
+                        }
+                    }
+                }
+
             }
         }
+    }
 
-        return filterNotiTimestamp(ArrayList(updatedNotificationList))
+    fun markNotificationAsRead(notificationId: String){
+        viewModelScope.launch {
+            userRepository.markNotificationAsRead(notificationId).let { response ->
+                _isMarkAsReadSuccess.value = response.success == true
+            }
+        }
     }
 
     private fun filterNotiTimestamp(notiDataList: ArrayList<NotificationData>): List<Notification> {
-        val notificationList = ArrayList<Notification>(notiDataList.sortedByDescending { it.timeStamp })
-        val sortedNotiDataList = notiDataList.sortedByDescending { it.timeStamp }
+        val notificationList = ArrayList<Notification>(notiDataList.sortedByDescending { it.createdAt })
+        val sortedNotiDataList = notiDataList.sortedByDescending { it.createdAt }
         var timeStampTitle: String
 
         for (i in sortedNotiDataList.size - 1 downTo 0) {
             val current = sortedNotiDataList[i]
             val previous = if (i > 0) sortedNotiDataList[i - 1] else null
 
-            Log.e("HoangDH", "timeStamp: ${DateUtils.convertLongToDate(current.timeStamp)}")
-
             when {
-                DateUtils.isToday(current.timeStamp) -> {
-                    if (previous == null || !DateUtils.isToday(previous.timeStamp)) {
+                DateUtils.isToday(current.createdAt) -> {
+                    if (previous == null || !DateUtils.isToday(previous.createdAt)) {
                         notificationList.add(i, NotificationTimeStamp("Today"))
                     }
                 }
 
-                DateUtils.isYesterday(current.timeStamp) -> {
-                    if (previous == null || !DateUtils.isYesterday(previous.timeStamp)) {
+                DateUtils.isYesterday(current.createdAt) -> {
+                    if (previous == null || !DateUtils.isYesterday(previous.createdAt)) {
                         notificationList.add(i, NotificationTimeStamp("Yesterday"))
                     }
                 }
 
                 else -> {
-                    timeStampTitle = DateUtils.convertLongToDate(current.timeStamp)
-                    if (previous == null || !DateUtils.checkDateIsSameDay(current.timeStamp, previous.timeStamp)) {
+                    timeStampTitle = DateUtils.convertInstantToDate(current.createdAt, "EEEE, MMMM d, yyyy")
+                    if (previous == null || !DateUtils.checkDateIsSameDay(current.createdAt, previous.createdAt)) {
                         notificationList.add(i, NotificationTimeStamp(timeStampTitle))
                     }
                 }

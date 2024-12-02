@@ -3,6 +3,7 @@ package com.example.doctorapp.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.doctorapp.constant.UserRole
+import com.example.doctorapp.data.model.Department
 import com.example.doctorapp.data.model.Doctor
 import com.example.doctorapp.data.model.Patient
 import com.example.doctorapp.data.model.User
@@ -83,6 +84,19 @@ class Prefs @Inject constructor(context: Context, preFileName: String) {
         get() = mPrefs.getString(PREFS_KEY_DEVICE_TOKEN, "") ?: ""
         set(value) = mPrefs.edit().putString(PREFS_KEY_DEVICE_TOKEN, value).apply()
 
+    var department: List<Department>
+        get() {
+            val departmentJson = mPrefs.getString(PREFS_KEY_DEPARTMENT, "")
+            return if (departmentJson.isNullOrEmpty()) {
+                emptyList()
+            } else {
+                Gson().fromJson(departmentJson, Array<Department>::class.java).toList()
+            }
+        }
+        set(value) {
+            mPrefs.edit().putString(PREFS_KEY_DEPARTMENT, Gson().toJson(value)).apply()
+        }
+
     companion object {
         private const val SHARE_PREFS_FILE_NAME = "prefs"
         private const val PREFS_KEY_IS_USER_LOGIN = "isUserLogin"
@@ -93,6 +107,7 @@ class Prefs @Inject constructor(context: Context, preFileName: String) {
         private const val PREFS_KEY_USER = "user"
         private const val PREFS_KEY_IS_PROFILE_EXIST = "isProfileExist"
         private const val PREFS_KEY_DEVICE_TOKEN = "deviceToken"
+        private const val PREFS_KEY_DEPARTMENT = "department"
         private var mInstance: Prefs? = null
 
         fun getInstance(context: Context): Prefs {

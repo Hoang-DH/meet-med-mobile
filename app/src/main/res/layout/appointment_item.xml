@@ -138,6 +138,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btnViewDetail"
                 android:layout_marginEnd="@dimen/common_size_20dp"
+                android:visibility="gone"
                 />
 
             <androidx.appcompat.widget.AppCompatButton

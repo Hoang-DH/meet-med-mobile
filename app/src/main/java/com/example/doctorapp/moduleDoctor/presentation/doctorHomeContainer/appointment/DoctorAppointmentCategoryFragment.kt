@@ -8,9 +8,12 @@ import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.model.DoctorAppointment
 import com.example.doctorapp.data.model.TimeSlot
 import com.example.doctorapp.databinding.FragmentDoctorAppointmentCategoryBinding
+import com.example.doctorapp.domain.core.base.BaseAdapterLoadMore
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorAppointmentAdapter
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import com.example.doctorapp.utils.Dialog
+import com.example.doctorapp.utils.MyResponse
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,6 +25,7 @@ class DoctorAppointmentCategoryFragment : BaseFragment<FragmentDoctorAppointment
     lateinit var appNavigation: AppNavigation
 
     companion object {
+        const val ASC = "asc"
         fun newInstance(category: String): DoctorAppointmentCategoryFragment {
             val fragment = DoctorAppointmentCategoryFragment()
             val bundle = Bundle()
@@ -33,38 +37,95 @@ class DoctorAppointmentCategoryFragment : BaseFragment<FragmentDoctorAppointment
 
     private val viewModel: DoctorAppointmentCategoryViewModel by viewModels()
     override fun getVM() = viewModel
-    private var mAppointmentAdapter: DoctorAppointmentAdapter = DoctorAppointmentAdapter()
+    private var mAppointmentAdapter: DoctorAppointmentAdapter? = null
+    private var currentTab: String = Define.AppointmentTab.UPCOMING
+    private var currentPage = 0
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        mAppointmentAdapter.setOnAppointmentClickListener(this)
+        loadArguments()
+        currentPage = 0
+        getAppointments(currentTab, currentPage)
+        mAppointmentAdapter = DoctorAppointmentAdapter(requireContext())
+        mAppointmentAdapter?.setOnAppointmentClickListener(this)
+        if (mAppointmentAdapter?.getLoadMorelistener() == null) {
+            mAppointmentAdapter?.setLoadMorelistener(object : BaseAdapterLoadMore.LoadMorelistener {
+                override fun onLoadMore() {
+//                    binding.rvNotification.post {
+//                        notificationAdapter.addFooter(loadMoreView)
+//                    }
+                    loadMore()
+                }
+            })
+        }
         binding.apply {
             rvAppointment.adapter = mAppointmentAdapter
             rvAppointment.layoutManager = LinearLayoutManager(requireContext())
+            swipeRefreshLayout.setOnRefreshListener {
+                currentPage = 0
+                getAppointments(currentTab, currentPage)
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
-        generateAppointmentList()
+    }
+
+    private fun loadMore() {
+        currentPage++
+        getAppointments(page = currentPage, status = currentTab)
+    }
+
+    private fun loadArguments() {
+        currentTab = arguments?.getString(Define.Fields.CATEGORY) ?: Define.AppointmentTab.UPCOMING
+    }
+
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+        viewModel.appointmentResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is MyResponse.Loading -> {
+                    showHideLoading(true)
+                }
+
+                is MyResponse.Success -> {
+                    showHideLoading(isShow = false)
+
+                    if (response.data.isEmpty()) {
+                        binding.apply {
+                            layoutEmptyAppointment.visibility = android.view.View.VISIBLE
+                            swipeRefreshLayout.visibility = android.view.View.GONE
+                        }
+                    } else {
+                        binding.apply {
+                            layoutEmptyAppointment.visibility = android.view.View.GONE
+                            swipeRefreshLayout.visibility = android.view.View.VISIBLE
+                            mAppointmentAdapter?.submitList(response.data)
+                            mAppointmentAdapter?.notifyDataSetChanged()
+                        }
+                    }
+                }
+
+                is MyResponse.Error -> {
+                    showHideLoading(isShow = false)
+                    Dialog.showDialogError(requireContext(), "Error occurred. Please try again later.")
+                }
+            }
+        }
     }
 
     //create function to generate list of appointment
-    private fun generateAppointmentList() {
-        val appointmentList = mutableListOf<DoctorAppointment>()
-        for (i in 1..10) {
-            appointmentList.add(
-                DoctorAppointment(
-                    id = i.toString(),
-                    patientName = "Patient $i",
-                    phone = "0123456789$i",
-                    email = "patient$i@example.com",
-                    timeSlot = TimeSlot("1","09:00", "10:00"),
-                    symtom = "Symptom $i"
-                )
-            )
-        }
-        mAppointmentAdapter.submitList(appointmentList)
+
+    private fun getAppointments(status: String = "", page : Int = 0) {
+        val params: MutableMap<String, Any> = mutableMapOf()
+        params[Define.Fields.STATUS] = status
+        params[Define.Fields.ORDER] = ASC
+        params[Define.Fields.PAGE] = page.toString()
+        viewModel.getAppointments(params)
     }
 
     override fun onAppointmentClick(doctorAppointment: DoctorAppointment) {
         val bundle = Bundle()
+        bundle.putString(Define.BundleKey.IS_FROM, currentTab)
         bundle.putParcelable(Define.Fields.DOCTOR_APPOINTMENT, doctorAppointment)
         appNavigation.openDoctorHomeToDoctorDetailAppointmentScreen(bundle)
     }

@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.doctorapp.R
+import com.example.doctorapp.constant.Define
 import com.example.doctorapp.databinding.FragmentDoctorHomeContainerBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.utils.Prefs
@@ -36,6 +37,7 @@ class DoctorHomeContainerFragment : BaseFragment<FragmentDoctorHomeContainerBind
         }
         Log.d("HoangDH", Prefs.getInstance(requireContext()).accessToken)
     }
+
 
     override fun bindingStateView() {
         super.bindingStateView()

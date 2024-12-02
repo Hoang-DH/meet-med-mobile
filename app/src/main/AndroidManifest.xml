@@ -27,11 +27,13 @@
         tools:targetApi="31" >
         <activity
             android:name=".moduleDoctor.presentation.container.MainDoctorActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".modulePatient.presentation.container.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"
             android:taskAffinity="" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

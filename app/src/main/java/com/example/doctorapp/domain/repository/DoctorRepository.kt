@@ -4,6 +4,7 @@ import com.example.doctorapp.data.dto.ApiArrayResponse
 import com.example.doctorapp.data.dto.ApiResponse
 import com.example.doctorapp.data.dto.PagingResponse
 import com.example.doctorapp.data.model.Doctor
+import com.example.doctorapp.data.model.DoctorAppointment
 import com.example.doctorapp.data.model.DoctorBookingShift
 import com.example.doctorapp.data.model.DoctorShift
 import retrofit2.Response
@@ -19,4 +20,8 @@ interface DoctorRepository {
     ): ApiResponse<PagingResponse<Doctor>>
     suspend fun getDoctorBookingShifts(doctorId: String): ApiArrayResponse<DoctorBookingShift>
     suspend fun getRegisteredShifts(): Response<ApiArrayResponse<DoctorShift>>
+    suspend fun getAppointments(params: Map<String, Any>): ApiResponse<PagingResponse<DoctorAppointment>>
+    suspend fun completeAppointment(appointmentId: String): ApiResponse<DoctorAppointment>
+    suspend fun getDoctorProfile(): ApiResponse<Doctor>
+    suspend fun updateDoctorProfile(doctor: Doctor): ApiResponse<Doctor>
 }

@@ -28,7 +28,7 @@ class BookingFragment :
     init {
         fragmentList.add(BookingCategoryFragment.newInstance(Define.BookingStatus.UPCOMING))
         fragmentList.add(BookingCategoryFragment.newInstance(Define.BookingStatus.COMPLETED))
-        fragmentList.add(BookingCategoryFragment.newInstance(Define.BookingStatus.CANCELLED))
+//        fragmentList.add(BookingCategoryFragment.newInstance(Define.BookingStatus.CANCELLED))
     }
 
     override fun initView(savedInstanceState: Bundle?) {

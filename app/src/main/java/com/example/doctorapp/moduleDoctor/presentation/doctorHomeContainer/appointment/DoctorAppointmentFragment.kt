@@ -12,7 +12,9 @@ import com.example.doctorapp.databinding.FragmentDoctorAppointmentBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorAppointmentPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DoctorAppointmentFragment : BaseFragment<FragmentDoctorAppointmentBinding, DoctorAppointmentViewModel>(R.layout.fragment_doctor_appointment) {
 
     companion object {

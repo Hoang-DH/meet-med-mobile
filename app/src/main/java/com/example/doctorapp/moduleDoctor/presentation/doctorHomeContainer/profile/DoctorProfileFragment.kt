@@ -6,6 +6,8 @@ import com.auth0.android.Auth0
 import com.auth0.android.authentication.AuthenticationException
 import com.auth0.android.callback.Callback
 import com.auth0.android.provider.WebAuthProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.R
 import com.example.doctorapp.databinding.FragmentDoctorProfileBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
@@ -16,7 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DoctorProfileFragment : BaseFragment<FragmentDoctorProfileBinding, DoctorProfileViewModel>(R.layout.fragment_doctor_profile) {
+class DoctorProfileFragment :
+    BaseFragment<FragmentDoctorProfileBinding, DoctorProfileViewModel>(R.layout.fragment_doctor_profile) {
 
     companion object {
         fun newInstance() = DoctorProfileFragment()
@@ -35,6 +38,22 @@ class DoctorProfileFragment : BaseFragment<FragmentDoctorProfileBinding, DoctorP
             resources.getString(R.string.com_auth0_client_id),
             resources.getString(R.string.com_auth0_domain)
         )
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        binding.apply {
+            context?.let {
+                val imageUrl = Prefs.getInstance(requireContext()).doctor?.user?.imageUrl
+                Glide.with(it)
+                    .load(if (imageUrl.isNullOrEmpty()) R.drawable.ic_profile_pic else imageUrl)
+                    .apply(
+                        RequestOptions().placeholder(R.drawable.ic_profile_pic).error(R.drawable.ic_profile_pic)
+                            .circleCrop()
+                    )
+                    .into(ivAvatar)
+            }
+        }
     }
 
     override fun setOnClick() {

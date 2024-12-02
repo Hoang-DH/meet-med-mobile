@@ -31,19 +31,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNewNotificationNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_size_20dp"
-            android:layout_marginEnd="@dimen/common_size_10dp"
-            android:background="@drawable/bg_mark_all_as_read"
-            android:padding="@dimen/common_size_5dp"
-            android:text="@string/string_mark_all_as_read"
-            android:textColor="@color/white"
-            android:textSize="@dimen/common_size_14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <androidx.appcompat.widget.AppCompatTextView-->
+<!--            android:id="@+id/tvNewNotificationNumber"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/common_size_20dp"-->
+<!--            android:layout_marginEnd="@dimen/common_size_10dp"-->
+<!--            android:background="@drawable/bg_mark_all_as_read"-->
+<!--            android:padding="@dimen/common_size_5dp"-->
+<!--            android:text="@string/string_mark_all_as_read"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/common_size_14sp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvNotification"
@@ -52,8 +52,39 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitleNotification"
             android:layout_marginTop="@dimen/common_size_30dp"
-            tools:listitem=""
+            android:layout_marginBottom="@dimen/common_size_30dp"
+            tools:listitem="@layout/item_noti_content"
             />
+
+        <LinearLayout
+            android:id="@+id/layoutEmptyNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivEmptyAppointment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_no_appointment"
+                android:layout_gravity="center"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/string_empty_noti"
+                android:textSize="@dimen/common_text_size_20sp"
+                android:textStyle="bold"
+                />
+
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

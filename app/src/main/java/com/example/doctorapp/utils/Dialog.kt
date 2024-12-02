@@ -20,7 +20,6 @@ object Dialog {
     fun showCongratulationDialog(
         context: Context,
         message: String,
-        isShowLoading: Boolean,
         onClickDone: (() -> Unit)? = null,
         onClickEdit: (() -> Unit)? = null
     ): AlertDialog {
@@ -37,10 +36,10 @@ object Dialog {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         binding.apply {
             llBtn.visibility = if (onClickEdit != null || onClickDone != null) View.VISIBLE else View.GONE
-            btnDone.visibility = if (onClickDone != null) View.VISIBLE else View.GONE
+//            btnDone.visibility = if (onClickDone != null) View.VISIBLE else View.GONE
             tvEditAppointment.visibility = if (onClickEdit != null) View.VISIBLE else View.GONE
             tvDescription.text = message
-            progressBar.visibility = if (isShowLoading) View.VISIBLE else View.GONE
+
             btnDone.setOnClickListener {
                 onClickDone?.invoke()
                 dialog.dismiss()

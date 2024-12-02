@@ -10,13 +10,17 @@ import java.util.Date
 
 object DateUtils {
 
-    private val format = SimpleDateFormat("EEEE, MMMM d, yyyy, HH:mm", java.util.Locale.getDefault()).apply {
+    private val format = SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault()).apply {
         timeZone = Calendar.getInstance().timeZone
     }
 
     fun convertLongToDate(time: Long): String {
         val date = Date(time)
         return format.format(date)
+    }
+
+    fun convertDateToLong(date: String): Long {
+        return format.parse(date)?.time ?: 0
     }
 
 
@@ -27,7 +31,7 @@ object DateUtils {
         return formatterTime.format(dateTime)
     }
 
-    fun convertInstantToDate(time: String, pattern: String): String {
+    fun convertInstantToDate(time: String?, pattern: String): String {
         val instant = Instant.parse(time)
         val formatterDate = DateTimeFormatter.ofPattern(pattern)
         val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
@@ -41,34 +45,32 @@ object DateUtils {
         return formatterDayOfWeek.format(dateTime)
     }
 
-
-    // check if 2 instant is same day
-    fun checkInstantIsSameDay(instant1: String, instant2: String): Boolean {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val date1 = LocalDateTime.parse(instant1, formatter)
-        val date2 = LocalDateTime.parse(instant2, formatter)
-        return date1 == date2
+    fun checkDateIsSameDay(instantString1: String?, instantString2: String?): Boolean {
+        val instant1 = Instant.parse(instantString1)
+        val instant2 = Instant.parse(instantString2)
+        val dateTime1 = LocalDateTime.ofInstant(instant1, ZoneId.systemDefault())
+        val dateTime2 = LocalDateTime.ofInstant(instant2, ZoneId.systemDefault())
+        return dateTime1.toLocalDate() == dateTime2.toLocalDate()
     }
 
-    fun checkDateIsSameDay(date1: Long, date2: Long): Boolean {
-        return format.format(Date(date1)) == format.format(Date(date2))
+    fun isToday(instantString: String?): Boolean {
+        val instant = Instant.parse(instantString)
+        val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+        val today = LocalDateTime.now(ZoneId.systemDefault())
+        return dateTime.toLocalDate() == today.toLocalDate()
     }
 
-    fun isToday(date: Long): Boolean {
-        val today = Calendar.getInstance().time
-        return format.format(Date(date)) == format.format(today)
+    fun isYesterday(instantString: String?): Boolean {
+        val instant = Instant.parse(instantString)
+        val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+        val yesterday = LocalDateTime.now(ZoneId.systemDefault()).minusDays(1)
+        return dateTime.toLocalDate() == yesterday.toLocalDate()
     }
 
-    fun isYesterday(date: Long): Boolean {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DATE, -1)
-        val yesterday = calendar.time
-        return format.format(Date(date)) == format.format(yesterday)
-    }
-
-    fun calculateTimeStampDifference(timeStamp: Long): String {
+    fun calculateTimeStampDifference(timeStamp: String): String {
         val currentTime = System.currentTimeMillis()
-        val difference = currentTime - timeStamp
+        val parsedTimeStamp = Instant.parse(timeStamp).toEpochMilli()
+        val difference = currentTime - parsedTimeStamp
         return when {
             difference < 60000 -> "Just now"
             difference < 3600000 -> "${difference / 60000}m"

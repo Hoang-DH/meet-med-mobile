@@ -1,12 +1,8 @@
 package com.example.doctorapp.modulePatient.presentation.homeContainer.home
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
@@ -17,13 +13,14 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.DepartmentAdapter
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.Dialog
+import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Prefs
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment :
-    BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
+    BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home), DepartmentAdapter.OnDepartmentClickListener {
 
     @Inject
     lateinit var appNavigation: AppNavigation
@@ -62,20 +59,20 @@ class HomeFragment :
     }
 
 
-
-
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
         }
+        viewModel.getAllDepartment()
         mAdapter = DepartmentAdapter(requireContext())
-        mAdapter?.submitList(getDepartments())
+        mAdapter?.setOnDepartmentClickListener(this)
         binding.apply {
             rvDepartment.layoutManager =
                 androidx.recyclerview.widget.GridLayoutManager(
                     requireContext(),
-                    4
+                    2
                 )
             rvDepartment.adapter = mAdapter
             tvName.text = Prefs.getInstance(requireContext()).patient?.user?.fullName ?: "Guest"
@@ -83,6 +80,29 @@ class HomeFragment :
             tvGreeting.text = getGreeting()
         }
     }
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+        viewModel.departmentResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is MyResponse.Loading -> {
+                    showHideLoading(true)
+                }
+
+                is MyResponse.Success -> {
+                    Prefs.getInstance(requireContext()).department = response.data
+                    mAdapter?.submitList(response.data)
+                    showHideLoading(false)
+                }
+
+                is MyResponse.Error -> {
+                    showHideLoading(false)
+                    Dialog.showAlertDialog(requireContext(), "Error", response.exception.message.toString())
+                }
+            }
+        }
+    }
+
 
     override fun bindingAction() {
         super.bindingAction()
@@ -100,50 +120,6 @@ class HomeFragment :
         }
     }
 
-    private fun getDepartments(): ArrayList<Department> {
-        return arrayListOf(
-            Department(
-                "1",
-                "Cardiology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "2",
-                "Neurology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "3",
-                "Orthopedics",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "4",
-                "Pediatrics",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "5",
-                "Dermatology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "6",
-                "Radiology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "7",
-                "Oncology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            ),
-            Department(
-                "8",
-                "Gastroenterology",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WwgH7Nl5_AW9nDCnR2Ozb_AU3rkIbSJdAg&s"
-            )
-        )
-    }
 
     // Function to get greeting based on time of day
     private fun getGreeting(): String {
@@ -153,6 +129,12 @@ class HomeFragment :
             in 12..17 -> "Good Afternoon"
             else -> "Good Evening"
         }
+    }
+
+    override fun onDepartmentClick(department: Department) {
+        val bundle = Bundle()
+        bundle.putParcelable(Define.BundleKey.DEPARTMENT, department)
+        appNavigation.openHomeContainerToSearchDoctorScreen(bundle)
     }
 
 }
