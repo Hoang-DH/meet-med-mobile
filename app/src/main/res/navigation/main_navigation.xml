@@ -314,16 +314,4 @@
         app:popUpTo="@id/doctorNotificationFragment"
         app:popUpToInclusive="true"
         />
-
-
-<!--    <activity-->
-<!--        android:id="@+id/mainActivity"-->
-<!--        android:name="com.example.doctorapp.modulePatient.presentation.container.MainActivity"-->
-<!--        android:label="MainActivity"-->
-<!--        >-->
-<!--        <action-->
-<!--            android:id="@+id/action_mainActivity_to_notificationFragment"-->
-<!--            app:destination="@id/notificationFragment"/>-->
-
-<!--    </activity>-->
 </navigation>
