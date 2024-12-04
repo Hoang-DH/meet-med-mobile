@@ -126,6 +126,7 @@
     <string name="string_empty_noti">You don\'t have any notification yet</string>
     <string name="string_department">Department</string>
     <string name="string_message">Message</string>
+    <string name="string_hint_chat_edt">Aa</string>
 
 
     <string-array name="gender_options">

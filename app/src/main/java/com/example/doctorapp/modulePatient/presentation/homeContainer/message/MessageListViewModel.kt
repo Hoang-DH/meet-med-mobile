@@ -1,7 +1,7 @@
 package com.example.doctorapp.modulePatient.presentation.homeContainer.message
 
-import androidx.lifecycle.ViewModel
+import com.example.doctorapp.domain.core.base.BaseViewModel
 
-class MessageListViewModel : ViewModel() {
+class MessageListViewModel : BaseViewModel() {
     // TODO: Implement the ViewModel
 }

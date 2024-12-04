@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/common_size_10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="@dimen/common_size_30dp"
+        android:layout_height="@dimen/common_size_30dp"
+        android:src="@drawable/ic_profile_pic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ivImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMessageContent"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_item_message_received"
+        android:text="Hi, how are you to day?"
+        android:layout_marginStart="@dimen/common_size_10dp"
+        android:paddingVertical="@dimen/common_size_8dp"
+        android:paddingHorizontal="@dimen/common_size_12dp"
+        app:layout_constraintStart_toEndOf="@id/ivAvatar"
+        app:layout_constraintBottom_toTopOf="@id/ivImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="@+id/tvMessageContent"
+        app:layout_constraintTop_toBottomOf="@id/tvMessageContent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_item_message_received"
+        android:drawableStart="@drawable/ic_file"
+        android:paddingHorizontal="@dimen/common_size_12dp"
+        android:paddingVertical="@dimen/common_size_8dp"
+        android:text="Ket qua xet nghiem.pdf"
+        android:drawablePadding="@dimen/common_size_10dp"
+        app:layout_constraintStart_toStartOf="@+id/ivImage"
+        app:layout_constraintTop_toBottomOf="@id/ivImage" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_item_message_sent"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
