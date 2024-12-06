@@ -115,7 +115,14 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeContainerFragment_to_messageRoomFragment"
+            app:destination="@id/messageRoomFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/doctorDetailFragment"
@@ -185,14 +192,14 @@
         android:id="@+id/notificationFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.profile.notification.NotificationFragment"
         android:label="NotificationFragment"
-        tools:layout="@layout/fragment_notification" >
+        tools:layout="@layout/fragment_notification">
         <action
             android:id="@+id/action_notificationFragment_to_detailAppointmentFragment"
             app:destination="@id/detailAppointmentFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -237,14 +244,14 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_doctorHomeContainerFragment_to_doctorNotificationFragment"
             app:destination="@id/doctorNotificationFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/doctorWorkingFragment"
@@ -273,7 +280,7 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/notificationFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_doctorNotificationFragment_to_doctorHomeContainerFragment"
             app:destination="@id/doctorHomeContainerFragment" />
@@ -291,8 +298,7 @@
         app:popEnterAnim="@anim/slide_in_left"
         app:popExitAnim="@anim/slide_out_right"
         app:popUpTo="@id/notificationFragment"
-        app:popUpToInclusive="true"
-        />
+        app:popUpToInclusive="true" />
     <action
         android:id="@+id/action_to_doctorNotificationFragment"
         app:destination="@id/doctorNotificationFragment"
@@ -301,8 +307,7 @@
         app:popEnterAnim="@anim/slide_in_left"
         app:popExitAnim="@anim/slide_out_right"
         app:popUpTo="@id/doctorNotificationFragment"
-        app:popUpToInclusive="true"
-        />
+        app:popUpToInclusive="true" />
 
     <action
         android:id="@+id/action_to_doctorHomeContainer"
@@ -312,6 +317,10 @@
         app:popEnterAnim="@anim/slide_in_left"
         app:popExitAnim="@anim/slide_out_right"
         app:popUpTo="@id/doctorNotificationFragment"
-        app:popUpToInclusive="true"
-        />
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/messageRoomFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.message.detailMessage.MessageRoomFragment"
+        android:label="MessageRoomFragment"
+        tools:layout="@layout/fragment_message_room" />
 </navigation>

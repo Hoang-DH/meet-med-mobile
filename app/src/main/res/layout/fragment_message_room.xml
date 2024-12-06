@@ -1,124 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".modulePatient.presentation.homeContainer.message.MessageListFragment">
+<layout>
 
-    <LinearLayout
-        android:id="@+id/layoutToolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_10dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivBack"
-            android:layout_width="@dimen/common_size_50dp"
-            android:layout_height="@dimen/common_size_50dp"
-            android:padding="@dimen/common_size_10dp"
-            android:src="@drawable/ic_back" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="@dimen/common_size_50dp"
-            android:layout_height="@dimen/common_size_50dp"
-            android:src="@drawable/ic_profile_pic" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvUsername"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/common_size_20dp"
-            android:layout_weight="1"
-            android:text="Dr. Emily Walker"
-            android:textColor="@color/black"
-            android:textSize="@dimen/common_size_20sp"
-            android:textStyle="bold" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivMore"
-            android:layout_width="@dimen/common_size_50dp"
-            android:layout_height="@dimen/common_size_50dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/common_size_10dp"
-            android:padding="@dimen/common_size_10dp"
-            android:src="@drawable/ic_more" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMessageList"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        tools:listitem="@layout/item_message_received"
-        app:layout_constraintBottom_toTopOf="@id/layoutBottom"
-        android:background="@color/color_background_chat_room"
-        app:layout_constraintTop_toBottomOf="@id/layoutToolbar" />
-
-    <LinearLayout
-        android:id="@+id/layoutBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivShowMedia"
-            android:layout_width="@dimen/common_size_40dp"
-            android:layout_height="@dimen/common_size_40dp"
-            android:src="@drawable/ic_arrow_right"
-            android:visibility="gone" />
+        android:layout_height="match_parent"
+        tools:context=".modulePatient.presentation.homeContainer.message.MessageListFragment">
 
         <LinearLayout
-            android:id="@+id/layoutMedia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:id="@+id/layoutToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_size_10dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivAddFile"
-                android:layout_width="@dimen/common_size_40dp"
-                android:layout_height="@dimen/common_size_40dp"
-                android:layout_marginStart="@dimen/common_size_10dp"
-                android:padding="@dimen/common_size_5dp"
-                android:src="@drawable/ic_add_file" />
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/common_size_50dp"
+                android:layout_height="@dimen/common_size_50dp"
+                android:padding="@dimen/common_size_10dp"
+                android:src="@drawable/ic_back" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivAddImage"
-                android:layout_width="@dimen/common_size_40dp"
-                android:layout_height="@dimen/common_size_40dp"
-                android:layout_marginStart="@dimen/common_size_10dp"
-                android:padding="@dimen/common_size_5dp"
-                android:src="@drawable/ic_add_image" />
+                android:id="@+id/ivAvatar"
+                android:layout_width="@dimen/common_size_50dp"
+                android:layout_height="@dimen/common_size_50dp"
+                android:src="@drawable/ic_profile_pic" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUsername"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/common_size_20dp"
+                android:layout_weight="1"
+                android:text="Dr. Emily Walker"
+                android:textColor="@color/black"
+                android:textSize="@dimen/common_size_20sp"
+                android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivCamera"
-                android:layout_width="@dimen/common_size_40dp"
-                android:layout_height="@dimen/common_size_40dp"
-                android:layout_marginStart="@dimen/common_size_10dp"
-                android:padding="@dimen/common_size_5dp"
-                android:src="@drawable/ic_camera" />
+                android:id="@+id/ivMore"
+                android:layout_width="@dimen/common_size_50dp"
+                android:layout_height="@dimen/common_size_50dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/common_size_10dp"
+                android:padding="@dimen/common_size_10dp"
+                android:src="@drawable/ic_more" />
+
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etInputMessage"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/common_size_10dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_edit_text"
-            android:hint="@string/string_hint_chat_edt"
-            android:padding="@dimen/common_size_5dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMessageList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/color_background_chat_room"
+            app:layout_constraintBottom_toTopOf="@id/layoutBottom"
+            app:layout_constraintTop_toBottomOf="@id/layoutToolbar"
+            tools:listitem="@layout/item_message_received" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivSendMessage"
-            android:layout_width="@dimen/common_size_40dp"
-            android:layout_height="@dimen/common_size_40dp"
-            android:padding="@dimen/common_size_5dp"
-            android:src="@drawable/ic_send_msg" />
+        <LinearLayout
+            android:id="@+id/layoutBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivShowMedia"
+                android:layout_width="@dimen/common_size_40dp"
+                android:layout_height="@dimen/common_size_40dp"
+                android:src="@drawable/ic_arrow_right"
+                android:visibility="gone" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/layoutMedia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAddFile"
+                    android:layout_width="@dimen/common_size_40dp"
+                    android:layout_height="@dimen/common_size_40dp"
+                    android:layout_marginStart="@dimen/common_size_10dp"
+                    android:padding="@dimen/common_size_5dp"
+                    android:src="@drawable/ic_add_file" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAddImage"
+                    android:layout_width="@dimen/common_size_40dp"
+                    android:layout_height="@dimen/common_size_40dp"
+                    android:layout_marginStart="@dimen/common_size_10dp"
+                    android:padding="@dimen/common_size_5dp"
+                    android:src="@drawable/ic_add_image" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivCamera"
+                    android:layout_width="@dimen/common_size_40dp"
+                    android:layout_height="@dimen/common_size_40dp"
+                    android:layout_marginStart="@dimen/common_size_10dp"
+                    android:padding="@dimen/common_size_5dp"
+                    android:src="@drawable/ic_camera" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etInputMessage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/common_size_10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:hint="@string/string_hint_chat_edt"
+                android:padding="@dimen/common_size_5dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSendMessage"
+                android:layout_width="@dimen/common_size_40dp"
+                android:layout_height="@dimen/common_size_40dp"
+                android:padding="@dimen/common_size_5dp"
+                android:src="@drawable/ic_send_msg" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

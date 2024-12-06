@@ -128,4 +128,8 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
     override fun openDoctorHomeContainer(bundle: Bundle?) {
         openScreen(R.id.action_to_doctorHomeContainer, bundle)
     }
+
+    override fun openMessageListToMessageRoomScreen(bundle: Bundle?) {
+        openScreen(R.id.action_homeContainerFragment_to_messageRoomFragment, bundle)
+    }
 }

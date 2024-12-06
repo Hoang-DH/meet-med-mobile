@@ -11,6 +11,8 @@ import com.example.doctorapp.modulePatient.presentation.diffUtil.MessageRoomDiff
 
 class MessageRoomAdapter(private val context: Context): ListAdapter<MessageRoom, MessageRoomAdapter.MessageRoomAdapterViewHolder> (MessageRoomDiffUtil()) {
 
+    private var onMessageRoomClickListener: OnMessageRoomClickListener? = null
+
     inner class MessageRoomAdapterViewHolder(private val binding: MessageListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(messageRoom: MessageRoom) {
             binding.apply {
@@ -26,7 +28,9 @@ class MessageRoomAdapter(private val context: Context): ListAdapter<MessageRoom,
                     tvTimestamp.setTypeface(null, android.graphics.Typeface.BOLD)
                     ivUnreadMessage.visibility = android.view.View.VISIBLE
                 }
-
+                itemView.setOnClickListener {
+                    onMessageRoomClickListener?.onMessageRoomClick(messageRoom)
+                }
             }
         }
     }
@@ -39,4 +43,13 @@ class MessageRoomAdapter(private val context: Context): ListAdapter<MessageRoom,
     override fun onBindViewHolder(holder: MessageRoomAdapterViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    fun setOnMessageRoomClickListener(listener: OnMessageRoomClickListener) {
+        onMessageRoomClickListener = listener
+    }
+
+    interface OnMessageRoomClickListener {
+        fun onMessageRoomClick(messageRoom: MessageRoom)
+    }
+
 }

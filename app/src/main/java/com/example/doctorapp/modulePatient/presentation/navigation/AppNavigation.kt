@@ -34,4 +34,5 @@ interface AppNavigation: BaseNavigator {
     fun openDoctorNotificationToDoctorWorkingScreen(bundle: Bundle? = null)
     fun openDoctorNotificationScreen(bundle: Bundle? = null)
     fun openDoctorHomeContainer(bundle: Bundle? = null)
+    fun openMessageListToMessageRoomScreen(bundle: Bundle? = null)
 }

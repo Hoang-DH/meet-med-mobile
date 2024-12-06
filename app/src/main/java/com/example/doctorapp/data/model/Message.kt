@@ -7,4 +7,5 @@ data class Message(
     var sendDate: String? = null,
     var messageType: String? = null,
     var read: Int? = null,
+    var senderProfile: User? = null
 )
