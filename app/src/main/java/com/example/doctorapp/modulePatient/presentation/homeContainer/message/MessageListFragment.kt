@@ -9,15 +9,22 @@ import com.example.doctorapp.data.model.User
 import com.example.doctorapp.databinding.FragmentMessageListBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.MessageRoomAdapter
+import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MessageListFragment :
-    BaseFragment<FragmentMessageListBinding, MessageListViewModel>(R.layout.fragment_message_list) {
+    BaseFragment<FragmentMessageListBinding, MessageListViewModel>(R.layout.fragment_message_list), MessageRoomAdapter.OnMessageRoomClickListener {
+
+
 
     companion object {
         fun newInstance() = MessageListFragment()
     }
+
+    @Inject
+    lateinit var appNavigation: AppNavigation
 
     private val viewModel: MessageListViewModel by viewModels()
     override fun getVM() = viewModel
@@ -26,6 +33,7 @@ class MessageListFragment :
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         messageRoomAdapter = MessageRoomAdapter(context = requireContext())
+        messageRoomAdapter?.setOnMessageRoomClickListener(this);
         messageRoomAdapter?.submitList(generateMessageRooms())
         binding.rvMessageList.apply {
             adapter = messageRoomAdapter
@@ -140,5 +148,9 @@ class MessageListFragment :
                 sender = users[9]
             )
         )
+    }
+
+    override fun onMessageRoomClick(messageRoom: MessageRoom) {
+        appNavigation.openMessageListToMessageRoomScreen()
     }
 }

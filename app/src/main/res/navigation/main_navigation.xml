@@ -116,6 +116,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_messageList_to_messageRoomFragment"
+            app:destination="@id/messageRoomFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/doctorDetailFragment"
@@ -314,4 +321,9 @@
         app:popUpTo="@id/doctorNotificationFragment"
         app:popUpToInclusive="true"
         />
+    <fragment
+        android:id="@+id/messageRoomFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.message.detailMessage.MessageRoomFragment"
+        android:label="MessageRoomFragment"
+        tools:layout="@layout/fragment_message_room"/>
 </navigation>
