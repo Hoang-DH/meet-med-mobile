@@ -44,9 +44,10 @@ class MessageRoomAdapter(private val context: Context): ListAdapter<MessageRoom,
         holder.bind(getItem(position))
     }
 
-    fun setOnMessageRoomClickListener(listener: OnMessageRoomClickListener) {
-        onMessageRoomClickListener = listener
+    fun setOnMessageRoomClickListener(onMessageRoomClickListener: OnMessageRoomClickListener){
+        this.onMessageRoomClickListener = onMessageRoomClickListener
     }
+
 
     interface OnMessageRoomClickListener {
         fun onMessageRoomClick(messageRoom: MessageRoom)

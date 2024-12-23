@@ -17,6 +17,8 @@ import javax.inject.Inject
 class MessageListFragment :
     BaseFragment<FragmentMessageListBinding, MessageListViewModel>(R.layout.fragment_message_list), MessageRoomAdapter.OnMessageRoomClickListener {
 
+
+
     companion object {
         fun newInstance() = MessageListFragment()
     }
@@ -31,7 +33,7 @@ class MessageListFragment :
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         messageRoomAdapter = MessageRoomAdapter(context = requireContext())
-        messageRoomAdapter?.setOnMessageRoomClickListener(this)
+        messageRoomAdapter?.setOnMessageRoomClickListener(this);
         messageRoomAdapter?.submitList(generateMessageRooms())
         binding.rvMessageList.apply {
             adapter = messageRoomAdapter
