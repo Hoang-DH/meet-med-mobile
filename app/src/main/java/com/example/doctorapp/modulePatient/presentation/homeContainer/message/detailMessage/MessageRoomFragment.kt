@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.ContentValues
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -12,8 +13,18 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.viewModels
 import com.example.doctorapp.R
+import com.example.doctorapp.constant.Define
+import com.example.doctorapp.constant.MessageStatus
+import com.example.doctorapp.data.model.Message
 import com.example.doctorapp.databinding.FragmentMessageRoomBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
+import com.example.doctorapp.modulePatient.presentation.adapter.MessageAdapter
+import com.example.doctorapp.utils.Prefs
+import com.example.doctorapp.utils.SocketHandler
+import io.socket.emitter.Emitter
+import org.json.JSONException
+import org.json.JSONObject
+import kotlin.random.Random
 
 
 class MessageRoomFragment :
@@ -24,6 +35,8 @@ class MessageRoomFragment :
 
     private var selectedFile: Uri? = null;
     private var currentMediaPickType = IMAGE_TYPE
+    private var messageAdapter: MessageAdapter? = null
+
 
     private var takePhotoCameraPermissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -40,7 +53,7 @@ class MessageRoomFragment :
     private val imagePermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             if (permissions.all { it.value }) {
-                openCamera(currentMediaPickType)
+                showMediaPickerLayout(binding.addMediaLayout.visibility == View.GONE)
             } else {
                 //showToast("Permission Denied")
             }
@@ -91,7 +104,8 @@ class MessageRoomFragment :
     private val videoLauncher = registerForActivityResult(ActivityResultContracts.CaptureVideo()) {
         if (it) {
             try {
-
+                // Handle the recorded video URI
+                Log.d("MessageRoomFragment", "Video recorded")
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -110,13 +124,14 @@ class MessageRoomFragment :
     }
 
     private fun openCamera(pickType: Int) {
-        val values = ContentValues()
         if (pickType == IMAGE_TYPE) {
+            val values = ContentValues()
             values.put(MediaStore.Images.Media.TITLE, CAMERA_IMAGE_FILE_NAME)
             selectedFile =
                 requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
             imageLauncher.launch(selectedFile)
         } else {
+            val values = ContentValues()
             values.put(MediaStore.Video.Media.TITLE, CAMERA_VIDEO_FILE_NAME)
             selectedFile =
                 requireContext().contentResolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values)
@@ -124,16 +139,71 @@ class MessageRoomFragment :
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Prefs.getInstance(requireContext()).patient?.id?.let { SocketHandler.initSocket(it) }
+        Log.d("SocketHandler", Prefs.getInstance(requireContext()).patient?.id.toString())
+        SocketHandler.getSocket().apply {
+            on(Define.Socket.EVENT_RECEIVE_MESSAGE, onReceiveMessage)
+            on(Define.Socket.EVENT_ERROR, onError)
+            on(Define.Socket.EVENT_CONNECTED) {
+                Log.d("SocketHandler", "Connected")
+            }
+            connect()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        SocketHandler.getSocket().apply {
+            off(Define.Socket.EVENT_RECEIVE_MESSAGE, onReceiveMessage)
+            off(Define.Socket.EVENT_ERROR, onError)
+            off(Define.Socket.EVENT_CONNECTED){
+                Log.d("SocketHandler", "Disconnected")
+            }
+            disconnect()
+            Log.d("SocketHandler", "Destroy")
+        }
+    }
+
+    private val onReceiveMessage = Emitter.Listener { args: Array<out Any>? ->
+        // Handle receive message
+        Log.d("SocketHandler", "Receive message: ${args?.forEach { Log.d("SocketHandler", it.toString()) }}")
+    }
+
+    private val onError = Emitter.Listener { args: Array<out Any>? ->
+        // Handle error
+        Log.d("SocketHandler", "Error: ${args?.get(0)}")
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        messageAdapter = MessageAdapter(requireContext())
+        binding.apply {
+            rvMessageList.adapter = messageAdapter
+            rvMessageList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+        }
+
+    }
+
+
+    override fun bindingStateView() {
+        super.bindingStateView()
+        viewModel.messageList.observe(viewLifecycleOwner) {
+            messageAdapter?.submitList(it)
+            messageAdapter?.notifyItemInserted(it.size)
+        }
+    }
+
     override fun setOnClick() {
         super.setOnClick()
         binding.apply {
             ivAddImage.setOnClickListener {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     imagePermission.launch(takePhotoCameraPermissionsSDK33)
                 } else {
                     imagePermission.launch(takePhotoCameraPermissions)
                 }
-                showMediaPickerLayout(binding.addMediaLayout.visibility == View.GONE)
             }
             tvTakePicture.setOnClickListener {
                 currentMediaPickType = IMAGE_TYPE
@@ -143,7 +213,35 @@ class MessageRoomFragment :
                 currentMediaPickType = VIDEO_TYPE
                 openCamera(currentMediaPickType)
             }
+
+            ivSendMessage.setOnClickListener {
+                val message = Message(
+                    id = Random(100).nextInt().toString(),
+                    messageContent = binding.etInputMessage.text.toString(),
+                    senderId = "1",
+                    messageType = "TEXT",
+                    status = MessageStatus.SENT
+                )
+                binding.etInputMessage.text?.clear()
+                sendMessage(message)
+                viewModel.sendMessage(message)
+            }
         }
+    }
+
+    private fun sendMessage(message: Message) {
+        val sendMessage = JSONObject()
+        val messageContent = JSONObject()
+        try{
+            sendMessage.put(Define.Socket.TO, TO_ID)
+            messageContent.put(Define.Socket.CONTENT, message.messageContent)
+            messageContent.put(Define.Socket.TYPE, message.messageType)
+            messageContent.put(Define.Socket.CHAT_BOX_ID, CHAT_BOX_ID)
+            sendMessage.put(Define.Socket.MESSAGE, messageContent)
+        } catch (e: JSONException){
+            e.printStackTrace()
+        }
+        SocketHandler.getSocket().emit(Define.Socket.EVENT_SEND_MESSAGE, sendMessage)
     }
 
     private fun showMediaPickerLayout(isShow: Boolean) {
@@ -163,7 +261,9 @@ class MessageRoomFragment :
         private const val CAMERA_IMAGE_FILE_NAME = "temp.jpg"
         private const val CAMERA_VIDEO_FILE_NAME = "temp.mp4"
         private const val IMAGE_TYPE = 0
-        private const val VIDEO_TYPE = 0
+        private const val VIDEO_TYPE = 1
+        private const val CHAT_BOX_ID = "29764836-c00a-415b-b8a0-cdcdde53b16d"
+        private const val TO_ID = "6a5c5552-aaba-485e-9382-e0cffddcc3f4"
         fun newInstance() = MessageRoomFragment()
     }
 }

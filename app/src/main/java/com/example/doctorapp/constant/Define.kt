@@ -78,5 +78,23 @@ object Define {
         const val IS_FROM_HOME_SCREEN = "isFromHomeScreen"
     }
 
+    object Socket{
+        const val SOCKET_URL = "http://chat-service.clinic.thanhnguyen03.site"
+        const val EVENT_RECEIVE_MESSAGE = "receive-message"
+        const val EVENT_ERROR = "error"
+        const val EVENT_CONNECTED = "connected"
+        const val EVENT_SEND_MESSAGE = "send-message"
+        const val TO = "to"
+        const val MESSAGE = "message"
+        const val CONTENT = "content"
+        const val TYPE = "type"
+        const val CHAT_BOX_ID = "chat_box_id"
+    }
+
+    object MessageReadStatus {
+        const val READ = 1
+        const val UNREAD = 0
+    }
+
 
 }

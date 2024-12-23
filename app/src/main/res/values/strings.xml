@@ -129,6 +129,7 @@
     <string name="string_hint_chat_edt">Aa</string>
     <string name="string_take_picture">Take Picture</string>
     <string name="string_record_video">Record Video</string>
+    <string name="cancel_view_attachment_talk_room">Cancel</string>
 
 
     <string-array name="gender_options">

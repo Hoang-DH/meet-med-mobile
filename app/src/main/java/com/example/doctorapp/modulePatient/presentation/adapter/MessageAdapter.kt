@@ -28,23 +28,32 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
         fun bind(message: Message) {
             binding.apply {
                 when (message.messageType) {
-                    "text" -> {
+                    "TEXT" -> {
                         tvMessageContent.text = message.messageContent
                         tvFile.visibility = View.GONE
                         ivImage.visibility = View.GONE
+                        ivPlayVideo.visibility = View.GONE
                     }
-                    "image" -> {
+                    "IMAGE" -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.GONE
                         ivImage.visibility = View.VISIBLE
+                        ivPlayVideo.visibility = View.GONE
                         Glide.with(context)
                             .load(R.drawable.headache)
                             .into(ivImage)
+                    }
+                    "VIDEO" -> {
+                        tvMessageContent.visibility = View.GONE
+                        tvFile.visibility = View.VISIBLE
+                        ivImage.visibility = View.GONE
+                        ivPlayVideo.visibility = View.VISIBLE
                     }
                     else -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.VISIBLE
                         ivImage.visibility = View.GONE
+                        ivPlayVideo.visibility = View.GONE
                     }
                 }
 
@@ -58,23 +67,32 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
             binding.apply {
                 ivAvatar.setImageResource(R.drawable.img)
                 when (message.messageType) {
-                    "text" -> {
+                    "TEXT" -> {
                         tvMessageContent.text = message.messageContent
                         tvFile.visibility = View.GONE
                         ivImage.visibility = View.GONE
+                        ivPlayVideo.visibility = View.GONE
                     }
-                    "image" -> {
+                    "IMAGE" -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.GONE
                         ivImage.visibility = View.VISIBLE
+                        ivPlayVideo.visibility = View.GONE
                         Glide.with(context)
                             .load(R.drawable.headache)
                             .into(ivImage)
+                    }
+                    "VIDEO" -> {
+                        tvMessageContent.visibility = View.GONE
+                        tvFile.visibility = View.VISIBLE
+                        ivImage.visibility = View.GONE
+                        ivPlayVideo.visibility = View.VISIBLE
                     }
                     else -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.VISIBLE
                         ivImage.visibility = View.GONE
+                        ivPlayVideo.visibility = View.GONE
                     }
                 }
 
