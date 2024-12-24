@@ -5,7 +5,7 @@ import android.os.Parcelable
 import com.example.doctorapp.modulePatient.presentation.constants.Gender
 import com.google.gson.annotations.SerializedName
 
-data class User(
+open class User(
     @SerializedName("id")
     val id: String? = null,
     @SerializedName("fullName")

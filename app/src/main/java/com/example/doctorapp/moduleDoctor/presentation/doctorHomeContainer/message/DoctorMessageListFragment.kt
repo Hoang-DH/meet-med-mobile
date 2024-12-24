@@ -2,10 +2,6 @@ package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.mess
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.data.model.MessageRoom

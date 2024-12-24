@@ -12,6 +12,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.viewModels
+import androidx.work.BackoffPolicy
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.constant.MessageStatus
@@ -21,9 +28,11 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.MessageAdapter
 import com.example.doctorapp.utils.Prefs
 import com.example.doctorapp.utils.SocketHandler
+import com.example.doctorapp.worker.UploadMediaWorker
 import io.socket.emitter.Emitter
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 
@@ -63,42 +72,54 @@ class MessageRoomFragment :
     private val imageLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         if (it) {
             try {
-                Log.d("Hoangdh", "imageLauncher")
-//                Glide.with(requireContext())
-//                    .load(avatarImageUri)
-//                    .apply(circleCropTransform())
-//                    .into(binding.ivAvatar)
-////                MediaManager.get().upload(avatarImageUri).callback(object : UploadCallback {
-////                    override fun onStart(requestId: String?) {
-////                        Log.d("HoangDH", "onStart")
-////                    }
-////
-////                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
-////                        Log.d("HoangDH", "onProgress")
-////                        showHideLoading(true)
-////                    }
-////
-////                    override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
-////                        Log.d("HoangDH", resultData.toString())
-////                        cloudinaryUrl = resultData?.get(CLOUDINARY_IMAGE_URL).toString()
-////
-////                        showHideLoading(false)
-////                    }
-////
-////                    override fun onError(requestId: String?, error: ErrorInfo?) {
-////                        Log.d("HoangDH", error.toString())
-////                    }
-////
-////                    override fun onReschedule(requestId: String?, error: ErrorInfo?) {
-////                        Log.d("HoangDH", error.toString())
-////                    }
-////
-////                }).dispatch()
+                Log.d("Hoangdh", selectedFile.toString())
+                val inputData = Data.Builder().putString("mediaUri", selectedFile.toString()).build()
+                val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+                val uploadImageRequest = OneTimeWorkRequest.Builder(UploadMediaWorker::class.java)
+                    .setInputData(inputData)
+                    .setConstraints(constraints)
+                    .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 10, TimeUnit.SECONDS)
+                    .build()
+                WorkManager.getInstance(requireContext()).enqueue(uploadImageRequest)
+                WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(uploadImageRequest.id).observe(viewLifecycleOwner) { workInfo ->
+                    if (workInfo != null) {
+                        when (workInfo.state) {
+                            WorkInfo.State.SUCCEEDED -> {
+                                val message = Message(
+                                    id = "1",
+                                    messageContent = workInfo.outputData.getString(UploadMediaWorker.CLOUDINARY_IMAGE_URL).toString(),
+                                    patient = Prefs.getInstance(requireContext()).patient,
+                                    type = "IMAGE",
+                                    status = MessageStatus.SENT
+                                )
+                                sendMessage(message)
+                                viewModel.updateMessageStatus(message, MessageStatus.SENT)
+                            }
+                            WorkInfo.State.FAILED -> {
+
+                            }
+                            WorkInfo.State.RUNNING -> {
+                                // Image upload is in progress
+                                val message = Message(
+                                    id = "1",
+                                    messageContent = workInfo.outputData.getString(UploadMediaWorker.CLOUDINARY_IMAGE_URL).toString(),
+                                    patient = Prefs.getInstance(requireContext()).patient,
+                                    type = "IMAGE",
+                                    status = MessageStatus.SENDING
+                                )
+                                viewModel.sendMessage(message)
+                                showHideLoading(true)
+                            }
+                            else -> {
+                                // Handle other states (e.g., PENDING, CANCELLED)
+                            }
+                        }
+                    }
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
-
     }
 
     private val videoLauncher = registerForActivityResult(ActivityResultContracts.CaptureVideo()) {
@@ -149,6 +170,7 @@ class MessageRoomFragment :
             on(Define.Socket.EVENT_CONNECTED) {
                 Log.d("SocketHandler", "Connected")
             }
+            on(Define.Socket.EVENT_MESSAGE_ACK, onMessageAck)
             connect()
         }
     }
@@ -161,10 +183,13 @@ class MessageRoomFragment :
             off(Define.Socket.EVENT_CONNECTED){
                 Log.d("SocketHandler", "Disconnected")
             }
+            off(Define.Socket.EVENT_MESSAGE_ACK, onMessageAck)
             disconnect()
             Log.d("SocketHandler", "Destroy")
         }
     }
+
+
 
     private val onReceiveMessage = Emitter.Listener { args: Array<out Any>? ->
         // Handle receive message
@@ -174,6 +199,11 @@ class MessageRoomFragment :
     private val onError = Emitter.Listener { args: Array<out Any>? ->
         // Handle error
         Log.d("SocketHandler", "Error: ${args?.get(0)}")
+    }
+
+    private val onMessageAck = Emitter.Listener { args: Array<out Any>? ->
+        // Handle message ack
+        Log.d("SocketHandler", "Message ack: ${args?.forEach { Log.d("SocketHandler", it.toString()) }}")
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -193,6 +223,8 @@ class MessageRoomFragment :
             messageAdapter?.submitList(it)
             messageAdapter?.notifyItemInserted(it.size)
         }
+
+
     }
 
     override fun setOnClick() {
@@ -218,8 +250,8 @@ class MessageRoomFragment :
                 val message = Message(
                     id = Random(100).nextInt().toString(),
                     messageContent = binding.etInputMessage.text.toString(),
-                    senderId = "1",
-                    messageType = "TEXT",
+                    patient = Prefs.getInstance(requireContext()).patient,
+                    type = "TEXT",
                     status = MessageStatus.SENT
                 )
                 binding.etInputMessage.text?.clear()
@@ -235,7 +267,7 @@ class MessageRoomFragment :
         try{
             sendMessage.put(Define.Socket.TO, TO_ID)
             messageContent.put(Define.Socket.CONTENT, message.messageContent)
-            messageContent.put(Define.Socket.TYPE, message.messageType)
+            messageContent.put(Define.Socket.TYPE, message.type)
             messageContent.put(Define.Socket.CHAT_BOX_ID, CHAT_BOX_ID)
             sendMessage.put(Define.Socket.MESSAGE, messageContent)
         } catch (e: JSONException){

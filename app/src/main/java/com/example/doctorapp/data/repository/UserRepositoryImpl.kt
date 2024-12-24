@@ -3,6 +3,7 @@ package com.example.doctorapp.data.repository
 import com.example.doctorapp.data.dto.ApiResponse
 import com.example.doctorapp.data.dto.Fcm
 import com.example.doctorapp.data.dto.PagingResponse
+import com.example.doctorapp.data.model.MessageRoom
 import com.example.doctorapp.data.model.NotificationData
 import com.example.doctorapp.data.model.User
 import com.example.doctorapp.domain.repository.UserRepository
@@ -25,5 +26,9 @@ class UserRepositoryImpl @Inject constructor(private val userApi: UserApiService
 
     override suspend fun markNotificationAsRead(notificationId: String): ApiResponse<Unit> {
         return userApi.markNotificationAsRead(notificationId)
+    }
+
+    override suspend fun getListChatBox(): ApiResponse<PagingResponse<MessageRoom>> {
+        return userApi.getListChatBox()
     }
 }

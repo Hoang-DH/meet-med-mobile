@@ -25,6 +25,7 @@ firebaseMessaging = "24.1.0"
 firebaseMessagingKtx = "24.1.0"
 socketIo = "2.1.0"
 photoView = "1.0.2"
+workManager = "2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +54,7 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
 socketIo = { group = "io.socket", name = "socket.io-client", version.ref = "socketIo" }
 photoView = { group = "io.getstream", name = "photoview", version.ref = "photoView" }
+workManager = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
 
 
 [plugins]

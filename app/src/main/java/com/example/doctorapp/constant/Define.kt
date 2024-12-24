@@ -84,6 +84,7 @@ object Define {
         const val EVENT_ERROR = "error"
         const val EVENT_CONNECTED = "connected"
         const val EVENT_SEND_MESSAGE = "send-message"
+        const val EVENT_MESSAGE_ACK = "message-ack"
         const val TO = "to"
         const val MESSAGE = "message"
         const val CONTENT = "content"

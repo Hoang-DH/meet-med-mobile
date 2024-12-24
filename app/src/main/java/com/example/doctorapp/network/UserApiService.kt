@@ -3,6 +3,7 @@ package com.example.doctorapp.network
 import com.example.doctorapp.data.dto.ApiResponse
 import com.example.doctorapp.data.dto.Fcm
 import com.example.doctorapp.data.dto.PagingResponse
+import com.example.doctorapp.data.model.MessageRoom
 import com.example.doctorapp.data.model.NotificationData
 import com.example.doctorapp.data.model.User
 import retrofit2.http.Body
@@ -15,6 +16,7 @@ import retrofit2.http.QueryMap
 private const val PATH_USER = "/api/user"
 private const val PATH_FCM = "/api/fcm-device-token"
 private const val PATH_NOTIFICATION = "/api/notification"
+private const val PATH_CHAT_BOX = "/api/chat-box"
 
 interface UserApiService {
 
@@ -30,5 +32,8 @@ interface UserApiService {
 
     @PUT("$PATH_NOTIFICATION/{notificationId}/read")
     suspend fun markNotificationAsRead(@Path("notificationId")notificationId: String): ApiResponse<Unit>
+
+    @GET(PATH_CHAT_BOX)
+    suspend fun getListChatBox(): ApiResponse<PagingResponse<MessageRoom>>
 
 }

@@ -130,6 +130,10 @@
     <string name="string_take_picture">Take Picture</string>
     <string name="string_record_video">Record Video</string>
     <string name="cancel_view_attachment_talk_room">Cancel</string>
+    <string name="sent">Sent</string>
+    <string name="sending">Sending</string>
+    <string name="seen">Seen</string>
+    <string name="failed">Sent failed</string>
 
 
     <string-array name="gender_options">

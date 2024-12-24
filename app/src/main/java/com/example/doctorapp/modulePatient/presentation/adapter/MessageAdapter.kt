@@ -4,10 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.doctorapp.R
+import com.example.doctorapp.constant.MessageStatus
 import com.example.doctorapp.data.model.Message
 import com.example.doctorapp.databinding.ItemMessageReceivedBinding
 import com.example.doctorapp.databinding.ItemMessageSentBinding
@@ -27,7 +27,7 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
         RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Message) {
             binding.apply {
-                when (message.messageType) {
+                when (message.type) {
                     "TEXT" -> {
                         tvMessageContent.text = message.messageContent
                         tvFile.visibility = View.GONE
@@ -56,6 +56,23 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
                         ivPlayVideo.visibility = View.GONE
                     }
                 }
+                when(message.status){
+                    MessageStatus.SENT -> {
+                        tvMessageStatus.text = context.getString(R.string.sent)
+                    }
+                    MessageStatus.SENDING -> {
+                        tvMessageStatus.text = context.getString(R.string.sending)
+                    }
+                    MessageStatus.SEEN -> {
+                        tvMessageStatus.text = context.getString(R.string.seen)
+                    }
+                    MessageStatus.FAILED -> {
+                        tvMessageStatus.text = context.getString(R.string.failed)
+                        tvMessageStatus.setTextColor(context.getColor(R.color.red))
+                    }
+
+                    null -> TODO()
+                }
 
             }
         }
@@ -66,7 +83,7 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
         fun bind(message: Message) {
             binding.apply {
                 ivAvatar.setImageResource(R.drawable.img)
-                when (message.messageType) {
+                when (message.type) {
                     "TEXT" -> {
                         tvMessageContent.text = message.messageContent
                         tvFile.visibility = View.GONE
@@ -104,16 +121,18 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
         RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Message) {
             binding.apply {
-                tvTimestamp.text = message.sendDate
+                tvTimestamp.text = message.updatedAt
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(getItem(position).senderId){
-            "1" -> TYPE_MESSAGE_SENT
-            "2" -> TYPE_MESSAGE_RECEIVED
-            else -> TYPE_TIME_STAMP
+        return if(getItem(position).patient != null) {
+            TYPE_MESSAGE_SENT
+        } else if(getItem(position).doctor != null) {
+            TYPE_MESSAGE_RECEIVED
+        } else {
+            TYPE_TIME_STAMP
         }
     }
 
