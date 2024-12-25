@@ -3,6 +3,7 @@ package com.example.doctorapp.network
 import com.example.doctorapp.data.dto.ApiResponse
 import com.example.doctorapp.data.dto.Fcm
 import com.example.doctorapp.data.dto.PagingResponse
+import com.example.doctorapp.data.model.Message
 import com.example.doctorapp.data.model.MessageRoom
 import com.example.doctorapp.data.model.NotificationData
 import com.example.doctorapp.data.model.User
@@ -31,9 +32,13 @@ interface UserApiService {
     suspend fun getUserNotifications(@QueryMap params: Map<String, Any>): ApiResponse<PagingResponse<NotificationData>>
 
     @PUT("$PATH_NOTIFICATION/{notificationId}/read")
-    suspend fun markNotificationAsRead(@Path("notificationId")notificationId: String): ApiResponse<Unit>
+    suspend fun markNotificationAsRead(@Path("notificationId") notificationId: String): ApiResponse<Unit>
 
     @GET(PATH_CHAT_BOX)
     suspend fun getListChatBox(): ApiResponse<PagingResponse<MessageRoom>>
+
+    @GET("$PATH_CHAT_BOX/{chatBoxId}/messages")
+    @JvmSuppressWildcards
+    suspend fun getMessagesOfChatBox(@Path("chatBoxId") chatBoxId: String, @QueryMap params: Map<String, Any>): ApiResponse<PagingResponse<Message>>
 
 }

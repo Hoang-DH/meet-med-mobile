@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/common_size_10dp">
@@ -40,13 +41,12 @@
             android:id="@+id/ivPlayVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/ivImage"
+            android:src="@drawable/ic_play_video"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/ivImage"
             app:layout_constraintEnd_toEndOf="@id/ivImage"
             app:layout_constraintStart_toStartOf="@id/ivImage"
-            android:src="@drawable/ic_play_video"
-            android:visibility="gone"
-            />
+            app:layout_constraintTop_toTopOf="@id/ivImage" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvFile"
@@ -60,6 +60,14 @@
             android:text="Ket qua xet nghiem.pdf"
             app:layout_constraintStart_toStartOf="@+id/ivImage"
             app:layout_constraintTop_toBottomOf="@id/ivImage" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/tvMessageContent"
+            app:layout_constraintTop_toBottomOf="@id/tvFile"
+            tools:text="08:00" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_item_message_sent"

@@ -5,21 +5,35 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.doctorapp.R
+import com.example.doctorapp.constant.MessageStatus
 import com.example.doctorapp.data.model.MessageRoom
 import com.example.doctorapp.databinding.MessageListItemBinding
 import com.example.doctorapp.modulePatient.presentation.diffUtil.MessageRoomDiffUtil
+import com.example.doctorapp.utils.DateUtils
 
-class MessageRoomAdapter(private val context: Context): ListAdapter<MessageRoom, MessageRoomAdapter.MessageRoomAdapterViewHolder> (MessageRoomDiffUtil()) {
+class MessageRoomAdapter(private val context: Context) :
+    ListAdapter<MessageRoom, MessageRoomAdapter.MessageRoomAdapterViewHolder>(MessageRoomDiffUtil()) {
 
     private var onMessageRoomClickListener: OnMessageRoomClickListener? = null
 
-    inner class MessageRoomAdapterViewHolder(private val binding: MessageListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MessageRoomAdapterViewHolder(private val binding: MessageListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(messageRoom: MessageRoom) {
             binding.apply {
-                tvMessageContent.text = messageRoom.lastSentMessageContent
-                tvTimestamp.text = messageRoom.lastSentTimeStamp
-                tvUsername.text = messageRoom.sender?.fullName
-                if(messageRoom.status == "read"){
+                tvMessageContent.text = messageRoom.lastSentMessageContent?.messageContent
+                tvTimestamp.text = messageRoom.lastSentMessageContent?.updatedAt?.let {
+                    DateUtils.convertInstantToTime(
+                        it
+                    )
+                }
+                tvUsername.text = messageRoom.doctor?.user?.fullName
+                if (messageRoom.lastSentMessageContent?.status == MessageStatus.SEEN) {
+                    tvMessageContent.setTypeface(null, android.graphics.Typeface.NORMAL)
+                    tvTimestamp.setTypeface(null, android.graphics.Typeface.NORMAL)
+                    ivUnreadMessage.visibility = android.view.View.GONE
+                } else if (messageRoom.lastSentMessageContent == null) {
+                    tvMessageContent.text = context.getString(R.string.start_conversation)
                     tvMessageContent.setTypeface(null, android.graphics.Typeface.NORMAL)
                     tvTimestamp.setTypeface(null, android.graphics.Typeface.NORMAL)
                     ivUnreadMessage.visibility = android.view.View.GONE
@@ -44,7 +58,7 @@ class MessageRoomAdapter(private val context: Context): ListAdapter<MessageRoom,
         holder.bind(getItem(position))
     }
 
-    fun setOnMessageRoomClickListener(onMessageRoomClickListener: OnMessageRoomClickListener){
+    fun setOnMessageRoomClickListener(onMessageRoomClickListener: OnMessageRoomClickListener) {
         this.onMessageRoomClickListener = onMessageRoomClickListener
     }
 

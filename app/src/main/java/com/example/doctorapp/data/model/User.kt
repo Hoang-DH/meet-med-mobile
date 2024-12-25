@@ -39,7 +39,14 @@ open class User(
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        TODO("Not yet implemented")
+        dest.writeString(id)
+        dest.writeString(fullName)
+        dest.writeString(email)
+        dest.writeString(gender.value)
+        dest.writeString(role)
+        dest.writeInt(age ?: 0)
+        dest.writeString(phone)
+        dest.writeString(imageUrl)
     }
 
     companion object CREATOR : Parcelable.Creator<User> {

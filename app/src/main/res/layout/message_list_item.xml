@@ -26,10 +26,12 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvUsername"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/common_size_20dp"
                 android:text="Dr. Emily Walker"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/color_1C2A3A"
                 android:textSize="@dimen/common_text_size_18sp"
                 android:textStyle="bold" />
@@ -55,9 +57,10 @@
             android:id="@+id/tvTimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/common_size_15dp"
+            android:layout_marginHorizontal="@dimen/common_size_10dp"
             android:minWidth="@dimen/common_size_15dp"
             android:text="08:00"
+            app:layout_constraintStart_toEndOf="@id/layoutContent"
             app:layout_constraintBottom_toBottomOf="@+id/layoutContent"
             app:layout_constraintEnd_toStartOf="@id/ivUnreadMessage"
             app:layout_constraintTop_toTopOf="@+id/layoutContent" />

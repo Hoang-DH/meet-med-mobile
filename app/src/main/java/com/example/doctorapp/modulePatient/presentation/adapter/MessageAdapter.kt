@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.doctorapp.R
@@ -23,30 +25,39 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
         private const val TYPE_TIME_STAMP = 2
     }
 
+    private var rotation: Animation? = null
+
+
     inner class ItemMessageSentViewHolder(private val binding: ItemMessageSentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Message) {
             binding.apply {
+                tvMessageContent.visibility = View.GONE
+                tvFile.visibility = View.GONE
+                ivImage.visibility = View.GONE
+                ivPlayVideo.visibility = View.GONE
                 when (message.type) {
                     "TEXT" -> {
                         tvMessageContent.text = message.messageContent
+                        tvMessageContent.visibility = View.VISIBLE
                         tvFile.visibility = View.GONE
                         ivImage.visibility = View.GONE
                         ivPlayVideo.visibility = View.GONE
                     }
                     "IMAGE" -> {
                         tvMessageContent.visibility = View.GONE
+                        ivImage.visibility = View.VISIBLE
                         tvFile.visibility = View.GONE
                         ivImage.visibility = View.VISIBLE
                         ivPlayVideo.visibility = View.GONE
                         Glide.with(context)
-                            .load(R.drawable.headache)
+                            .load(message.messageContent)
                             .into(ivImage)
                     }
                     "VIDEO" -> {
                         tvMessageContent.visibility = View.GONE
-                        tvFile.visibility = View.VISIBLE
-                        ivImage.visibility = View.GONE
+                        tvFile.visibility = View.GONE
+                        ivImage.visibility = View.VISIBLE
                         ivPlayVideo.visibility = View.VISIBLE
                     }
                     else -> {
@@ -59,16 +70,27 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
                 when(message.status){
                     MessageStatus.SENT -> {
                         tvMessageStatus.text = context.getString(R.string.sent)
+                        stopAnimationLoading()
+                        ivLoading.clearAnimation()
+                        ivLoading.visibility = View.GONE
                     }
                     MessageStatus.SENDING -> {
                         tvMessageStatus.text = context.getString(R.string.sending)
+                        startAnimationLoading()
+                        ivLoading.startAnimation(rotation)
                     }
                     MessageStatus.SEEN -> {
                         tvMessageStatus.text = context.getString(R.string.seen)
+                        stopAnimationLoading()
+                        ivLoading.clearAnimation()
+                        ivLoading.visibility = View.GONE
                     }
                     MessageStatus.FAILED -> {
                         tvMessageStatus.text = context.getString(R.string.failed)
                         tvMessageStatus.setTextColor(context.getColor(R.color.red))
+                        stopAnimationLoading()
+                        ivLoading.clearAnimation()
+                        ivLoading.visibility = View.GONE
                     }
 
                     null -> TODO()
@@ -83,26 +105,32 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
         fun bind(message: Message) {
             binding.apply {
                 ivAvatar.setImageResource(R.drawable.img)
+                tvMessageContent.visibility = View.GONE
+                tvFile.visibility = View.GONE
+                ivImage.visibility = View.GONE
+                ivPlayVideo.visibility = View.GONE
                 when (message.type) {
                     "TEXT" -> {
                         tvMessageContent.text = message.messageContent
+                        tvMessageContent.visibility = View.VISIBLE
                         tvFile.visibility = View.GONE
                         ivImage.visibility = View.GONE
                         ivPlayVideo.visibility = View.GONE
                     }
                     "IMAGE" -> {
                         tvMessageContent.visibility = View.GONE
+                        ivImage.visibility = View.VISIBLE
                         tvFile.visibility = View.GONE
                         ivImage.visibility = View.VISIBLE
                         ivPlayVideo.visibility = View.GONE
                         Glide.with(context)
-                            .load(R.drawable.headache)
+                            .load(message.messageContent)
                             .into(ivImage)
                     }
                     "VIDEO" -> {
                         tvMessageContent.visibility = View.GONE
-                        tvFile.visibility = View.VISIBLE
-                        ivImage.visibility = View.GONE
+                        tvFile.visibility = View.GONE
+                        ivImage.visibility = View.VISIBLE
                         ivPlayVideo.visibility = View.VISIBLE
                     }
                     else -> {
@@ -167,6 +195,16 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
                 ItemTimeStampViewHolder(binding)
             }
         }
+    }
+
+    private fun startAnimationLoading(){
+        rotation = AnimationUtils.loadAnimation(context, R.anim.rotate_anim)
+
+    }
+
+    private fun stopAnimationLoading(){
+        rotation?.cancel()
+        rotation?.reset()
     }
 
 }

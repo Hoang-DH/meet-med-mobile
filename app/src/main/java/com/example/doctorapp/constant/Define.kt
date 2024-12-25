@@ -54,6 +54,7 @@ object Define {
         const val DEPARTMENT = "department"
         const val DOCTOR = "doctor"
         const val IS_FROM = "isFrom"
+        const val MESSAGE_ROOM = "messageRoom"
     }
 
     object IntentKey {
@@ -79,7 +80,7 @@ object Define {
     }
 
     object Socket{
-        const val SOCKET_URL = "http://chat-service.clinic.thanhnguyen03.site"
+        const val SOCKET_URL = "http://clinic.thanhnguyen03.site/socket.io"
         const val EVENT_RECEIVE_MESSAGE = "receive-message"
         const val EVENT_ERROR = "error"
         const val EVENT_CONNECTED = "connected"

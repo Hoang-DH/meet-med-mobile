@@ -1,6 +1,7 @@
 package com.example.doctorapp.data.model
 
 import com.example.doctorapp.constant.MessageStatus
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class Message(
@@ -29,3 +30,13 @@ data class Message(
     @SerializedName("status")
     var status: MessageStatus? = null,
 )
+
+data class MessageWrapper(
+    @SerializedName("message") val message: Message
+)
+
+fun convertJsonToMessage(jsonString: String): Message {
+    val gson = Gson()
+    val messageWrapper = gson.fromJson(jsonString, MessageWrapper::class.java)
+    return messageWrapper.message
+}
