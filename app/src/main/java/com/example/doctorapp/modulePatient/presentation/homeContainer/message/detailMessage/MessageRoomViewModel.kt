@@ -27,12 +27,14 @@ class MessageRoomViewModel @Inject constructor(private val userRepository: UserR
         get() = _messageList
     
     fun getMessagesOfChatBox(chatBoxId: String, params: Map<String, Any>) {
+        if(params[Define.Fields.PAGE] == "0") {
+            messages.clear()
+        }
         _messageList.value = MyResponse.Loading
         viewModelScope.launch {
             userRepository.getMessagesOfChatBox(chatBoxId, params).let { response ->
                 if(response.success == true){
                     messages.addAll(response.data?.content ?: emptyList())
-                    messages.reverse()
                     _messageList.value = MyResponse.Success(messages)
                 }
                 else{

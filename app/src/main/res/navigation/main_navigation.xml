@@ -322,5 +322,18 @@
         android:id="@+id/messageRoomFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.message.detailMessage.MessageRoomFragment"
         android:label="MessageRoomFragment"
-        tools:layout="@layout/fragment_message_room" />
+        tools:layout="@layout/fragment_message_room" >
+        <action
+            android:id="@+id/action_messageRoomFragment_to_detailAttachmentFragment"
+            app:destination="@id/detailAttachmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/detailAttachmentFragment"
+        android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.message.detailMessage.DetailAttachmentFragment"
+        android:label="DetailAttachmentFragment"
+        tools:layout="@layout/fragment_detail_attachment"/>
 </navigation>

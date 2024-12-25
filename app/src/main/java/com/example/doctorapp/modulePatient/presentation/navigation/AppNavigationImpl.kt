@@ -133,4 +133,8 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
         openScreen(R.id.action_messageList_to_messageRoomFragment, bundle)
     }
 
+    override fun openMessageRoomToDetailAttachmentScreen(bundle: Bundle?) {
+        openScreen(R.id.action_messageRoomFragment_to_detailAttachmentFragment, bundle)
+    }
+
 }

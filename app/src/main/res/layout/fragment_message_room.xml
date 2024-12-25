@@ -55,6 +55,7 @@
             android:id="@+id/rvMessageList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:paddingHorizontal="@dimen/common_size_10dp"
             android:background="@color/color_background_chat_room"
             app:layout_constraintBottom_toTopOf="@id/layoutBottom"
             app:layout_constraintTop_toBottomOf="@id/layoutToolbar"

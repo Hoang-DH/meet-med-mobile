@@ -8,6 +8,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.MessageStatus
 import com.example.doctorapp.data.model.Message
@@ -15,9 +17,10 @@ import com.example.doctorapp.databinding.ItemMessageReceivedBinding
 import com.example.doctorapp.databinding.ItemMessageSentBinding
 import com.example.doctorapp.databinding.ItemNotiTimestampBinding
 import com.example.doctorapp.domain.core.base.BaseAdapterLoadMore
+import com.example.doctorapp.domain.core.base.BaseReverseAdapterLoadMore
 import com.example.doctorapp.modulePatient.presentation.diffUtil.MessageDiffUtil
 
-class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message>(MessageDiffUtil()) {
+class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<Message>(MessageDiffUtil()) {
 
     companion object {
         private const val TYPE_MESSAGE_SENT = 0
@@ -26,7 +29,15 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
     }
 
     private var rotation: Animation? = null
+    private var onMediaItemClickListener: OnMediaItemClickListener? = null
 
+    interface OnMediaItemClickListener {
+        fun onMediaItemClick(message: Message)
+    }
+
+    fun setOnMediaItemClickListener(listener: OnMediaItemClickListener) {
+        onMediaItemClickListener = listener
+    }
 
     inner class ItemMessageSentViewHolder(private val binding: ItemMessageSentBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -52,7 +63,11 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
                         ivPlayVideo.visibility = View.GONE
                         Glide.with(context)
                             .load(message.messageContent)
+                            .apply(RequestOptions().transform(CenterCrop()))
                             .into(ivImage)
+                        ivImage.setOnClickListener {
+                            onMediaItemClickListener?.onMediaItemClick(message)
+                        }
                     }
                     "VIDEO" -> {
                         tvMessageContent.visibility = View.GONE
@@ -71,25 +86,23 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
                     MessageStatus.SENT -> {
                         tvMessageStatus.text = context.getString(R.string.sent)
                         stopAnimationLoading()
-                        ivLoading.clearAnimation()
                         ivLoading.visibility = View.GONE
                     }
                     MessageStatus.SENDING -> {
                         tvMessageStatus.text = context.getString(R.string.sending)
                         startAnimationLoading()
+                        ivLoading.visibility = View.VISIBLE
                         ivLoading.startAnimation(rotation)
                     }
                     MessageStatus.SEEN -> {
                         tvMessageStatus.text = context.getString(R.string.seen)
                         stopAnimationLoading()
-                        ivLoading.clearAnimation()
                         ivLoading.visibility = View.GONE
                     }
                     MessageStatus.FAILED -> {
                         tvMessageStatus.text = context.getString(R.string.failed)
                         tvMessageStatus.setTextColor(context.getColor(R.color.red))
                         stopAnimationLoading()
-                        ivLoading.clearAnimation()
                         ivLoading.visibility = View.GONE
                     }
 
@@ -126,6 +139,9 @@ class MessageAdapter(private val context: Context) : BaseAdapterLoadMore<Message
                         Glide.with(context)
                             .load(message.messageContent)
                             .into(ivImage)
+                        ivImage.setOnClickListener {
+                            onMediaItemClickListener?.onMediaItemClick(message)
+                        }
                     }
                     "VIDEO" -> {
                         tvMessageContent.visibility = View.GONE

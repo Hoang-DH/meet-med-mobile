@@ -5,8 +5,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/common_size_10dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/common_size_10dp">
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -30,18 +30,18 @@
             android:layout_width="@dimen/common_size_20dp"
             android:layout_height="@dimen/common_size_20dp"
             android:src="@drawable/ic_load_more"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivImage"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@id/ivLoading"
-            app:layout_constraintTop_toBottomOf="@id/tvMessageContent"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toBottomOf="@id/tvMessageContent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivPlayVideo"
@@ -64,12 +64,12 @@
             android:paddingHorizontal="@dimen/common_size_12dp"
             android:paddingVertical="@dimen/common_size_10dp"
             android:text="Ket qua xet nghiem.pdf"
+            android:visibility="gone"
             app:layout_constrainedWidth="true"
-            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintEnd_toStartOf="@id/ivLoading"
+            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="@+id/guideline_item_message_sent"
-            app:layout_constraintTop_toBottomOf="@id/ivImage"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toBottomOf="@id/ivImage" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvMessageStatus"
@@ -85,11 +85,10 @@
             android:id="@+id/tvTimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="08:00"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvFile"
-            android:visibility="gone"
-            />
+            tools:text="08:00" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_item_message_sent"

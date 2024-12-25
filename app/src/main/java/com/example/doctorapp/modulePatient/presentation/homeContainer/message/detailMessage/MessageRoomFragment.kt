@@ -26,7 +26,9 @@ import com.example.doctorapp.data.model.Message
 import com.example.doctorapp.data.model.MessageRoom
 import com.example.doctorapp.databinding.FragmentMessageRoomBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
+import com.example.doctorapp.domain.core.base.BaseReverseAdapterLoadMore
 import com.example.doctorapp.modulePatient.presentation.adapter.MessageAdapter
+import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Prefs
@@ -38,11 +40,17 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.UUID
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import kotlin.random.Random
 
 @AndroidEntryPoint
 class MessageRoomFragment :
-    BaseFragment<FragmentMessageRoomBinding, MessageRoomViewModel>(R.layout.fragment_message_room) {
+    BaseFragment<FragmentMessageRoomBinding, MessageRoomViewModel>(R.layout.fragment_message_room),
+    MessageAdapter.OnMediaItemClickListener {
+
+
+    @Inject
+    lateinit var appNavigation: AppNavigation
 
     private val viewModel: MessageRoomViewModel by viewModels()
     override fun getVM(): MessageRoomViewModel = viewModel
@@ -52,7 +60,7 @@ class MessageRoomFragment :
     private var messageAdapter: MessageAdapter? = null
     private var message: Message? = null
     private var messageRoom: MessageRoom? = null
-    private var currentOffset = 0
+    private var currentPage = 0
 
     private var takePhotoCameraPermissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -213,7 +221,7 @@ class MessageRoomFragment :
                 Log.d("SocketHandler", "Connected")
             }
             on(Define.Socket.EVENT_MESSAGE_ACK, onMessageAck)
-            if(!SocketHandler.getSocket().connected()){
+            if (!SocketHandler.getSocket().connected()) {
                 connect()
             }
         }
@@ -254,8 +262,20 @@ class MessageRoomFragment :
         super.initView(savedInstanceState)
         //get arguments
         loadArguments()
-        getMessageOfChatBox(1)
+        getMessageOfChatBox(currentPage, ORDER_DESC, ORDER_BY_UPDATED_AT)
         messageAdapter = MessageAdapter(requireContext())
+        messageAdapter?.setOnMediaItemClickListener(this)
+        if (messageAdapter?.getLoadMorelistener() == null) {
+            messageAdapter?.setLoadMorelistener(object : BaseReverseAdapterLoadMore.LoadMorelistener {
+                override fun onLoadMore() {
+//                    binding.rvNotification.post {
+//                        notificationAdapter.addFooter(loadMoreView)
+//                    }
+                    currentPage++
+                    getMessageOfChatBox(currentPage, ORDER_DESC, ORDER_BY_UPDATED_AT)
+                }
+            })
+        }
         binding.apply {
             rvMessageList.adapter = messageAdapter
             rvMessageList.layoutManager =
@@ -290,7 +310,6 @@ class MessageRoomFragment :
                     showHideLoading(false)
                     messageAdapter?.submitList(response.data)
                     messageAdapter?.notifyDataSetChanged()
-                    binding.rvMessageList.smoothScrollToPosition(0)
                 }
 
                 is MyResponse.Error -> {
@@ -388,5 +407,12 @@ class MessageRoomFragment :
         const val ORDER_DESC = "desc"
         const val ORDER_BY_UPDATED_AT = "updatedAt"
         fun newInstance() = MessageRoomFragment()
+    }
+
+    override fun onMediaItemClick(message: Message) {
+        val bundle = Bundle()
+        bundle.putString(Define.BundleKey.MEDIA_URL, message.messageContent)
+        bundle.putString(Define.BundleKey.MESSAGE_TYPE, message.type)
+        appNavigation.openMessageRoomToDetailAttachmentScreen(bundle)
     }
 }

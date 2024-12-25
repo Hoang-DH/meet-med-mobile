@@ -46,6 +46,7 @@ object Define {
     }
 
     object BundleKey {
+        const val MESSAGE_TYPE = "messageType"
         const val DOCTOR_APPOINTMENT_ID = "doctorAppointmentId"
         const val DOCTOR_APPOINTMENT = "doctorAppointment"
         const val APPOINTMENT_ID = "appointmentId"
@@ -55,6 +56,7 @@ object Define {
         const val DOCTOR = "doctor"
         const val IS_FROM = "isFrom"
         const val MESSAGE_ROOM = "messageRoom"
+        const val MEDIA_URL = "mediaUrl"
     }
 
     object IntentKey {
