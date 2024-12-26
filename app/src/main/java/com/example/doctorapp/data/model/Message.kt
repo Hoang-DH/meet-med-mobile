@@ -4,6 +4,8 @@ import com.example.doctorapp.constant.MessageStatus
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
+sealed class MessageData()
+
 data class Message(
 
     @SerializedName("createdAt")
@@ -29,7 +31,11 @@ data class Message(
 
     @SerializedName("status")
     var status: MessageStatus? = null,
-)
+): MessageData()
+
+data class MessageTimeStamp(
+    var titleTimeStamp: String? = null,
+): MessageData()
 
 data class MessageWrapper(
     @SerializedName("message") val message: Message

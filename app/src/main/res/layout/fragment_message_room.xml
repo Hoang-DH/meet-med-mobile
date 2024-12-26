@@ -35,6 +35,8 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/common_size_20dp"
                 android:layout_weight="1"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="Dr. Emily Walker"
                 android:textColor="@color/black"
                 android:textSize="@dimen/common_size_20sp"

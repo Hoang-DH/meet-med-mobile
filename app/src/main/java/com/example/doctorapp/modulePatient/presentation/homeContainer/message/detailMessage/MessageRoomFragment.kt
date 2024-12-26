@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -19,11 +20,14 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.constant.MessageStatus
 import com.example.doctorapp.data.model.Message
 import com.example.doctorapp.data.model.MessageRoom
+import com.example.doctorapp.data.model.convertJsonToMessage
 import com.example.doctorapp.databinding.FragmentMessageRoomBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.domain.core.base.BaseReverseAdapterLoadMore
@@ -38,7 +42,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.socket.emitter.Emitter
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.UUID
+import java.time.Instant
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.random.Random
@@ -92,12 +96,7 @@ class MessageRoomFragment :
 
     private val videoLauncher = registerForActivityResult(ActivityResultContracts.CaptureVideo()) {
         if (it) {
-            try {
-                // Handle the recorded video URI
-                Log.d("MessageRoomFragment", "Video recorded")
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            uploadMedia(VIDEO_TYPE)
         }
     }
 
@@ -145,39 +144,32 @@ class MessageRoomFragment :
         WorkManager.getInstance(requireContext()).getWorkInfoByIdLiveData(uploadRequest.id)
             .observe(viewLifecycleOwner) { workInfo ->
                 if (workInfo != null) {
+                    val id = workInfo.id
                     when (workInfo.state) {
-                        WorkInfo.State.SUCCEEDED -> {
-                            val message = Message(
-                                id = "1",
-                                messageContent = workInfo.outputData.getString(UploadMediaWorker.CLOUDINARY_IMAGE_URL)
-                                    .toString(),
-                                patient = Prefs.getInstance(requireContext()).patient,
-                                type = messageType,
-                                status = MessageStatus.SENT
-                            )
-                            sendMessage(message)
-                            viewModel.updateMessageStatus(message, MessageStatus.SENT)
 
+                        WorkInfo.State.SUCCEEDED -> {
+                            val message = convertJsonToMessage(workInfo.outputData.getString(UploadMediaWorker.MESSAGE_SENT).toString())
+                            message.id = id.toString()
+                            viewModel.updateMessageStatus(message, MessageStatus.SENT)
                         }
 
                         WorkInfo.State.FAILED -> {
                             val message = Message(
-                                id = "1",
-                                messageContent = workInfo.outputData.getString(UploadMediaWorker.CLOUDINARY_IMAGE_URL)
-                                    .toString(),
+                                id = id.toString(),
+                                messageContent = selectedFile.toString(),
                                 patient = Prefs.getInstance(requireContext()).patient,
                                 type = messageType,
                                 status = MessageStatus.FAILED
                             )
-                            sendMessage(message)
                             viewModel.updateMessageStatus(message, MessageStatus.FAILED)
                         }
 
                         WorkInfo.State.RUNNING -> {
                             // Image upload is in progress
                             val message = Message(
-                                id = UUID.randomUUID().leastSignificantBits.toString(),
-                                createdAt = System.currentTimeMillis().toString(),
+                                id = id.toString(),
+                                createdAt = Instant.now().toString(),
+                                updatedAt = Instant.now().toString(),
                                 messageContent = selectedFile.toString(),
                                 patient = Prefs.getInstance(requireContext()).patient,
                                 type = messageType,
@@ -214,14 +206,14 @@ class MessageRoomFragment :
         super.onCreate(savedInstanceState)
         Prefs.getInstance(requireContext()).patient?.id?.let { SocketHandler.initSocket(it) }
         Log.d("SocketHandler", Prefs.getInstance(requireContext()).patient?.id.toString())
-        SocketHandler.getSocket().apply {
+        SocketHandler.getSocket()?.apply {
             on(Define.Socket.EVENT_RECEIVE_MESSAGE, onReceiveMessage)
             on(Define.Socket.EVENT_ERROR, onError)
             on(Define.Socket.EVENT_CONNECTED) {
                 Log.d("SocketHandler", "Connected")
             }
             on(Define.Socket.EVENT_MESSAGE_ACK, onMessageAck)
-            if (!SocketHandler.getSocket().connected()) {
+            if (SocketHandler.getSocket()?.connected() == false) {
                 connect()
             }
         }
@@ -229,7 +221,7 @@ class MessageRoomFragment :
 
     override fun onDestroy() {
         super.onDestroy()
-        SocketHandler.getSocket().apply {
+        SocketHandler.getSocket()?.apply {
             off(Define.Socket.EVENT_RECEIVE_MESSAGE, onReceiveMessage)
             off(Define.Socket.EVENT_ERROR, onError)
             off(Define.Socket.EVENT_CONNECTED) {
@@ -256,6 +248,12 @@ class MessageRoomFragment :
         // Handle message ack
         Log.d("SocketHandler", "Message ack: ${args[0]}")
         // update
+        val message = convertJsonToMessage(args[0].toString())
+        requireActivity().runOnUiThread {
+            viewModel.sendMessage(message)
+            binding.rvMessageList.smoothScrollToPosition(0)
+        }
+
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -280,6 +278,10 @@ class MessageRoomFragment :
             rvMessageList.adapter = messageAdapter
             rvMessageList.layoutManager =
                 androidx.recyclerview.widget.LinearLayoutManager(requireContext()).apply { reverseLayout = true }
+            tvUsername.text = messageRoom?.doctor?.user?.fullName
+            Glide.with(requireContext()).load(messageRoom?.doctor?.user?.imageUrl)
+                .apply(RequestOptions.circleCropTransform()).placeholder(R.drawable.ic_profile_pic)
+                .into(ivAvatar)
         }
 
     }
@@ -335,6 +337,24 @@ class MessageRoomFragment :
                 }
             }
 
+            etInputMessage.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        layoutMedia.visibility = View.GONE
+                        ivShowMedia.visibility = View.VISIBLE
+                        showMediaPickerLayout(false)
+                    }
+                }
+                false
+            }
+            ivShowMedia.setOnClickListener {
+                layoutMedia.visibility = View.VISIBLE
+                ivShowMedia.visibility = View.GONE
+            }
+
+            ivBack.setOnClickListener {
+                appNavigation.navigateUp()
+            }
 
             tvTakePicture.setOnClickListener {
                 currentMediaPickType = IMAGE_TYPE
@@ -355,7 +375,6 @@ class MessageRoomFragment :
                 )
                 binding.etInputMessage.text?.clear()
                 sendMessage(message)
-                viewModel.sendMessage(message)
             }
         }
     }
@@ -380,7 +399,7 @@ class MessageRoomFragment :
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        SocketHandler.getSocket().emit(Define.Socket.EVENT_SEND_MESSAGE, sendMessage)
+        SocketHandler.getSocket()?.emit(Define.Socket.EVENT_SEND_MESSAGE, sendMessage)
     }
 
     private fun showMediaPickerLayout(isShow: Boolean) {

@@ -19,7 +19,7 @@
             android:text="Hi, how are you to day?ádfasdfasdfasdfsadfasdfas"
             android:textAlignment="textStart"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toTopOf="@id/ivImage"
+            app:layout_constraintBottom_toTopOf="@id/cvImage"
             app:layout_constraintEnd_toStartOf="@id/ivLoading"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toEndOf="@+id/guideline_item_message_sent"
@@ -35,24 +35,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivImage"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@id/ivLoading"
-            app:layout_constraintTop_toBottomOf="@id/tvMessageContent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivPlayVideo"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_play_video"
+            app:layout_constraintEnd_toStartOf="@id/ivLoading"
+            app:cardCornerRadius="@dimen/common_size_15dp"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/ivImage"
-            app:layout_constraintEnd_toEndOf="@id/ivImage"
-            app:layout_constraintStart_toStartOf="@id/ivImage"
-            app:layout_constraintTop_toTopOf="@id/ivImage" />
+            app:layout_constraintTop_toBottomOf="@id/tvMessageContent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImage"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@drawable/bg_img_placeholder"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPlayVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_play_video"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                 />
+        </androidx.cardview.widget.CardView>
+
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvFile"
@@ -69,7 +78,7 @@
             app:layout_constraintEnd_toStartOf="@id/ivLoading"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="@+id/guideline_item_message_sent"
-            app:layout_constraintTop_toBottomOf="@id/ivImage" />
+            app:layout_constraintTop_toBottomOf="@id/cvImage" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvMessageStatus"

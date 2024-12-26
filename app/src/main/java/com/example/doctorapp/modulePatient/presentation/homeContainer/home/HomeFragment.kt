@@ -12,6 +12,7 @@ import com.example.doctorapp.databinding.FragmentHomeBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.DepartmentAdapter
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import com.example.doctorapp.utils.CheckNetWorkCallback
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Prefs
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment :
-    BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home), DepartmentAdapter.OnDepartmentClickListener {
+    BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home),
+    DepartmentAdapter.OnDepartmentClickListener {
 
     @Inject
     lateinit var appNavigation: AppNavigation
@@ -65,7 +67,15 @@ class HomeFragment :
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
         }
-        viewModel.getAllDepartment()
+        checkAndHandleNetworkConnect(object : CheckNetWorkCallback {
+            override fun networkConnected() {
+                viewModel.getAllDepartment()
+            }
+
+            override fun networkIgnored() {
+                TODO("Not yet implemented")
+            }
+        })
         mAdapter = DepartmentAdapter(requireContext())
         mAdapter?.setOnDepartmentClickListener(this)
         binding.apply {

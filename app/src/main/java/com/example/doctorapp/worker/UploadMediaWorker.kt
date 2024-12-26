@@ -12,6 +12,7 @@ import com.cloudinary.android.callback.UploadCallback
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.model.Message
 import com.example.doctorapp.utils.ApplicationMediaManager
+import com.example.doctorapp.utils.Prefs
 import com.example.doctorapp.utils.SocketHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -48,6 +49,7 @@ class UploadMediaWorker(appContext: Context, workerParameters: WorkerParameters)
                         override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
                             Log.d("HoangDH", "success:" + resultData.toString())
                             cloudinaryUrl = resultData?.get(CLOUDINARY_IMAGE_URL).toString()
+
                             continuation.resume(Result.success(workDataOf(CLOUDINARY_IMAGE_URL to cloudinaryUrl)))
                             val sendMessage = JSONObject()
                             val messageContent = JSONObject()
@@ -58,10 +60,19 @@ class UploadMediaWorker(appContext: Context, workerParameters: WorkerParameters)
                                 messageContent.put(Define.Socket.CHAT_BOX_ID, chatBoxId)
                                 sendMessage.put(Define.Socket.MESSAGE, messageContent)
                                 //check if socket is connected
-                                if(!SocketHandler.getSocket().connected()){
-                                    SocketHandler.getSocket().connect()
+                                if(SocketHandler.getSocket() == null){
+                                    SocketHandler.initSocket(Prefs.getInstance(applicationContext).patient?.id ?: "")
                                 }
-                                SocketHandler.getSocket().emit(Define.Socket.EVENT_SEND_MESSAGE, sendMessage)
+                                if(SocketHandler.getSocket()?.connected() == false){
+                                    SocketHandler.getSocket()?.apply {
+                                        on(Define.Socket.EVENT_MESSAGE_ACK) { args ->
+                                            val wData = workDataOf(CLOUDINARY_IMAGE_URL to cloudinaryUrl, MESSAGE_SENT to args[0])
+                                            continuation.resume(Result.success(wData))
+                                        }
+                                        connect()
+                                    }
+                                }
+                                SocketHandler.getSocket()?.emit(Define.Socket.EVENT_SEND_MESSAGE, sendMessage)
                             } catch (e: JSONException) {
                                 e.printStackTrace()
                             }
@@ -76,12 +87,15 @@ class UploadMediaWorker(appContext: Context, workerParameters: WorkerParameters)
                         override fun onReschedule(requestId: String?, error: ErrorInfo?) {
                             Log.d("HoangDH", error.toString())
                             cloudinaryUrl = null
-                            continuation.resume(Result.failure())
+                            continuation.resume(Result.retry())
                         }
                     }).dispatch()
                 }
-                if(SocketHandler.getSocket().connected()){
-                    SocketHandler.getSocket().disconnect()
+                if(SocketHandler.getSocket()?.connected() == true){
+                    SocketHandler.getSocket()?.apply {
+                        off(Define.Socket.EVENT_MESSAGE_ACK)
+                        disconnect()
+                    }
                 }
                 return@withContext result
             } catch (e: Exception) {
@@ -99,5 +113,6 @@ class UploadMediaWorker(appContext: Context, workerParameters: WorkerParameters)
         const val WORK_NAME = "UploadMediaWorker"
         const val MEDIA_URI = "media_uri"
         const val CLOUDINARY_IMAGE_URL = "secure_url"
+        const val MESSAGE_SENT = "message_sent"
     }
 }

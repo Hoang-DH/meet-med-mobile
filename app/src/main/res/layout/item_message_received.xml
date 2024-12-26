@@ -13,7 +13,7 @@
             android:layout_width="@dimen/common_size_30dp"
             android:layout_height="@dimen/common_size_30dp"
             android:src="@drawable/ic_profile_pic"
-            app:layout_constraintBottom_toTopOf="@id/ivImage"
+            app:layout_constraintBottom_toTopOf="@id/cvImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,27 +26,36 @@
             android:paddingHorizontal="@dimen/common_size_12dp"
             android:paddingVertical="@dimen/common_size_8dp"
             android:text="Hi, how are you to day?"
-            app:layout_constraintBottom_toTopOf="@id/ivImage"
+            app:layout_constraintBottom_toTopOf="@id/cvImage"
             app:layout_constraintStart_toEndOf="@id/ivAvatar"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivImage"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            app:layout_constraintStart_toStartOf="@+id/tvMessageContent"
-            app:layout_constraintTop_toBottomOf="@id/tvMessageContent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivPlayVideo"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_play_video"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/ivImage"
-            app:layout_constraintEnd_toEndOf="@id/ivImage"
-            app:layout_constraintStart_toStartOf="@id/ivImage"
-            app:layout_constraintTop_toTopOf="@id/ivImage" />
+            app:cardCornerRadius="@dimen/common_size_15dp"
+            app:layout_constraintStart_toStartOf="@+id/tvMessageContent"
+            app:layout_constraintTop_toBottomOf="@id/tvMessageContent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImage"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@drawable/bg_edit_text" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPlayVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_play_video"
+                android:visibility="gone" />
+
+        </androidx.cardview.widget.CardView>
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvFile"
@@ -58,13 +67,15 @@
             android:paddingHorizontal="@dimen/common_size_12dp"
             android:paddingVertical="@dimen/common_size_8dp"
             android:text="Ket qua xet nghiem.pdf"
-            app:layout_constraintStart_toStartOf="@+id/ivImage"
-            app:layout_constraintTop_toBottomOf="@id/ivImage" />
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/cvImage"
+            app:layout_constraintTop_toBottomOf="@id/cvImage" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTimestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/tvMessageContent"
             app:layout_constraintTop_toBottomOf="@id/tvFile"
             tools:text="08:00" />

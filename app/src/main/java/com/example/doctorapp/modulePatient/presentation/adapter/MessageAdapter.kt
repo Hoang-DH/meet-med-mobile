@@ -13,14 +13,17 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.MessageStatus
 import com.example.doctorapp.data.model.Message
+import com.example.doctorapp.data.model.MessageData
+import com.example.doctorapp.data.model.MessageTimeStamp
 import com.example.doctorapp.databinding.ItemMessageReceivedBinding
 import com.example.doctorapp.databinding.ItemMessageSentBinding
+import com.example.doctorapp.databinding.ItemMessageTimestampBinding
 import com.example.doctorapp.databinding.ItemNotiTimestampBinding
 import com.example.doctorapp.domain.core.base.BaseAdapterLoadMore
 import com.example.doctorapp.domain.core.base.BaseReverseAdapterLoadMore
 import com.example.doctorapp.modulePatient.presentation.diffUtil.MessageDiffUtil
 
-class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<Message>(MessageDiffUtil()) {
+class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<MessageData>(MessageDiffUtil()) {
 
     companion object {
         private const val TYPE_MESSAGE_SENT = 0
@@ -45,40 +48,40 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
             binding.apply {
                 tvMessageContent.visibility = View.GONE
                 tvFile.visibility = View.GONE
-                ivImage.visibility = View.GONE
+                cvImage.visibility = View.GONE
                 ivPlayVideo.visibility = View.GONE
                 when (message.type) {
                     "TEXT" -> {
                         tvMessageContent.text = message.messageContent
                         tvMessageContent.visibility = View.VISIBLE
                         tvFile.visibility = View.GONE
-                        ivImage.visibility = View.GONE
+                        cvImage.visibility = View.GONE
                         ivPlayVideo.visibility = View.GONE
                     }
                     "IMAGE" -> {
                         tvMessageContent.visibility = View.GONE
-                        ivImage.visibility = View.VISIBLE
+                        cvImage.visibility = View.VISIBLE
                         tvFile.visibility = View.GONE
-                        ivImage.visibility = View.VISIBLE
+                        cvImage.visibility = View.VISIBLE
                         ivPlayVideo.visibility = View.GONE
                         Glide.with(context)
                             .load(message.messageContent)
                             .apply(RequestOptions().transform(CenterCrop()))
                             .into(ivImage)
-                        ivImage.setOnClickListener {
+                        cvImage.setOnClickListener {
                             onMediaItemClickListener?.onMediaItemClick(message)
                         }
                     }
                     "VIDEO" -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.GONE
-                        ivImage.visibility = View.VISIBLE
+                        cvImage.visibility = View.VISIBLE
                         ivPlayVideo.visibility = View.VISIBLE
                     }
                     else -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.VISIBLE
-                        ivImage.visibility = View.GONE
+                        cvImage.visibility = View.GONE
                         ivPlayVideo.visibility = View.GONE
                     }
                 }
@@ -120,39 +123,40 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
                 ivAvatar.setImageResource(R.drawable.img)
                 tvMessageContent.visibility = View.GONE
                 tvFile.visibility = View.GONE
-                ivImage.visibility = View.GONE
+                cvImage.visibility = View.GONE
                 ivPlayVideo.visibility = View.GONE
                 when (message.type) {
                     "TEXT" -> {
                         tvMessageContent.text = message.messageContent
                         tvMessageContent.visibility = View.VISIBLE
                         tvFile.visibility = View.GONE
-                        ivImage.visibility = View.GONE
+                        cvImage.visibility = View.GONE
                         ivPlayVideo.visibility = View.GONE
                     }
                     "IMAGE" -> {
                         tvMessageContent.visibility = View.GONE
-                        ivImage.visibility = View.VISIBLE
+                        cvImage.visibility = View.VISIBLE
                         tvFile.visibility = View.GONE
-                        ivImage.visibility = View.VISIBLE
+                        cvImage.visibility = View.VISIBLE
                         ivPlayVideo.visibility = View.GONE
                         Glide.with(context)
                             .load(message.messageContent)
+                            .apply(RequestOptions().transform(CenterCrop()))
                             .into(ivImage)
-                        ivImage.setOnClickListener {
+                        cvImage.setOnClickListener {
                             onMediaItemClickListener?.onMediaItemClick(message)
                         }
                     }
                     "VIDEO" -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.GONE
-                        ivImage.visibility = View.VISIBLE
+                        cvImage.visibility = View.VISIBLE
                         ivPlayVideo.visibility = View.VISIBLE
                     }
                     else -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.VISIBLE
-                        ivImage.visibility = View.GONE
+                        cvImage.visibility = View.GONE
                         ivPlayVideo.visibility = View.GONE
                     }
                 }
@@ -161,35 +165,38 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
         }
     }
 
-    inner class ItemTimeStampViewHolder(private val binding: ItemNotiTimestampBinding) :
+    inner class ItemTimeStampViewHolder(private val binding: ItemMessageTimestampBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(message: Message) {
+        fun bind(message: MessageTimeStamp) {
             binding.apply {
-                tvTimestamp.text = message.updatedAt
+                tvMessageTimestamp.text = message.titleTimeStamp
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(getItem(position).patient != null) {
-            TYPE_MESSAGE_SENT
-        } else if(getItem(position).doctor != null) {
-            TYPE_MESSAGE_RECEIVED
-        } else {
-            TYPE_TIME_STAMP
+        return when (getItem(position)) {
+            is Message -> {
+                if ((getItem(position) as Message).doctor != null) {
+                    TYPE_MESSAGE_RECEIVED
+                } else {
+                    TYPE_MESSAGE_SENT
+                }
+            }
+            else -> TYPE_TIME_STAMP
         }
     }
 
     override fun onBindViewHolderNormal(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ItemMessageSentViewHolder -> {
-                holder.bind(getItem(position))
+                holder.bind(getItem(position) as Message)
             }
             is ItemMessageReceived -> {
-                holder.bind(getItem(position))
+                holder.bind(getItem(position) as Message)
             }
             is ItemTimeStampViewHolder -> {
-                holder.bind(getItem(position))
+                holder.bind(getItem(position) as MessageTimeStamp)
             }
         }
     }
@@ -207,7 +214,7 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
             }
 
             else -> {
-                val binding = ItemNotiTimestampBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemMessageTimestampBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 ItemTimeStampViewHolder(binding)
             }
         }

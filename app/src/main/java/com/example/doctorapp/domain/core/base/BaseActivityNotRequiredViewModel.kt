@@ -6,6 +6,9 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.example.doctorapp.utils.CheckNetWorkCallback
+import com.example.doctorapp.utils.DeviceUtil
+import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.LoadingDialog
 import java.lang.ref.WeakReference
 
@@ -41,6 +44,8 @@ abstract class BaseActivityNotRequiredViewModel<BD: ViewDataBinding> : AppCompat
         LoadingDialog.getInstance(this)?.destroyLoadingDialog()
     }
 
+
+
     fun showLoading() {
         LoadingDialog.getInstance(this)?.show()
     }
@@ -48,6 +53,8 @@ abstract class BaseActivityNotRequiredViewModel<BD: ViewDataBinding> : AppCompat
     fun hideLoading() {
         LoadingDialog.getInstance(this)?.hidden()
     }
+
+
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         return super.dispatchTouchEvent(ev)

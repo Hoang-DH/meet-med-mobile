@@ -9,7 +9,7 @@ import io.socket.engineio.client.transports.WebSocket
 
 object SocketHandler {
 
-    private lateinit var mSocket: Socket
+    private var mSocket: Socket? = null
 
     fun initSocket(userId: String) {
         val options = IO.Options()
@@ -23,7 +23,7 @@ object SocketHandler {
         }
     }
 
-    fun getSocket(): Socket {
+    fun getSocket(): Socket? {
         return mSocket
     }
 }
