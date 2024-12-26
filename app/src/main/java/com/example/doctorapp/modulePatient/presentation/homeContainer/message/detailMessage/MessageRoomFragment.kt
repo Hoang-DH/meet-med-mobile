@@ -34,10 +34,11 @@ import com.example.doctorapp.domain.core.base.BaseReverseAdapterLoadMore
 import com.example.doctorapp.modulePatient.presentation.adapter.MessageAdapter
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.Dialog
+import com.example.doctorapp.utils.FileUtils
 import com.example.doctorapp.utils.MyResponse
 import com.example.doctorapp.utils.Prefs
 import com.example.doctorapp.utils.SocketHandler
-import com.example.doctorapp.worker.UploadMediaWorker
+import com.example.doctorapp.worker.SendMessageWorker
 import dagger.hilt.android.AndroidEntryPoint
 import io.socket.emitter.Emitter
 import org.json.JSONException
@@ -90,13 +91,13 @@ class MessageRoomFragment :
 
     private val imageLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         if (it) {
-            uploadMedia(IMAGE_TYPE)
+            uploadMessage(IMAGE_TYPE)
         }
     }
 
     private val videoLauncher = registerForActivityResult(ActivityResultContracts.CaptureVideo()) {
         if (it) {
-            uploadMedia(VIDEO_TYPE)
+            uploadMessage(VIDEO_TYPE)
         }
     }
 
@@ -122,20 +123,31 @@ class MessageRoomFragment :
         }
     }
 
-    private fun uploadMedia(mediaType: Int) {
+    private fun uploadMessage(mediaType: Int, messageContentText: String? = null) {
         val messageType = when (mediaType) {
+            TEXT -> "TEXT"
             IMAGE_TYPE -> "IMAGE"
             VIDEO_TYPE -> "VIDEO"
             else -> "FILE"
         }
-        val inputData = Data.Builder()
-            .putString(UploadMediaWorker.MEDIA_URI, selectedFile.toString())
-            .putString(Define.Socket.TO, messageRoom?.doctor?.id)
-            .putString(Define.Socket.CHAT_BOX_ID, messageRoom?.id)
-            .putString(Define.Socket.TYPE, messageType)
-            .build()
+        val inputData= if (messageType == "TEXT") {
+            Data.Builder()
+                .putString(SendMessageWorker.MESSAGE_CONTENT, messageContentText)
+                .putString(Define.Socket.TO, messageRoom?.doctor?.id)
+                .putString(Define.Socket.CHAT_BOX_ID, messageRoom?.id)
+                .putString(Define.Socket.TYPE, messageType)
+                .build()
+        } else {
+            Data.Builder()
+                .putString(SendMessageWorker.MESSAGE_CONTENT, FileUtils.getRealPathFromUri(selectedFile, requireContext()))
+                .putString(Define.Socket.TO, messageRoom?.doctor?.id)
+                .putString(Define.Socket.CHAT_BOX_ID, messageRoom?.id)
+                .putString(Define.Socket.TYPE, messageType)
+                .build()
+        }
+//
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val uploadRequest = OneTimeWorkRequest.Builder(UploadMediaWorker::class.java)
+        val uploadRequest = OneTimeWorkRequest.Builder(SendMessageWorker::class.java)
             .setInputData(inputData)
             .setConstraints(constraints)
             .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 10, TimeUnit.SECONDS)
@@ -148,7 +160,9 @@ class MessageRoomFragment :
                     when (workInfo.state) {
 
                         WorkInfo.State.SUCCEEDED -> {
-                            val message = convertJsonToMessage(workInfo.outputData.getString(UploadMediaWorker.MESSAGE_SENT).toString())
+                            val message = convertJsonToMessage(
+                                workInfo.outputData.getString(SendMessageWorker.MESSAGE_SENT).toString()
+                            )
                             message.id = id.toString()
                             viewModel.updateMessageStatus(message, MessageStatus.SENT)
                         }
@@ -156,7 +170,7 @@ class MessageRoomFragment :
                         WorkInfo.State.FAILED -> {
                             val message = Message(
                                 id = id.toString(),
-                                messageContent = selectedFile.toString(),
+                                messageContent = if(messageType == "TEXT") messageContentText else selectedFile.toString(),
                                 patient = Prefs.getInstance(requireContext()).patient,
                                 type = messageType,
                                 status = MessageStatus.FAILED
@@ -170,7 +184,7 @@ class MessageRoomFragment :
                                 id = id.toString(),
                                 createdAt = Instant.now().toString(),
                                 updatedAt = Instant.now().toString(),
-                                messageContent = selectedFile.toString(),
+                                messageContent = if(messageType == "TEXT") messageContentText else selectedFile.toString(),
                                 patient = Prefs.getInstance(requireContext()).patient,
                                 type = messageType,
                                 status = MessageStatus.SENDING
@@ -366,15 +380,9 @@ class MessageRoomFragment :
             }
 
             ivSendMessage.setOnClickListener {
-                val message = Message(
-                    id = Random(100).nextInt().toString(),
-                    messageContent = binding.etInputMessage.text.toString(),
-                    patient = Prefs.getInstance(requireContext()).patient,
-                    type = "TEXT",
-                    status = MessageStatus.SENT
-                )
+
+                uploadMessage(TEXT, etInputMessage.text.toString())
                 binding.etInputMessage.text?.clear()
-                sendMessage(message)
             }
         }
     }
@@ -420,6 +428,7 @@ class MessageRoomFragment :
         private const val CAMERA_VIDEO_FILE_NAME = "temp.mp4"
         private const val IMAGE_TYPE = 0
         private const val VIDEO_TYPE = 1
+        private const val TEXT = 2
         private const val CHAT_BOX_ID = "29764836-c00a-415b-b8a0-cdcdde53b16d"
         private const val TO_ID = "6a5c5552-aaba-485e-9382-e0cffddcc3f4"
         const val ORDER_ASC = "asc"

@@ -26,6 +26,7 @@ firebaseMessagingKtx = "24.1.0"
 socketIo = "2.1.0"
 photoView = "1.0.2"
 workManager = "2.7.0"
+ffmpeg = "4.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -55,6 +56,7 @@ firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messa
 socketIo = { group = "io.socket", name = "socket.io-client", version.ref = "socketIo" }
 photoView = { group = "io.getstream", name = "photoview", version.ref = "photoView" }
 workManager = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
+ffmpeg = { group = "com.arthenica", name = "mobile-ffmpeg-full", version.ref = "ffmpeg" }
 
 
 [plugins]
