@@ -38,7 +38,7 @@ class MessageRoomViewModel @Inject constructor(private val userRepository: UserR
             userRepository.getMessagesOfChatBox(chatBoxId, params).let { response ->
                 if (response.success == true) {
                     messages.addAll(response.data?.content ?: emptyList())
-                    _messageList.value = MyResponse.Success(groupMessagesByTimestamp(messages))
+                    _messageList.value = MyResponse.Success(groupMessagesByTimestamp(processThumbnail(messages)))
                 } else {
                     when (response.statusCode) {
                         Define.HttpResponseCode.NOT_FOUND -> {
@@ -83,9 +83,19 @@ class MessageRoomViewModel @Inject constructor(private val userRepository: UserR
         val index = messages.indexOfFirst { it.id == message.id }
         if (index != -1) {
             messages[index].status = status
+            messages[index].thumbnail = message.thumbnail
             _messageList.value = MyResponse.Success(groupMessagesByTimestamp(messages))
             Log.d("TAG", "updateMessageStatus: i")
         }
+    }
+
+    private fun processThumbnail(messages: List<Message>): List<Message> {
+        for(message in messages){
+            if(message.messageContent != null && message.messageContent!!.endsWith(".mp4", ignoreCase = true)){
+                message.thumbnail = message.messageContent!!.replace(".mp4", ".jpg")
+            }
+        }
+        return messages
     }
 
     private fun groupMessagesByTimestamp(messages: List<Message>): List<MessageData> {

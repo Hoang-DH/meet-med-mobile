@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MotionEvent
@@ -164,6 +165,7 @@ class MessageRoomFragment :
                                 workInfo.outputData.getString(SendMessageWorker.MESSAGE_SENT).toString()
                             )
                             message.id = id.toString()
+                            message.thumbnail = message.messageContent?.replace("mp4", "jpg")
                             viewModel.updateMessageStatus(message, MessageStatus.SENT)
                         }
 
@@ -187,9 +189,13 @@ class MessageRoomFragment :
                                 messageContent = if(messageType == "TEXT") messageContentText else selectedFile.toString(),
                                 patient = Prefs.getInstance(requireContext()).patient,
                                 type = messageType,
-                                status = MessageStatus.SENDING
+                                status = MessageStatus.SENDING,
+                                thumbnail = null
                             )
                             viewModel.sendMessage(message)
+                            Handler().postDelayed({
+                                binding.rvMessageList.smoothScrollToPosition(0)
+                            }, 1000)
                         }
 
                         else -> {
@@ -226,7 +232,6 @@ class MessageRoomFragment :
             on(Define.Socket.EVENT_CONNECTED) {
                 Log.d("SocketHandler", "Connected")
             }
-            on(Define.Socket.EVENT_MESSAGE_ACK, onMessageAck)
             if (SocketHandler.getSocket()?.connected() == false) {
                 connect()
             }
@@ -241,7 +246,6 @@ class MessageRoomFragment :
             off(Define.Socket.EVENT_CONNECTED) {
                 Log.d("SocketHandler", "Disconnected")
             }
-            off(Define.Socket.EVENT_MESSAGE_ACK, onMessageAck)
             disconnect()
             Log.d("SocketHandler", "Destroy")
         }
@@ -258,17 +262,7 @@ class MessageRoomFragment :
         Log.d("SocketHandler", "Error: ${args?.get(0)}")
     }
 
-    private val onMessageAck = Emitter.Listener { args ->
-        // Handle message ack
-        Log.d("SocketHandler", "Message ack: ${args[0]}")
-        // update
-        val message = convertJsonToMessage(args[0].toString())
-        requireActivity().runOnUiThread {
-            viewModel.sendMessage(message)
-            binding.rvMessageList.smoothScrollToPosition(0)
-        }
 
-    }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

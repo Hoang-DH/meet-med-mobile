@@ -21,14 +21,15 @@ class MessageRoomAdapter(private val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(messageRoom: MessageRoom) {
             binding.apply {
-                tvMessageContent.text = messageRoom.lastSentMessageContent?.messageContent
+                tvMessageContent.text =
+                    if (messageRoom.lastSentMessageContent?.patient != null) "You: " + messageRoom.lastSentMessageContent?.messageContent else messageRoom.lastSentMessageContent?.messageContent
                 tvTimestamp.text = messageRoom.lastSentMessageContent?.updatedAt?.let {
                     DateUtils.convertInstantToTime(
                         it
                     )
                 }
                 tvUsername.text = messageRoom.doctor?.user?.fullName
-                if (messageRoom.lastSentMessageContent?.status == MessageStatus.SEEN) {
+                if (messageRoom.lastSentMessageContent?.status == MessageStatus.SEEN || messageRoom.lastSentMessageContent?.patient != null) {
                     tvMessageContent.setTypeface(null, android.graphics.Typeface.NORMAL)
                     tvTimestamp.setTypeface(null, android.graphics.Typeface.NORMAL)
                     ivUnreadMessage.visibility = android.view.View.GONE

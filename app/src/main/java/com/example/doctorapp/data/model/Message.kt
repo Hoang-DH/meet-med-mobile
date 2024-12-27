@@ -31,6 +31,8 @@ data class Message(
 
     @SerializedName("status")
     var status: MessageStatus? = null,
+
+    var thumbnail: String? = null
 ): MessageData()
 
 data class MessageTimeStamp(

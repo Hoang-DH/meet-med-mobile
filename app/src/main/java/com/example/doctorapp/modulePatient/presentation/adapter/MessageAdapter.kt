@@ -18,8 +18,6 @@ import com.example.doctorapp.data.model.MessageTimeStamp
 import com.example.doctorapp.databinding.ItemMessageReceivedBinding
 import com.example.doctorapp.databinding.ItemMessageSentBinding
 import com.example.doctorapp.databinding.ItemMessageTimestampBinding
-import com.example.doctorapp.databinding.ItemNotiTimestampBinding
-import com.example.doctorapp.domain.core.base.BaseAdapterLoadMore
 import com.example.doctorapp.domain.core.base.BaseReverseAdapterLoadMore
 import com.example.doctorapp.modulePatient.presentation.diffUtil.MessageDiffUtil
 
@@ -58,6 +56,7 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
                         cvImage.visibility = View.GONE
                         ivPlayVideo.visibility = View.GONE
                     }
+
                     "IMAGE" -> {
                         tvMessageContent.visibility = View.GONE
                         cvImage.visibility = View.VISIBLE
@@ -72,12 +71,28 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
                             onMediaItemClickListener?.onMediaItemClick(message)
                         }
                     }
+
                     "VIDEO" -> {
+                        if (message.thumbnail != null) {
+
+                            Glide.with(context)
+                                .load(message.thumbnail)
+                                .apply(RequestOptions().transform(CenterCrop()))
+                                .into(ivImage)
+                        } else {
+                            //set background for image view
+                            ivImage.setImageResource(R.drawable.bg_img_placeholder)
+                        }
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.GONE
                         cvImage.visibility = View.VISIBLE
                         ivPlayVideo.visibility = View.VISIBLE
+
+                        cvImage.setOnClickListener {
+                            onMediaItemClickListener?.onMediaItemClick(message)
+                        }
                     }
+
                     else -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.VISIBLE
@@ -85,23 +100,26 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
                         ivPlayVideo.visibility = View.GONE
                     }
                 }
-                when(message.status){
+                when (message.status) {
                     MessageStatus.SENT -> {
                         tvMessageStatus.text = context.getString(R.string.sent)
                         stopAnimationLoading()
                         ivLoading.visibility = View.GONE
                     }
+
                     MessageStatus.SENDING -> {
                         tvMessageStatus.text = context.getString(R.string.sending)
                         startAnimationLoading()
                         ivLoading.visibility = View.VISIBLE
                         ivLoading.startAnimation(rotation)
                     }
+
                     MessageStatus.SEEN -> {
                         tvMessageStatus.text = context.getString(R.string.seen)
                         stopAnimationLoading()
                         ivLoading.visibility = View.GONE
                     }
+
                     MessageStatus.FAILED -> {
                         tvMessageStatus.text = context.getString(R.string.failed)
                         tvMessageStatus.setTextColor(context.getColor(R.color.red))
@@ -133,6 +151,7 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
                         cvImage.visibility = View.GONE
                         ivPlayVideo.visibility = View.GONE
                     }
+
                     "IMAGE" -> {
                         tvMessageContent.visibility = View.GONE
                         cvImage.visibility = View.VISIBLE
@@ -147,12 +166,23 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
                             onMediaItemClickListener?.onMediaItemClick(message)
                         }
                     }
+
                     "VIDEO" -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.GONE
                         cvImage.visibility = View.VISIBLE
                         ivPlayVideo.visibility = View.VISIBLE
+                        if (message.thumbnail != null) {
+                            Glide.with(context)
+                                .load(message.thumbnail)
+                                .apply(RequestOptions().transform(CenterCrop()))
+                                .into(ivImage)
+                        }
+                        cvImage.setOnClickListener {
+                            onMediaItemClickListener?.onMediaItemClick(message)
+                        }
                     }
+
                     else -> {
                         tvMessageContent.visibility = View.GONE
                         tvFile.visibility = View.VISIBLE
@@ -183,6 +213,7 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
                     TYPE_MESSAGE_SENT
                 }
             }
+
             else -> TYPE_TIME_STAMP
         }
     }
@@ -192,9 +223,11 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
             is ItemMessageSentViewHolder -> {
                 holder.bind(getItem(position) as Message)
             }
+
             is ItemMessageReceived -> {
                 holder.bind(getItem(position) as Message)
             }
+
             is ItemTimeStampViewHolder -> {
                 holder.bind(getItem(position) as MessageTimeStamp)
             }
@@ -220,12 +253,12 @@ class MessageAdapter(private val context: Context) : BaseReverseAdapterLoadMore<
         }
     }
 
-    private fun startAnimationLoading(){
+    private fun startAnimationLoading() {
         rotation = AnimationUtils.loadAnimation(context, R.anim.rotate_anim)
 
     }
 
-    private fun stopAnimationLoading(){
+    private fun stopAnimationLoading() {
         rotation?.cancel()
         rotation?.reset()
     }
