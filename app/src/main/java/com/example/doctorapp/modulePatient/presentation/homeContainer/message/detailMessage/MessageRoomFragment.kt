@@ -64,7 +64,6 @@ class MessageRoomFragment :
     private var selectedFile: Uri? = null;
     private var currentMediaPickType = IMAGE_TYPE
     private var messageAdapter: MessageAdapter? = null
-    private var message: Message? = null
     private var messageRoom: MessageRoom? = null
     private var currentPage = 0
 
@@ -193,9 +192,7 @@ class MessageRoomFragment :
                                 thumbnail = null
                             )
                             viewModel.sendMessage(message)
-                            Handler().postDelayed({
-                                binding.rvMessageList.smoothScrollToPosition(0)
-                            }, 1000)
+                            scrollToBottom()
                         }
 
                         else -> {
@@ -255,11 +252,22 @@ class MessageRoomFragment :
     private val onReceiveMessage = Emitter.Listener { args: Array<out Any>? ->
         // Handle receive message
         Log.d("SocketHandler", "Receive message: ${args?.forEach { Log.d("SocketHandler", it.toString()) }}")
+        val message = convertJsonToMessage(args?.get(0).toString())
+        requireActivity().runOnUiThread {
+            viewModel.sendMessage(message)
+            scrollToBottom()
+        }
     }
 
     private val onError = Emitter.Listener { args: Array<out Any>? ->
         // Handle error
         Log.d("SocketHandler", "Error: ${args?.get(0)}")
+    }
+
+    private fun scrollToBottom() {
+        Handler().postDelayed({
+            binding.rvMessageList.smoothScrollToPosition(0)
+        }, 1000)
     }
 
 

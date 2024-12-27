@@ -252,6 +252,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_doctorMessageListFragment_to_doctorMessageRoomFragment"
+            app:destination="@id/doctorMessageRoomFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/doctorWorkingFragment"
@@ -336,4 +343,9 @@
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.message.detailMessage.DetailAttachmentFragment"
         android:label="DetailAttachmentFragment"
         tools:layout="@layout/fragment_detail_attachment"/>
+    <fragment
+        android:id="@+id/doctorMessageRoomFragment"
+        android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.message.detailMessage.DoctorMessageRoomFragment"
+        android:label="DoctorMessageRoomFragment"
+        tools:layout="@layout/fragment_doctor_message_room"/>
 </navigation>

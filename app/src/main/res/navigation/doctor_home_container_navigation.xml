@@ -6,6 +6,7 @@
 
     <include app:graph="@navigation/tab_doctor_home" />
     <include app:graph="@navigation/tab_doctor_appointment" />
+    <include app:graph="@navigation/tab_doctor_message" />
     <include app:graph="@navigation/tab_doctor_profile" />
     <include app:graph="@navigation/tab_doctor_working" />
 </navigation>

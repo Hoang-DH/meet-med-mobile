@@ -59,6 +59,7 @@ class SendMessageWorker(appContext: Context, workerParameters: WorkerParameters)
                             val wData = workDataOf(
                                 MESSAGE_SENT to args[0].toString()
                             )
+                            Log.d("SocketHandler", args[0].toString())
                             safeResume(Result.success(wData))
                         }
                         SocketHandler.getSocket()?.emit(Define.Socket.EVENT_SEND_MESSAGE, sendMessage)
@@ -110,6 +111,7 @@ class SendMessageWorker(appContext: Context, workerParameters: WorkerParameters)
                                             val wData = workDataOf(
                                                 MESSAGE_SENT to args[0].toString()
                                             )
+                                            Log.d("SocketHandler", args[0].toString())
                                             continuation.resume(Result.success(wData))
                                         }
                                         SocketHandler.getSocket()?.emit(Define.Socket.EVENT_SEND_MESSAGE, sendMessage)

@@ -11,6 +11,7 @@ import com.example.doctorapp.databinding.FragmentMessageListBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.MessageRoomAdapter
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
+import com.example.doctorapp.utils.CheckNetWorkCallback
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +36,16 @@ class MessageListFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        viewModel.getMessageRoomList()
+        checkAndHandleNetworkConnect(object : CheckNetWorkCallback {
+            override fun networkConnected() {
+                viewModel.getMessageRoomList()
+            }
+
+            override fun networkIgnored() {
+                TODO("Not yet implemented")
+            }
+        })
+
         messageRoomAdapter = MessageRoomAdapter(context = requireContext())
         messageRoomAdapter?.setOnMessageRoomClickListener(this);
 
