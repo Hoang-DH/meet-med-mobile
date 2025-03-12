@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.Department
-import com.example.doctorapp.data.model.Doctor
+import com.example.doctorapp.domain.model.Department
+import com.example.doctorapp.domain.model.Doctor
 import com.example.doctorapp.databinding.FragmentSearchDoctorBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.DepartmentCategoryAdapter

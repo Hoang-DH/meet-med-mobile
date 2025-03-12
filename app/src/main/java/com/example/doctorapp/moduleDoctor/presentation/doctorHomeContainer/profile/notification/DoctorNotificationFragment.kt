@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.NotificationData
+import com.example.doctorapp.domain.model.NotificationData
 import com.example.doctorapp.databinding.FragmentDoctorNotificationBinding
 import com.example.doctorapp.domain.core.base.BaseAdapterLoadMore
 import com.example.doctorapp.domain.core.base.BaseFragment

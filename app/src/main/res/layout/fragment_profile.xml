@@ -96,38 +96,38 @@
             android:layout_marginHorizontal="@dimen/common_size_20dp"
             android:background="@color/color_divider"
             />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvFavorite"
-            android:layout_marginHorizontal="@dimen/common_size_20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/divider1"
-            android:layout_marginTop="@dimen/common_size_15dp"
-            android:drawableStart="@drawable/ic_heart"
-            android:text="@string/string_favorite"
-            android:textColor="@color/color_6b7280"
-            android:drawableEnd="@drawable/ic_next_disabled"
-            android:drawablePadding="@dimen/common_size_15dp"
-            android:textSize="@dimen/common_text_size_16sp"
-            android:gravity="center_vertical"
-            />
+<!--        <androidx.appcompat.widget.AppCompatTextView-->
+<!--            android:id="@+id/tvFavorite"-->
+<!--            android:layout_marginHorizontal="@dimen/common_size_20dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/divider1"-->
+<!--            android:layout_marginTop="@dimen/common_size_15dp"-->
+<!--            android:drawableStart="@drawable/ic_heart"-->
+<!--            android:text="@string/string_favorite"-->
+<!--            android:textColor="@color/color_6b7280"-->
+<!--            android:drawableEnd="@drawable/ic_next_disabled"-->
+<!--            android:drawablePadding="@dimen/common_size_15dp"-->
+<!--            android:textSize="@dimen/common_text_size_16sp"-->
+<!--            android:gravity="center_vertical"-->
+<!--            />-->
 
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            app:layout_constraintTop_toBottomOf="@id/tvFavorite"
-            android:layout_marginTop="@dimen/common_size_10dp"
-            android:layout_marginHorizontal="@dimen/common_size_20dp"
-            android:background="@color/color_divider"
-            />
+<!--        <View-->
+<!--            android:id="@+id/divider2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tvFavorite"-->
+<!--            android:layout_marginTop="@dimen/common_size_10dp"-->
+<!--            android:layout_marginHorizontal="@dimen/common_size_20dp"-->
+<!--            android:background="@color/color_divider"-->
+<!--            />-->
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvNotification"
             android:layout_marginHorizontal="@dimen/common_size_20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/divider2"
+            app:layout_constraintTop_toBottomOf="@id/divider1"
             android:layout_marginTop="@dimen/common_size_15dp"
             android:drawableStart="@drawable/ic_edit_noti"
             android:text="@string/string_notification"

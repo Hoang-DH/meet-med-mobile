@@ -26,15 +26,13 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.constant.MessageStatus
-import com.example.doctorapp.data.model.Message
-import com.example.doctorapp.data.model.MessageRoom
-import com.example.doctorapp.data.model.convertJsonToMessage
+import com.example.doctorapp.domain.model.Message
+import com.example.doctorapp.domain.model.MessageRoom
+import com.example.doctorapp.domain.model.convertJsonToMessage
 import com.example.doctorapp.databinding.FragmentDoctorMessageRoomBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.domain.core.base.BaseReverseAdapterLoadMore
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorMessageAdapter
-import com.example.doctorapp.modulePatient.presentation.adapter.MessageAdapter
-import com.example.doctorapp.modulePatient.presentation.adapter.MessageRoomAdapter
 import com.example.doctorapp.modulePatient.presentation.homeContainer.message.detailMessage.MessageRoomFragment
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import com.example.doctorapp.utils.Dialog
@@ -198,9 +196,7 @@ class DoctorMessageRoomFragment :
                                 thumbnail = null
                             )
                             viewModel.sendMessage(message)
-                            Handler().postDelayed({
-                                binding.rvMessageList.smoothScrollToPosition(0)
-                            }, 1000)
+                            scrollToBottom()
                         }
 
                         else -> {
@@ -260,11 +256,22 @@ class DoctorMessageRoomFragment :
     private val onReceiveMessage = Emitter.Listener { args: Array<out Any>? ->
         // Handle receive message
         Log.d("SocketHandler", "Receive message: ${args?.forEach { Log.d("SocketHandler", it.toString()) }}")
+        val message = convertJsonToMessage(args?.get(0).toString())
+        requireActivity().runOnUiThread {
+            viewModel.sendMessage(message)
+            scrollToBottom()
+        }
     }
 
     private val onError = Emitter.Listener { args: Array<out Any>? ->
         // Handle error
         Log.d("SocketHandler", "Error: ${args?.get(0)}")
+    }
+
+    private fun scrollToBottom() {
+        Handler().postDelayed({
+            binding.rvMessageList.smoothScrollToPosition(0)
+        }, 1000)
     }
 
 
@@ -290,7 +297,7 @@ class DoctorMessageRoomFragment :
             rvMessageList.adapter = messageAdapter
             rvMessageList.layoutManager =
                 androidx.recyclerview.widget.LinearLayoutManager(requireContext()).apply { reverseLayout = true }
-            tvUsername.text = messageRoom?.doctor?.user?.fullName
+            tvUsername.text = messageRoom?.patient?.user?.fullName
             Glide.with(requireContext()).load(messageRoom?.doctor?.user?.imageUrl)
                 .apply(RequestOptions.circleCropTransform()).placeholder(R.drawable.ic_profile_pic)
                 .into(ivAvatar)
@@ -439,6 +446,6 @@ class DoctorMessageRoomFragment :
         val bundle = Bundle()
         bundle.putString(Define.BundleKey.MEDIA_URL, message.messageContent)
         bundle.putString(Define.BundleKey.MESSAGE_TYPE, message.type)
-        appNavigation.openMessageRoomToDetailAttachmentScreen(bundle)
+        appNavigation.openDoctorMessageRoomToDoctorDetailAttachmentScreen(bundle)
     }
 }

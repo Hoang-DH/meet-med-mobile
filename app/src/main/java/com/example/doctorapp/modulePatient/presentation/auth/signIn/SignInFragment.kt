@@ -95,7 +95,7 @@ class SignInFragment :
                         }
                         val token = task.result
                         Prefs.getInstance(requireContext()).deviceToken = token
-                        Log.d("HoangDH", "deviceToken: $token")
+                        Log.d("HoangDH", "deviceToken: ${Prefs.getInstance(requireContext()).accessToken}")
                     }
                     appNavigation.openSignInToHomeContainerScreen()
                 }

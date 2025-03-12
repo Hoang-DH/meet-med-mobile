@@ -2,6 +2,7 @@ package com.example.doctorapp.worker
 
 import android.content.Context
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
@@ -9,7 +10,7 @@ import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.Message
+import com.example.doctorapp.domain.model.Message
 import com.example.doctorapp.utils.ApplicationMediaManager
 import com.example.doctorapp.utils.Prefs
 import com.example.doctorapp.utils.SocketHandler
@@ -26,7 +27,8 @@ class SendMessageWorker(appContext: Context, workerParameters: WorkerParameters)
     private var cloudinaryUrl: String? = null
     override suspend fun doWork(): Result {
         ApplicationMediaManager.startMediaManager(applicationContext)
-        val messageContent = inputData.getString(MESSAGE_CONTENT) ?: return Result.failure()
+        Log.d("HoangDH", MediaManager.get().toString())
+        val messageContent = inputData.getString(MESSAGE_CONTENT)?.toUri() ?: return Result.failure()
         val to = inputData.getString(Define.Socket.TO) ?: return Result.failure()
         val chatBoxId = inputData.getString(Define.Socket.CHAT_BOX_ID) ?: return Result.failure()
         val messageType = inputData.getString(Define.Socket.TYPE) ?: return Result.failure()

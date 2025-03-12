@@ -3,10 +3,10 @@ package com.example.doctorapp.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.doctorapp.constant.UserRole
-import com.example.doctorapp.data.model.Department
-import com.example.doctorapp.data.model.Doctor
-import com.example.doctorapp.data.model.Patient
-import com.example.doctorapp.data.model.User
+import com.example.doctorapp.domain.model.Department
+import com.example.doctorapp.domain.model.Doctor
+import com.example.doctorapp.domain.model.Patient
+import com.example.doctorapp.domain.model.User
 import com.google.gson.Gson
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject

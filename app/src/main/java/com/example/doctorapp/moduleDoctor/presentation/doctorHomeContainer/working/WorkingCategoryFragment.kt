@@ -1,11 +1,12 @@
 package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.working
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
-import com.example.doctorapp.data.model.DoctorShift
+import com.example.doctorapp.domain.model.DoctorShift
 import com.example.doctorapp.databinding.FragmentWorkingCategoryBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorShiftAdapter
@@ -37,6 +38,12 @@ class WorkingCategoryFragment :
     private val shiftAdapter by lazy {
         DoctorShiftAdapter(requireContext(), tab == Define.WorkingTab.MY_SHIFTS)
     }
+
+    private var isShowDialog = true
+
+
+
+
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -73,6 +80,14 @@ class WorkingCategoryFragment :
             }
             btnAddShift.setOnClickListener {
                 viewModel.registerNewShift()
+            }
+            swipeRefreshLayout.setOnRefreshListener {
+                if(tab == Define.WorkingTab.MY_SHIFTS){
+                    viewModel.getRegisteredShifts()
+                } else {
+                    viewModel.getListShiftToRegister()
+                }
+                swipeRefreshLayout.isRefreshing = false
             }
         }
     }
@@ -136,15 +151,18 @@ class WorkingCategoryFragment :
                 when (response) {
                     is MyResponse.Success -> {
                         showHideLoading(false)
-                        Dialog.showCongratulationDialog(
-                            requireContext(),
-                            "Register shift successfully",
-                            onClickDone = {
-                                // navigate to MY_SHIFTS tab
-                                (requireParentFragment() as DoctorWorkingFragment).changeTab(Define.WorkingTab.MY_SHIFTS)
-                            }
+                        if(isShowDialog){
+                            Dialog.showCongratulationDialog(
+                                requireContext(),
+                                "Register shift successfully",
+                                onClickDone = {
+                                    // navigate to MY_SHIFTS tab
+                                    (requireParentFragment() as DoctorWorkingFragment).changeTab(Define.WorkingTab.MY_SHIFTS)
+                                    // hide dialog
+                                }
 
-                        )
+                            )
+                        }
                     }
 
                     is MyResponse.Error -> {

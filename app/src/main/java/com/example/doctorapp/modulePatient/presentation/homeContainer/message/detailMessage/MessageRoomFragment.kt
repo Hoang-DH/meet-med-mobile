@@ -26,9 +26,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.constant.MessageStatus
-import com.example.doctorapp.data.model.Message
-import com.example.doctorapp.data.model.MessageRoom
-import com.example.doctorapp.data.model.convertJsonToMessage
+import com.example.doctorapp.domain.model.Message
+import com.example.doctorapp.domain.model.MessageRoom
+import com.example.doctorapp.domain.model.convertJsonToMessage
 import com.example.doctorapp.databinding.FragmentMessageRoomBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.domain.core.base.BaseReverseAdapterLoadMore
@@ -47,7 +47,6 @@ import org.json.JSONObject
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class MessageRoomFragment :
@@ -67,26 +66,35 @@ class MessageRoomFragment :
     private var messageRoom: MessageRoom? = null
     private var currentPage = 0
 
-    private var takePhotoCameraPermissions = arrayOf(
+    private var takePhotoCameraPermissions = Manifest.permission.CAMERA
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private val takePhotoCameraPermissionsSDK33 = Manifest.permission.CAMERA
+
+    private var getMediaContentPermissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.CAMERA
     )
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private val takePhotoCameraPermissionsSDK33 = arrayOf(
-        Manifest.permission.READ_MEDIA_IMAGES,
-        Manifest.permission.CAMERA
-    )
+    private val getMediaContentPermissionsSdk33 = arrayOf(Manifest.permission.READ_MEDIA_IMAGES)
 
-    private val imagePermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            if (permissions.all { it.value }) {
+    private val cameraPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
                 showMediaPickerLayout(binding.addMediaLayout.visibility == View.GONE)
             } else {
                 //showToast("Permission Denied")
             }
 
+        }
+
+    private val storageMediaPermission =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            if (permissions.all { it.value }) {
+                galleryLauncher.launch(GALLERY_TYPE)
+            } else {
+                //showToast("Permission Denied")
+            }
         }
 
     private val imageLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) {
@@ -106,6 +114,13 @@ class MessageRoomFragment :
             try {
                 selectedFile = it
                 //uploadFile()
+                if (FileUtils.isImageOrVideo(requireContext(), selectedFile!!) == "image") {
+                    uploadMessage(IMAGE_TYPE)
+                } else if (FileUtils.isImageOrVideo(requireContext(), selectedFile!!) == "video") {
+                    uploadMessage(VIDEO_TYPE)
+                } else {
+                    throw Exception("Unknown file type")
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -130,7 +145,7 @@ class MessageRoomFragment :
             VIDEO_TYPE -> "VIDEO"
             else -> "FILE"
         }
-        val inputData= if (messageType == "TEXT") {
+        val inputData = if (messageType == "TEXT") {
             Data.Builder()
                 .putString(SendMessageWorker.MESSAGE_CONTENT, messageContentText)
                 .putString(Define.Socket.TO, messageRoom?.doctor?.id)
@@ -139,7 +154,10 @@ class MessageRoomFragment :
                 .build()
         } else {
             Data.Builder()
-                .putString(SendMessageWorker.MESSAGE_CONTENT, FileUtils.getRealPathFromUri(selectedFile, requireContext()))
+                .putString(
+                    SendMessageWorker.MESSAGE_CONTENT,
+                    selectedFile.toString()
+                )
                 .putString(Define.Socket.TO, messageRoom?.doctor?.id)
                 .putString(Define.Socket.CHAT_BOX_ID, messageRoom?.id)
                 .putString(Define.Socket.TYPE, messageType)
@@ -171,7 +189,7 @@ class MessageRoomFragment :
                         WorkInfo.State.FAILED -> {
                             val message = Message(
                                 id = id.toString(),
-                                messageContent = if(messageType == "TEXT") messageContentText else selectedFile.toString(),
+                                messageContent = if (messageType == "TEXT") messageContentText else selectedFile.toString(),
                                 patient = Prefs.getInstance(requireContext()).patient,
                                 type = messageType,
                                 status = MessageStatus.FAILED
@@ -185,7 +203,7 @@ class MessageRoomFragment :
                                 id = id.toString(),
                                 createdAt = Instant.now().toString(),
                                 updatedAt = Instant.now().toString(),
-                                messageContent = if(messageType == "TEXT") messageContentText else selectedFile.toString(),
+                                messageContent = if (messageType == "TEXT") messageContentText else selectedFile.toString(),
                                 patient = Prefs.getInstance(requireContext()).patient,
                                 type = messageType,
                                 status = MessageStatus.SENDING,
@@ -253,6 +271,7 @@ class MessageRoomFragment :
         // Handle receive message
         Log.d("SocketHandler", "Receive message: ${args?.forEach { Log.d("SocketHandler", it.toString()) }}")
         val message = convertJsonToMessage(args?.get(0).toString())
+        message.thumbnail = message.messageContent?.replace("mp4", "jpg")
         requireActivity().runOnUiThread {
             viewModel.sendMessage(message)
             scrollToBottom()
@@ -269,7 +288,6 @@ class MessageRoomFragment :
             binding.rvMessageList.smoothScrollToPosition(0)
         }, 1000)
     }
-
 
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -347,9 +365,17 @@ class MessageRoomFragment :
         binding.apply {
             ivCamera.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    imagePermission.launch(takePhotoCameraPermissionsSDK33)
+                    cameraPermission.launch(takePhotoCameraPermissionsSDK33)
                 } else {
-                    imagePermission.launch(takePhotoCameraPermissions)
+                    cameraPermission.launch(takePhotoCameraPermissions)
+                }
+            }
+
+            ivAddImage.setOnClickListener {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    storageMediaPermission.launch(getMediaContentPermissionsSdk33)
+                } else {
+                    storageMediaPermission.launch(getMediaContentPermissions)
                 }
             }
 

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.doctorapp.R
-import com.example.doctorapp.data.model.Doctor
+import com.example.doctorapp.domain.model.Doctor
 import com.example.doctorapp.databinding.DoctorItemBinding
 import com.example.doctorapp.modulePatient.presentation.diffUtil.DoctorDiffUtil
 

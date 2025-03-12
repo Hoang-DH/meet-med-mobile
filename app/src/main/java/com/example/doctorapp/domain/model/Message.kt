@@ -1,4 +1,4 @@
-package com.example.doctorapp.data.model
+package com.example.doctorapp.domain.model
 
 import com.example.doctorapp.constant.MessageStatus
 import com.google.gson.Gson
@@ -31,6 +31,9 @@ data class Message(
 
     @SerializedName("status")
     var status: MessageStatus? = null,
+
+    @SerializedName("chatBoxId")
+    var chatBoxId: String? = null,
 
     var thumbnail: String? = null
 ): MessageData()

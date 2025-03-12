@@ -2,12 +2,13 @@ package com.example.doctorapp.modulePatient.presentation.homeContainer.home
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.dto.Fcm
-import com.example.doctorapp.data.model.Department
+import com.example.doctorapp.domain.model.Department
 import com.example.doctorapp.databinding.FragmentHomeBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.DepartmentAdapter
@@ -37,13 +38,18 @@ class HomeFragment :
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
-                val fcm =
-                    Fcm(Prefs.getInstance(requireContext()).deviceToken, Prefs.getInstance(requireContext()).user?.id)
-                viewModel.postFCMDeviceToken(fcm)
+                postFcmToken()
             } else {
                 requestPermission()
             }
         }
+
+    private fun postFcmToken() {
+        val fcm =
+            Fcm(Prefs.getInstance(requireContext()).deviceToken, Prefs.getInstance(requireContext()).user?.id)
+        viewModel.postFCMDeviceToken(fcm)
+        Log.d("HoangDH", Prefs.getInstance(requireContext()).deviceToken)
+    }
 
     private fun requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -63,10 +69,12 @@ class HomeFragment :
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            postFcmToken()
         }
+
         checkAndHandleNetworkConnect(object : CheckNetWorkCallback {
             override fun networkConnected() {
                 viewModel.getAllDepartment()

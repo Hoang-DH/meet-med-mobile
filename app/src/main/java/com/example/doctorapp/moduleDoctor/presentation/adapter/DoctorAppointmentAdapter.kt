@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.R
-import com.example.doctorapp.data.model.DoctorAppointment
-import com.example.doctorapp.data.model.Notification
+import com.example.doctorapp.domain.model.DoctorAppointment
+import com.example.doctorapp.domain.model.Notification
 import com.example.doctorapp.databinding.DoctorAppointmentItemBinding
 import com.example.doctorapp.domain.core.base.BaseAdapterLoadMore
 import com.example.doctorapp.moduleDoctor.presentation.diffUtil.DoctorAppointmentDiffUtil

@@ -295,7 +295,8 @@
     <fragment
         android:id="@+id/detailAppointmentFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.booking.bookingCategory.details.DetailAppointmentFragment"
-        android:label="DetailAppointmentFragment" />
+        android:label="DetailAppointmentFragment"
+        tools:layout="@layout/fragment_detail_appointment"/>
 
     <action
         android:id="@+id/action_to_notificationFragment"
@@ -325,6 +326,17 @@
         app:popExitAnim="@anim/slide_out_right"
         app:popUpTo="@id/doctorNotificationFragment"
         app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_to_messageRoom"
+        app:destination="@id/messageRoomFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/messageRoomFragment"
+        app:popUpToInclusive="true" />
+
     <fragment
         android:id="@+id/messageRoomFragment"
         android:name="com.example.doctorapp.modulePatient.presentation.homeContainer.message.detailMessage.MessageRoomFragment"
@@ -347,5 +359,18 @@
         android:id="@+id/doctorMessageRoomFragment"
         android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.message.detailMessage.DoctorMessageRoomFragment"
         android:label="DoctorMessageRoomFragment"
-        tools:layout="@layout/fragment_doctor_message_room"/>
+        tools:layout="@layout/fragment_doctor_message_room">
+        <action
+            android:id="@+id/action_doctorMessageRoomFragment_to_doctorDetailAttachmentFragment"
+            app:destination="@id/doctorDetailAttachmentFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/doctorDetailAttachmentFragment"
+        android:name="com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.message.detailMessage.DoctorDetailAttachmentFragment"
+        android:label="DoctorDetailAttachmentFragment"
+        tools:layout="@layout/fragment_doctor_detail_attachment"/>
 </navigation>

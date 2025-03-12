@@ -30,8 +30,8 @@ import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.example.doctorapp.R
-import com.example.doctorapp.data.model.Patient
-import com.example.doctorapp.data.model.User
+import com.example.doctorapp.domain.model.Patient
+import com.example.doctorapp.domain.model.User
 import com.example.doctorapp.databinding.FragmentEditProfileBinding
 import com.example.doctorapp.databinding.PopupGenderBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
@@ -62,7 +62,6 @@ class EditProfileFragment :
 
     private var takePhotoCameraPermissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.CAMERA
     )
     private val takePhotoCameraPermissionSDK33 = arrayOf(

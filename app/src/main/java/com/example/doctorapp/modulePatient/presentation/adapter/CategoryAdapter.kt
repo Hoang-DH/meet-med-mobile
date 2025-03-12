@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.doctorapp.R
-import com.example.doctorapp.data.model.Department
+import com.example.doctorapp.domain.model.Department
 import com.example.doctorapp.databinding.CategoryItemBinding
 import com.example.doctorapp.modulePatient.presentation.diffUtil.DepartmentCategoryDiffUtil
 

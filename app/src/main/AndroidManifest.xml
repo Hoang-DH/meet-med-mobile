@@ -25,8 +25,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorApp"
-        android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".moduleDoctor.presentation.container.MainDoctorActivity"
             android:exported="false"

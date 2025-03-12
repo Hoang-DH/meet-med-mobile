@@ -5,7 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.MessageRoom
+import com.example.doctorapp.domain.model.MessageRoom
 import com.example.doctorapp.databinding.FragmentDoctorMessageListBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorMessageRoomAdapter

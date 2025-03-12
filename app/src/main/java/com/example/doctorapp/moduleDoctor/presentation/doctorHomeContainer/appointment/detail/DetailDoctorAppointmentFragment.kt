@@ -7,8 +7,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.BookingShift
-import com.example.doctorapp.data.model.DoctorAppointment
+import com.example.doctorapp.domain.model.BookingShift
+import com.example.doctorapp.domain.model.DoctorAppointment
 import com.example.doctorapp.databinding.FragmentDetailAppointmentBinding
 import com.example.doctorapp.databinding.FragmentDetailDoctorAppointmentBinding
 import com.example.doctorapp.domain.core.base.BaseFragment

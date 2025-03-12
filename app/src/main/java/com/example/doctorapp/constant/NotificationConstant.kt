@@ -11,5 +11,8 @@ object NotificationConstant {
         const val CANCEL_APPOINTMENT_SUCCESS = "CANCEL_APPOINTMENT_SUCCESS"
         const val APPOINTMENT_REMINDER = "APPOINTMENT_REMINDER"
         const val WORKING_SHIFT_REMINDER = "WORKING_SHIFT_REMINDER"
+        const val MESSAGE_TEXT  = "TEXT"
+        const val MESSAGE_IMAGE = "IMAGE"
+        const val MESSAGE_VIDEO = "VIDEO"
     }
 }

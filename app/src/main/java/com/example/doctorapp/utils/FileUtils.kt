@@ -3,6 +3,7 @@ package com.example.doctorapp.utils
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
+import android.webkit.MimeTypeMap
 
 object FileUtils {
 
@@ -19,6 +20,21 @@ object FileUtils {
             }
         }
         return path
+    }
+
+    private fun getMimeType(context: Context, uri: Uri): String? {
+        val contentResolver = context.contentResolver
+        val mimeTypeMap = MimeTypeMap.getSingleton()
+        return contentResolver.getType(uri) ?: mimeTypeMap.getExtensionFromMimeType(uri.toString())
+    }
+
+    fun isImageOrVideo(context: Context, uri: Uri): String {
+        val mimeType = getMimeType(context, uri)
+        return when {
+            mimeType?.startsWith("image/") == true -> "image"
+            mimeType?.startsWith("video/") == true -> "video"
+            else -> "unknown"
+        }
     }
 
 }

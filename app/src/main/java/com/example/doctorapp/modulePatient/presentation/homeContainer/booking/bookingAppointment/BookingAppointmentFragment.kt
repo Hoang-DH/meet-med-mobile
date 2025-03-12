@@ -6,10 +6,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.BookingShift
-import com.example.doctorapp.data.model.Doctor
-import com.example.doctorapp.data.model.DoctorBookingShift
-import com.example.doctorapp.data.model.TimeSlot
+import com.example.doctorapp.domain.model.BookingShift
+import com.example.doctorapp.domain.model.Doctor
+import com.example.doctorapp.domain.model.DoctorBookingShift
+import com.example.doctorapp.domain.model.TimeSlot
 import com.example.doctorapp.databinding.FragmentBookingAppointmentBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.BookingShiftAdapter

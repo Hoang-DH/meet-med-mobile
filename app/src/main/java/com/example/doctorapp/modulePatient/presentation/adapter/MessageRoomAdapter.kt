@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.MessageStatus
-import com.example.doctorapp.data.model.MessageRoom
+import com.example.doctorapp.domain.model.MessageRoom
 import com.example.doctorapp.databinding.MessageListItemBinding
 import com.example.doctorapp.modulePatient.presentation.diffUtil.MessageRoomDiffUtil
 import com.example.doctorapp.utils.DateUtils
@@ -21,8 +21,17 @@ class MessageRoomAdapter(private val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(messageRoom: MessageRoom) {
             binding.apply {
-                tvMessageContent.text =
-                    if (messageRoom.lastSentMessageContent?.patient != null) "You: " + messageRoom.lastSentMessageContent?.messageContent else messageRoom.lastSentMessageContent?.messageContent
+                if (messageRoom.lastSentMessageContent?.type == "IMAGE" || messageRoom.lastSentMessageContent?.type == "VIDEO") {
+                    if (messageRoom.lastSentMessageContent?.patient != null) {
+                        tvMessageContent.text = "You: " + messageRoom.lastSentMessageContent?.type!!.lowercase()
+                    } else {
+                        tvMessageContent.text = messageRoom.lastSentMessageContent?.type!!.lowercase()
+                    }
+                } else {
+                    tvMessageContent.text =
+                        if (messageRoom.lastSentMessageContent?.patient != null) "You: " + messageRoom.lastSentMessageContent?.messageContent else messageRoom.lastSentMessageContent?.messageContent
+                }
+
                 tvTimestamp.text = messageRoom.lastSentMessageContent?.updatedAt?.let {
                     DateUtils.convertInstantToTime(
                         it

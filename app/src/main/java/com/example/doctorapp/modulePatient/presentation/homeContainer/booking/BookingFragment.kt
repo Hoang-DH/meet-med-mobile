@@ -9,7 +9,7 @@ import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.adapter.BookingPagerAdapter
 import com.example.doctorapp.modulePatient.presentation.homeContainer.booking.bookingCategory.BookingCategoryFragment
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.BookingShift
+import com.example.doctorapp.domain.model.BookingShift
 import com.example.doctorapp.utils.Dialog
 import com.example.doctorapp.utils.MyResponse
 import com.google.android.material.tabs.TabLayoutMediator

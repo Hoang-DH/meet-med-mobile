@@ -2,7 +2,7 @@ package com.example.doctorapp.modulePatient.presentation.homeContainer.booking.b
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.doctorapp.data.model.BookingShift
+import com.example.doctorapp.domain.model.BookingShift
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.PatientRepository
 import com.example.doctorapp.utils.MyResponse

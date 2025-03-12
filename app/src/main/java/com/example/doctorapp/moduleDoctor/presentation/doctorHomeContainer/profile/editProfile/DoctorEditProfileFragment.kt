@@ -25,8 +25,8 @@ import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.example.doctorapp.R
-import com.example.doctorapp.data.model.Doctor
-import com.example.doctorapp.data.model.User
+import com.example.doctorapp.domain.model.Doctor
+import com.example.doctorapp.domain.model.User
 import com.example.doctorapp.databinding.FragmentDoctorEditProfileBinding
 import com.example.doctorapp.databinding.PopupGenderBinding
 import com.example.doctorapp.domain.core.base.BaseFragment

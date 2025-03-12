@@ -3,10 +3,10 @@ package com.example.doctorapp.network
 import com.example.doctorapp.data.dto.ApiResponse
 import com.example.doctorapp.data.dto.Fcm
 import com.example.doctorapp.data.dto.PagingResponse
-import com.example.doctorapp.data.model.Message
-import com.example.doctorapp.data.model.MessageRoom
-import com.example.doctorapp.data.model.NotificationData
-import com.example.doctorapp.data.model.User
+import com.example.doctorapp.domain.model.Message
+import com.example.doctorapp.domain.model.MessageRoom
+import com.example.doctorapp.domain.model.NotificationData
+import com.example.doctorapp.domain.model.User
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

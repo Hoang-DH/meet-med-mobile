@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.constant.MessageStatus
-import com.example.doctorapp.data.model.Message
-import com.example.doctorapp.data.model.MessageData
-import com.example.doctorapp.data.model.MessageTimeStamp
+import com.example.doctorapp.domain.model.Message
+import com.example.doctorapp.domain.model.MessageData
+import com.example.doctorapp.domain.model.MessageTimeStamp
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.UserRepository
 import com.example.doctorapp.utils.DateUtils

@@ -12,9 +12,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.MessageStatus
-import com.example.doctorapp.data.model.Message
-import com.example.doctorapp.data.model.MessageData
-import com.example.doctorapp.data.model.MessageTimeStamp
+import com.example.doctorapp.domain.model.Message
+import com.example.doctorapp.domain.model.MessageData
+import com.example.doctorapp.domain.model.MessageTimeStamp
 import com.example.doctorapp.databinding.ItemMessageReceivedBinding
 import com.example.doctorapp.databinding.ItemMessageSentBinding
 import com.example.doctorapp.databinding.ItemMessageTimestampBinding

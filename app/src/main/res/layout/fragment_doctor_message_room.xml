@@ -85,13 +85,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivAddFile"
-                        android:layout_width="@dimen/common_size_40dp"
-                        android:layout_height="@dimen/common_size_40dp"
-                        android:layout_marginStart="@dimen/common_size_10dp"
-                        android:padding="@dimen/common_size_5dp"
-                        android:src="@drawable/ic_add_file" />
+<!--                    <androidx.appcompat.widget.AppCompatImageView-->
+<!--                        android:id="@+id/ivAddFile"-->
+<!--                        android:layout_width="@dimen/common_size_40dp"-->
+<!--                        android:layout_height="@dimen/common_size_40dp"-->
+<!--                        android:layout_marginStart="@dimen/common_size_10dp"-->
+<!--                        android:padding="@dimen/common_size_5dp"-->
+<!--                        android:src="@drawable/ic_add_file" />-->
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivAddImage"

@@ -46,6 +46,7 @@ object Define {
     }
 
     object BundleKey {
+        const val CHAT_BOX_ID = "chatBoxId"
         const val MESSAGE_TYPE = "messageType"
         const val DOCTOR_APPOINTMENT_ID = "doctorAppointmentId"
         const val DOCTOR_APPOINTMENT = "doctorAppointment"
@@ -74,7 +75,7 @@ object Define {
     }
 
     object Network {
-        const val BASE_URL = "http://clinic.thanhnguyen03.site"
+        const val BASE_URL = "http://clinic.hoangdh.site"
     }
 
     object IsFrom {
@@ -82,7 +83,7 @@ object Define {
     }
 
     object Socket{
-        const val SOCKET_URL = "http://clinic.thanhnguyen03.site/socket.io"
+        const val SOCKET_URL = "http://clinic.hoangdh.site/socket.io"
         const val EVENT_RECEIVE_MESSAGE = "receive-message"
         const val EVENT_ERROR = "error"
         const val EVENT_CONNECTED = "connected"

@@ -19,4 +19,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         val notificationUtils = NotificationUtils(applicationContext)
         notificationUtils.showNotification(message.data)
     }
+
+
 }
