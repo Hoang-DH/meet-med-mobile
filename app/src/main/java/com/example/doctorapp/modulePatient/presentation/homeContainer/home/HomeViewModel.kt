@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.dto.Fcm
-import com.example.doctorapp.data.model.Department
+import com.example.doctorapp.domain.model.Department
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.PatientRepository
 import com.example.doctorapp.domain.repository.UserRepository

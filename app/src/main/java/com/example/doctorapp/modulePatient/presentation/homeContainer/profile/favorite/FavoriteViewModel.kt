@@ -1,7 +1,7 @@
 package com.example.doctorapp.modulePatient.presentation.homeContainer.profile.favorite
 
 import androidx.lifecycle.MutableLiveData
-import com.example.doctorapp.data.model.Doctor
+import com.example.doctorapp.domain.model.Doctor
 import com.example.doctorapp.domain.core.base.BaseViewModel
 
 class FavoriteViewModel : BaseViewModel() {

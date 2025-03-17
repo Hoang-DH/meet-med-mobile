@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="@dimen/common_size_80dp"
+            android:layout_height="@dimen/common_size_80dp"
+            android:src="@drawable/ic_profile_pic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/layoutContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
+            app:layout_constraintEnd_toStartOf="@id/tvTimestamp"
+            app:layout_constraintStart_toEndOf="@id/ivAvatar"
+            app:layout_constraintTop_toTopOf="@+id/ivAvatar">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_size_20dp"
+                android:text="Dr. Emily Walker"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/color_1C2A3A"
+                android:textSize="@dimen/common_text_size_18sp"
+                android:textStyle="bold" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMessageContent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/common_size_20dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Hi, how are you to day?"
+                android:textColor="@color/color_1C2A3A"
+                android:textSize="@dimen/common_text_size_16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvUsername" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/common_size_10dp"
+            android:minWidth="@dimen/common_size_15dp"
+            android:text="08:00"
+            app:layout_constraintStart_toEndOf="@id/layoutContent"
+            app:layout_constraintBottom_toBottomOf="@+id/layoutContent"
+            app:layout_constraintEnd_toStartOf="@id/ivUnreadMessage"
+            app:layout_constraintTop_toTopOf="@+id/layoutContent" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivUnreadMessage"
+            android:layout_width="@dimen/common_size_15dp"
+            android:layout_height="@dimen/common_size_15dp"
+            android:layout_marginEnd="@dimen/common_size_15dp"
+            android:src="@drawable/ic_unread_message_room"
+            app:layout_constraintBottom_toBottomOf="@id/layoutContent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/layoutContent" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_1dp"
+            android:background="@color/color_text_hint"
+            app:layout_constraintTop_toBottomOf="@id/ivAvatar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

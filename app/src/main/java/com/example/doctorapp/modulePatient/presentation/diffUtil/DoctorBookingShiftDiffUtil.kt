@@ -1,7 +1,7 @@
 package com.example.doctorapp.modulePatient.presentation.diffUtil
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.doctorapp.data.model.DoctorBookingShift
+import com.example.doctorapp.domain.model.DoctorBookingShift
 
 class DoctorBookingShiftDiffUtil: DiffUtil.ItemCallback<DoctorBookingShift>() {
     override fun areItemsTheSame(oldItem: DoctorBookingShift, newItem: DoctorBookingShift): Boolean {

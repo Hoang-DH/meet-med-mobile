@@ -42,4 +42,5 @@
     <dimen name="string_padding_loadmore">7dp</dimen>
     <dimen name="common_size__26dp">-26dp</dimen>
     <dimen name="common_size__20dp">-20dp</dimen>
+    <dimen name="common_size_13dp">13dp</dimen>
 </resources>

@@ -6,8 +6,11 @@ import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.example.doctorapp.domain.core.base.BaseActivity
 import com.example.doctorapp.R
+import com.example.doctorapp.constant.Define
 import com.example.doctorapp.constant.NotificationConstant
 import com.example.doctorapp.databinding.ActivityMainBinding
+import com.example.doctorapp.domain.model.Message
+import com.example.doctorapp.domain.model.MessageRoom
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,9 +35,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>() 
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        if(intent.action != NotificationConstant.Type.WORKING_SHIFT_REMINDER){
+        val bundle = intent.extras
+        if (bundle != null) {
+            if(bundle.getString(Define.BundleKey.CHAT_BOX_ID) != null){
+                val message = MessageRoom(id = bundle.getString(Define.BundleKey.CHAT_BOX_ID)!!)
+                val newBundle = Bundle()
+                newBundle.putParcelable(Define.BundleKey.MESSAGE_ROOM, message)
+                appNavigation.openMessageRoom(newBundle)
+            }
+        } else if(intent.action != NotificationConstant.Type.WORKING_SHIFT_REMINDER){
             appNavigation.openNotificationScreen()
-        }
-        else appNavigation.openDoctorNotificationScreen()
+        } else appNavigation.openDoctorNotificationScreen()
     }
 }

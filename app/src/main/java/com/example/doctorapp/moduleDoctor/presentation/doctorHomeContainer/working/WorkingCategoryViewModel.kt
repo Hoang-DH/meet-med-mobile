@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.DoctorShift
-import com.example.doctorapp.data.model.DoctorShiftDayOfWeek
-import com.example.doctorapp.data.model.DoctorShifts
+import com.example.doctorapp.domain.model.DoctorShift
+import com.example.doctorapp.domain.model.DoctorShiftDayOfWeek
+import com.example.doctorapp.domain.model.DoctorShifts
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.DoctorRepository
 import com.example.doctorapp.utils.DateUtils
@@ -28,6 +28,10 @@ class WorkingCategoryViewModel @Inject constructor(private val doctorRepository:
 
     fun setSelectAll(isSelectAll: Boolean) {
         _isSelectedAll.value = isSelectAll
+    }
+
+    fun updateRegisteredShiftResponse(){
+        _registeredShiftResponse.value = MyResponse.Loading
     }
 
     fun getListShiftToRegister() {

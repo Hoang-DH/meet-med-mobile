@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.doctorapp.R
-import com.example.doctorapp.data.model.DoctorShift
-import com.example.doctorapp.data.model.DoctorShiftDayOfWeek
-import com.example.doctorapp.data.model.DoctorShifts
+import com.example.doctorapp.domain.model.DoctorShift
+import com.example.doctorapp.domain.model.DoctorShiftDayOfWeek
+import com.example.doctorapp.domain.model.DoctorShifts
 import com.example.doctorapp.databinding.ItemDayOfWeekBinding
 import com.example.doctorapp.databinding.ShiftItemBinding
 import com.example.doctorapp.moduleDoctor.presentation.diffUtil.DoctorShiftDiffUtil
@@ -79,6 +79,7 @@ class DoctorShiftAdapter(
             }
         }
     }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItem(position)) {

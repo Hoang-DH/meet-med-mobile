@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
 import com.example.doctorapp.data.dto.Fcm
-import com.example.doctorapp.data.model.DoctorAppointment
-import com.example.doctorapp.data.model.User
+import com.example.doctorapp.domain.model.DoctorAppointment
+import com.example.doctorapp.domain.model.User
 import com.example.doctorapp.databinding.FragmentDoctorHomeBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.moduleDoctor.presentation.adapter.DoctorAppointmentAdapter

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.Patient
+import com.example.doctorapp.domain.model.Patient
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.PatientRepository
 import com.example.doctorapp.utils.MyResponse

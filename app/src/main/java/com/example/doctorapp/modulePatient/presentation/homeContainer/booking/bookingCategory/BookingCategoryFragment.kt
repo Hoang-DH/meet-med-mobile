@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.BookingShift
+import com.example.doctorapp.domain.model.BookingShift
 import com.example.doctorapp.databinding.FragmentBookingCategoryBinding
 import com.example.doctorapp.domain.core.base.BaseAdapterLoadMore
 import com.example.doctorapp.domain.core.base.BaseFragment

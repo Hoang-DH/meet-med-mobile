@@ -3,9 +3,9 @@ package com.example.doctorapp.data.repository
 import com.example.doctorapp.data.dto.ApiArrayResponse
 import com.example.doctorapp.data.dto.ApiResponse
 import com.example.doctorapp.data.dto.PagingResponse
-import com.example.doctorapp.data.model.BookingShift
-import com.example.doctorapp.data.model.Department
-import com.example.doctorapp.data.model.Patient
+import com.example.doctorapp.domain.model.BookingShift
+import com.example.doctorapp.domain.model.Department
+import com.example.doctorapp.domain.model.Patient
 import com.example.doctorapp.domain.repository.PatientRepository
 import com.example.doctorapp.modulePatient.network.PatientApiService
 import javax.inject.Inject

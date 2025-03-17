@@ -6,6 +6,9 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.example.doctorapp.utils.CheckNetWorkCallback
+import com.example.doctorapp.utils.DeviceUtil
+import com.example.doctorapp.utils.Dialog
 
 abstract class BaseFragmentNotRequiredViewModel<BD: ViewDataBinding>(@LayoutRes id: Int): Fragment(id) {
 
@@ -66,6 +69,20 @@ abstract class BaseFragmentNotRequiredViewModel<BD: ViewDataBinding>(@LayoutRes 
                 (activity as BaseActivityNotRequiredViewModel<*>?)!!.showLoading()
             } else {
                 (activity as BaseActivityNotRequiredViewModel<*>?)!!.hideLoading()
+            }
+        }
+    }
+
+    protected fun checkAndHandleNetworkConnect(callback: CheckNetWorkCallback){
+        if(DeviceUtil.isNetworkConnected(requireContext())) {
+            callback.networkConnected()
+        } else{
+            Dialog.showDialogError(requireContext(), "No internet connection"){
+                if(DeviceUtil.isNetworkConnected(requireContext())){
+                    callback.networkConnected()
+                } else{
+                    checkAndHandleNetworkConnect(callback)
+                }
             }
         }
     }

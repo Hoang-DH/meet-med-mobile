@@ -3,9 +3,9 @@ package com.example.doctorapp.modulePatient.presentation.auth.signIn
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.Doctor
-import com.example.doctorapp.data.model.Patient
-import com.example.doctorapp.data.model.User
+import com.example.doctorapp.domain.model.Doctor
+import com.example.doctorapp.domain.model.Patient
+import com.example.doctorapp.domain.model.User
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.DoctorRepository
 import com.example.doctorapp.domain.repository.PatientRepository

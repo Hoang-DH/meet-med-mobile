@@ -5,8 +5,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.DoctorAppointment
-import com.example.doctorapp.data.model.TimeSlot
+import com.example.doctorapp.domain.model.DoctorAppointment
+import com.example.doctorapp.domain.model.TimeSlot
 import com.example.doctorapp.databinding.FragmentDoctorAppointmentCategoryBinding
 import com.example.doctorapp.domain.core.base.BaseAdapterLoadMore
 import com.example.doctorapp.domain.core.base.BaseFragment

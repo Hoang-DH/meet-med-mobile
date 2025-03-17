@@ -1,4 +1,4 @@
-package com.example.doctorapp.data.model
+package com.example.doctorapp.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable

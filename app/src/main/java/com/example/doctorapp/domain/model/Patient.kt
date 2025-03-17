@@ -1,4 +1,4 @@
-package com.example.doctorapp.data.model
+package com.example.doctorapp.domain.model
 
 import com.example.doctorapp.modulePatient.presentation.constants.Gender
 import com.google.gson.annotations.SerializedName

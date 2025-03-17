@@ -4,7 +4,7 @@ import androidx.fragment.app.viewModels
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.example.doctorapp.R
-import com.example.doctorapp.data.model.Doctor
+import com.example.doctorapp.domain.model.Doctor
 import com.example.doctorapp.databinding.FragmentDoctorDetailBinding
 import com.example.doctorapp.domain.core.base.BaseFragment
 import com.example.doctorapp.modulePatient.presentation.navigation.AppNavigation

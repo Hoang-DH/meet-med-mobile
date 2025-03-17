@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.Notification
-import com.example.doctorapp.data.model.NotificationData
-import com.example.doctorapp.data.model.NotificationTimeStamp
+import com.example.doctorapp.domain.model.Notification
+import com.example.doctorapp.domain.model.NotificationData
+import com.example.doctorapp.domain.model.NotificationTimeStamp
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.UserRepository
 import com.example.doctorapp.utils.DateUtils

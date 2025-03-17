@@ -46,10 +46,34 @@ class SignInFragment :
         if (Prefs.getInstance(requireContext()).isUserLogin) {
             if (Prefs.getInstance(requireContext()).userRole == UserRole.DOCTOR) {
                 appNavigation.openSignInToDoctorHomeContainerScreen()
+//                logout()
             } else {
                 appNavigation.openSignInToHomeContainerScreen()
             }
         }
+    }
+
+    private fun logout() {
+        WebAuthProvider.logout(account).withScheme(getString(R.string.com_auth0_scheme))
+            .start(requireContext(), object :
+                Callback<Void?, AuthenticationException> {
+                override fun onFailure(error: AuthenticationException) {
+                    showSnackBar("Error: ${error.message}", binding.root)
+                }
+
+                override fun onSuccess(result: Void?) {
+                    Prefs.getInstance(requireContext()).apply {
+                        isUserLogin = false
+                        patient = null
+                        doctor = null
+                        user = null
+                        isProfileExist = false
+                        accessToken = ""
+                        userRole = null
+                    }
+                   showSnackBar("Logout success", binding.root)
+                }
+            })
     }
 
     override fun bindingStateView() {
@@ -71,7 +95,7 @@ class SignInFragment :
                         }
                         val token = task.result
                         Prefs.getInstance(requireContext()).deviceToken = token
-                        Log.d("HoangDH", "deviceToken: $token")
+                        Log.d("HoangDH", "deviceToken: ${Prefs.getInstance(requireContext()).accessToken}")
                     }
                     appNavigation.openSignInToHomeContainerScreen()
                 }

@@ -128,4 +128,25 @@ class AppNavigationImpl @Inject constructor() : AppNavigation, BaseNavigatorImpl
     override fun openDoctorHomeContainer(bundle: Bundle?) {
         openScreen(R.id.action_to_doctorHomeContainer, bundle)
     }
+
+    override fun openMessageListToMessageRoomScreen(bundle: Bundle?) {
+        openScreen(R.id.action_messageList_to_messageRoomFragment, bundle)
+    }
+
+    override fun openMessageRoomToDetailAttachmentScreen(bundle: Bundle?) {
+        openScreen(R.id.action_messageRoomFragment_to_detailAttachmentFragment, bundle)
+    }
+
+    override fun openDoctorMessageListToDoctorMessageRoomScreen(bundle: Bundle?) {
+        openScreen(R.id.action_doctorMessageListFragment_to_doctorMessageRoomFragment, bundle)
+    }
+
+    override fun openDoctorMessageRoomToDoctorDetailAttachmentScreen(bundle: Bundle?) {
+        openScreen(R.id.action_doctorMessageRoomFragment_to_doctorDetailAttachmentFragment, bundle)
+    }
+
+    override fun openMessageRoom(bundle: Bundle?) {
+        openScreen(R.id.action_to_messageRoom, bundle)
+    }
+
 }

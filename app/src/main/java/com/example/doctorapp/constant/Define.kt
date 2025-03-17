@@ -46,6 +46,8 @@ object Define {
     }
 
     object BundleKey {
+        const val CHAT_BOX_ID = "chatBoxId"
+        const val MESSAGE_TYPE = "messageType"
         const val DOCTOR_APPOINTMENT_ID = "doctorAppointmentId"
         const val DOCTOR_APPOINTMENT = "doctorAppointment"
         const val APPOINTMENT_ID = "appointmentId"
@@ -54,6 +56,8 @@ object Define {
         const val DEPARTMENT = "department"
         const val DOCTOR = "doctor"
         const val IS_FROM = "isFrom"
+        const val MESSAGE_ROOM = "messageRoom"
+        const val MEDIA_URL = "mediaUrl"
     }
 
     object IntentKey {
@@ -71,11 +75,30 @@ object Define {
     }
 
     object Network {
-        const val BASE_URL = "http://clinic.thanhnguyen03.site"
+        const val BASE_URL = "http://clinic.hoangdh.site"
     }
 
     object IsFrom {
         const val IS_FROM_HOME_SCREEN = "isFromHomeScreen"
+    }
+
+    object Socket{
+        const val SOCKET_URL = "http://clinic.hoangdh.site/socket.io"
+        const val EVENT_RECEIVE_MESSAGE = "receive-message"
+        const val EVENT_ERROR = "error"
+        const val EVENT_CONNECTED = "connected"
+        const val EVENT_SEND_MESSAGE = "send-message"
+        const val EVENT_MESSAGE_ACK = "message-ack"
+        const val TO = "to"
+        const val MESSAGE = "message"
+        const val CONTENT = "content"
+        const val TYPE = "type"
+        const val CHAT_BOX_ID = "chat_box_id"
+    }
+
+    object MessageReadStatus {
+        const val READ = 1
+        const val UNREAD = 0
     }
 
 

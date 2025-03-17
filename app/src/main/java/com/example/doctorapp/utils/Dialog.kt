@@ -96,6 +96,8 @@ object Dialog {
     }
 
 
+
+
     fun dismissDialog(dialog: AlertDialog) {
         dialog.dismiss()
     }

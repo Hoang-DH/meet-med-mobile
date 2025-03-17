@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.doctorapp.data.model.DoctorBookingShift
+import com.example.doctorapp.domain.model.DoctorBookingShift
 import com.example.doctorapp.databinding.BookingDateItemBinding
 import com.example.doctorapp.modulePatient.presentation.diffUtil.DoctorBookingShiftDiffUtil
 import com.example.doctorapp.utils.DateUtils

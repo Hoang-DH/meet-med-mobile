@@ -23,6 +23,10 @@ cloudinary = "3.0.2"
 googleGmsGoogleServices = "4.4.2"
 firebaseMessaging = "24.1.0"
 firebaseMessagingKtx = "24.1.0"
+socketIo = "2.1.0"
+photoView = "1.0.2"
+workManager = "2.7.0"
+ffmpeg = "4.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,6 +53,11 @@ loggingInterceptor = { group = "com.squareup.okhttp3", name = "logging-intercept
 cloudinary = { group = "com.cloudinary", name = "cloudinary-android", version.ref = "cloudinary" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
+socketIo = { group = "io.socket", name = "socket.io-client", version.ref = "socketIo" }
+photoView = { group = "io.getstream", name = "photoview", version.ref = "photoView" }
+workManager = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
+ffmpeg = { group = "com.arthenica", name = "mobile-ffmpeg-full", version.ref = "ffmpeg" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

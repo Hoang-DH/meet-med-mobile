@@ -15,5 +15,8 @@
     <color name="color_1C2A3A">#1C2A3A</color>
     <color name="color_def7e4">#def7e4</color>
     <color name="color_bg_date_time_item">#E5E7EB</color>
+    <color name="color_background_chat_room">#f3f3f3</color>
+    <color name="colorBgGray3">#66000000</color>
+    <color name="red">#eb4034</color>
 
 </resources>

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.doctorapp.data.model.TimeSlot
+import com.example.doctorapp.domain.model.TimeSlot
 import com.example.doctorapp.databinding.TimeItemBinding
 import com.example.doctorapp.utils.DateUtils
 

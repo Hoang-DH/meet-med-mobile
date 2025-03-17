@@ -89,4 +89,15 @@ dependencies {
 
     //cloudinary
     implementation(libs.cloudinary)
+
+    implementation(libs.photoView)
+
+    //work manager
+    implementation(libs.workManager)
+
+    //socket.io
+    implementation("io.socket:socket.io-client:2.1.0") {
+        exclude(group = "org.json", module = "json")
+    }
+
 }

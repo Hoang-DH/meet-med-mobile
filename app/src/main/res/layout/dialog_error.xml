@@ -38,33 +38,30 @@
             android:layout_marginTop="@dimen/common_size_10dp"
             android:maxLines="3"
             android:paddingHorizontal="50dp"
-            tools:text="@string/string_account_ready"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/common_size_14sp"
             app:layout_constraintEnd_toEndOf="@id/tvError"
             app:layout_constraintStart_toStartOf="@id/tvError"
-            app:layout_constraintTop_toBottomOf="@id/tvError" />
+            app:layout_constraintTop_toBottomOf="@id/tvError"
+            tools:text="@string/string_account_ready" />
 
 
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnOk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/common_size_50dp"
-                android:layout_marginTop="@dimen/common_size_30dp"
-                android:background="@drawable/bg_category_checked"
-                android:text="@string/string_ok"
-                app:layout_constraintTop_toBottomOf="@id/tvDescription"
-                android:textColor="@color/white" />
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnOk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/common_size_50dp"
+            android:layout_marginTop="@dimen/common_size_30dp"
+            android:background="@drawable/bg_category_checked"
+            android:text="@string/string_ok"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
 
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </layout>

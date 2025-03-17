@@ -3,7 +3,7 @@ package com.example.doctorapp.moduleDoctor.presentation.doctorHomeContainer.appo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.doctorapp.constant.Define
-import com.example.doctorapp.data.model.DoctorAppointment
+import com.example.doctorapp.domain.model.DoctorAppointment
 import com.example.doctorapp.domain.core.base.BaseViewModel
 import com.example.doctorapp.domain.repository.DoctorRepository
 import com.example.doctorapp.utils.MyResponse

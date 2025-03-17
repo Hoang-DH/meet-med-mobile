@@ -11,9 +11,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.doctorapp.R
 import com.example.doctorapp.constant.NotificationConstant
-import com.example.doctorapp.data.model.Notification
-import com.example.doctorapp.data.model.NotificationData
-import com.example.doctorapp.data.model.NotificationTimeStamp
+import com.example.doctorapp.domain.model.Notification
+import com.example.doctorapp.domain.model.NotificationData
+import com.example.doctorapp.domain.model.NotificationTimeStamp
 import com.example.doctorapp.databinding.ItemNotiContentBinding
 import com.example.doctorapp.databinding.ItemNotiTimestampBinding
 import com.example.doctorapp.domain.core.base.BaseAdapterLoadMore

@@ -1,11 +1,11 @@
-package com.example.doctorapp.data.model
+package com.example.doctorapp.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.example.doctorapp.modulePatient.presentation.constants.Gender
 import com.google.gson.annotations.SerializedName
 
-data class User(
+open class User(
     @SerializedName("id")
     val id: String? = null,
     @SerializedName("fullName")
@@ -39,7 +39,14 @@ data class User(
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        TODO("Not yet implemented")
+        dest.writeString(id)
+        dest.writeString(fullName)
+        dest.writeString(email)
+        dest.writeString(gender.value)
+        dest.writeString(role)
+        dest.writeInt(age ?: 0)
+        dest.writeString(phone)
+        dest.writeString(imageUrl)
     }
 
     companion object CREATOR : Parcelable.Creator<User> {
